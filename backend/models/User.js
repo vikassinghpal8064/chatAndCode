@@ -8,12 +8,12 @@ let userSchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
     },
-    lastname: {
+    lastName: {
       type: String,
       trim: true,
       lowercase: true,
     },
-    useName: {
+    userName: {
       type: String,
       required: true,
       trim: true,
@@ -37,21 +37,21 @@ let userSchema = new mongoose.Schema(
       autopopulate:true
     },
     phone: {
-      type: Number,
+      type: String,
     },
-    group: [{ type: mongoose.Types.ObjectId, ref: "Group",
+    groups: [{ type: mongoose.Types.ObjectId, ref: "Group",
     // autopopulate:true 
   }],
 
-    post: [{ type: mongoose.Types.ObjectId, ref: "Post",
+    posts: [{ type: mongoose.Types.ObjectId, ref: "Post",
     // autopopulate:true
    }],
 
-    friend: [{ type: mongoose.Types.ObjectId, ref: "Friend",
+    friends: [{ type: mongoose.Types.ObjectId, ref: "Friend",
     // autopopulate:true 
   }],
 
-    notification: [{ type: mongoose.Types.ObjectId, ref: "Notification",
+    notifications: [{ type: mongoose.Types.ObjectId, ref: "Notification",
     // autopopulate:true 
   }],
   },

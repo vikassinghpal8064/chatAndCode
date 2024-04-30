@@ -9,7 +9,7 @@ let educationSchema= new mongoose.Schema({
     college:{
         name:{type:String,trim:true},
         year:{type:Number},
-        class:{type:String,trim:true}
+        major:{type:String,trim:true}
     }
 },{timestamps:true})
 

@@ -24,4 +24,4 @@ let postSchema= new mongoose.Schema({
 },{timestamps:true})
 // postSchema.plugin(require("mongoose-autopopulate"))
 let Post=mongoose.model("Post",postSchema);
-module.exports=post;
+module.exports=Post;

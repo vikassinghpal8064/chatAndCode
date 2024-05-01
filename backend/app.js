@@ -5,6 +5,7 @@ const cors= require("cors")
 const app = express();
 const signupUser=require("./controllers/signupUser");
 const login=require("./controllers/login");
+const post= require("./controllers/post");
 
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/friendsbook');
@@ -27,7 +28,7 @@ app.use("/me",(req,res)=>{
 })
 app.use(signupUser);
 app.use(login);
-
+app.use(post);
 
 
 

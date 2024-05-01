@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Friend = require("./Friend");
 
 let userSchema = new mongoose.Schema(
   {
@@ -51,8 +52,18 @@ let userSchema = new mongoose.Schema(
     // autopopulate:true 
   }],
 
-    notifications: [{ type: mongoose.Types.ObjectId, ref: "Notification",
-    // autopopulate:true 
+    notifications: [{post:{
+      type:mongoose.Types.ObjectId,
+      ref:"Post"
+    },
+    friend:{
+      type:mongoose.Types.ObjectId,
+      ref:"Friend"
+    },
+    message:{
+      type:String,
+      trim:true,
+    }
   }],
   },
   { timestamps: true }

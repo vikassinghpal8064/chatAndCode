@@ -35,27 +35,24 @@ let userSchema = new mongoose.Schema(
     education: {
       type: mongoose.Types.ObjectId,
       ref: "Education",
-      autopopulate:true
+     
     },
     phone: {
       type: String,
     },
     groups: [{ type: mongoose.Types.ObjectId, ref: "Group",
-    // autopopulate:true 
+ 
   }],
 
     posts: [{ type: mongoose.Types.ObjectId, ref: "Post",
-    // autopopulate:true
+
    }],
 
     friends: [{ type: mongoose.Types.ObjectId, ref: "Friend",
-    // autopopulate:true 
+ 
   }],
 
-    notifications: [{post:{
-      type:mongoose.Types.ObjectId,
-      ref:"Post"
-    },
+    notifications: [{
     friend:{
       type:mongoose.Types.ObjectId,
       ref:"Friend"

@@ -2,17 +2,16 @@ const mongoose = require("mongoose");
 
 let friendSchema=new  mongoose.Schema({
 
-        source:{
+        sourceId:{
            
-            type:mongoose.Types.ObjectId,
-            ref:"User",
-            // autopopulate:true,
+            type:String,
+            required:true,
         
     },
-      target:{
-   
-    type:mongoose.Types.ObjectId,
-    ref:"User",
+      targetId:{
+    type:String,
+    required:true,
+    
   
     
  },
@@ -22,10 +21,7 @@ let friendSchema=new  mongoose.Schema({
    dafault:false,
  },
  
- post:{
-   type:mongoose.Types.ObjectId,
-   ref:"Post"
- }
+
 },{timestamps:true})
 // friendSchema.plugin(require('mongoose-autopopulate'));
 let Friend= mongoose.model("Friend",friendSchema);

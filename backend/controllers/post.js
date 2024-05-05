@@ -6,7 +6,7 @@ const User= require("../models/User")
 //add new post
 router.post("/addPost/:id",async(req,res)=>{
     try{
-
+        
         let {id:userId}= req.params;
         let user=  await User.findById(userId);
         if(!user){
@@ -51,6 +51,7 @@ router.delete("/deletePost/:id",async(req,res)=>{
         res.status(500).send({message:err.message});
     }
 })
+
 
 
 

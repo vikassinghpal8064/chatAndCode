@@ -40,7 +40,6 @@ router.get("/acceptRequest", async(req,res)=>{
   let friend= await Friend.findById(friendId);
 //   console.log(friendId,friend);
 user.friends.push(friend);
-
 user.notifications.pop();
 user.save();
   res.status(201).send({message:"friend Rrquest accepted"});
@@ -52,6 +51,26 @@ user.save();
     }
 })
 
+
+//reject request
+router.get("/rejectRequest", async(req,res)=>{
+    try{
+  let userCookeId="66334cf9d767b9e8f8af7b8b";
+  let user= await User.findById(userCookeId);
+  let friendId= user.notifications[0].friend._id.toString();
+  
+  let friend= await Friend.findByIdAndDelete(friendId);
+
+user.notifications.pop();
+user.save();
+  res.status(201).send({message:"friend Rrquest rejected"});
+  
+    
+    }
+    catch(err){
+        res.status(500).send({message:err.message})
+    }
+})
 
 
 

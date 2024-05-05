@@ -57,6 +57,11 @@ let userSchema = new mongoose.Schema(
       type:mongoose.Types.ObjectId,
       ref:"Friend"
     },
+   category:{
+    
+       type:String,
+       trim:true,
+    },
     message:{
       type:String,
       trim:true,

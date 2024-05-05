@@ -7,6 +7,7 @@ const signupUser=require("./controllers/signupUser");
 const login=require("./controllers/login");
 const post= require("./controllers/post");
 const friendRequest= require("./controllers/friendRequest")
+const cookieParser = require("cookie-parser");
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/friendsbook');
      }
@@ -26,6 +27,7 @@ app.use("/me",(req,res)=>{
     console.log("hii it me")
     res.send("<h1>hii its me</h1>")
 })
+app.use(cookieParser());
 app.use(signupUser);
 app.use(login);
 app.use(post);

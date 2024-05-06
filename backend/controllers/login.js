@@ -38,11 +38,11 @@ router.post("/login/", async(req,res)=>{
 router.get("/check",async (req,res)=>{
     try{
 
-        let token=req.cookies.user;
-        console.log(token);
+        let token=req.cookies.uid;
+        // console.log(token);
         let item= getUser(token);
-        console.log(item);
-        res.send({ message: "ok"});
+        // console.log(item);
+        res.send({ message: "ok",token:token,item:item});
     }
     catch(err){
         res.status(500).send({message:err.message});

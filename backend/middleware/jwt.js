@@ -2,6 +2,7 @@ const express= require("express");
 const router= express.Router();
 const jwt= require("jsonwebtoken");
 const secretKey="vikasSingh8064@@shivani123America";
+
 function setToken(user){
     let payload={
         id:user._id,

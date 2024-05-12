@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-function Login() {
 
-  function handleSubmit(e){
+function Login() {
+  const [obj, setObj] = useState({});
+
+  function handleSubmit(e) {
     e.preventDefault();
-  let obj={
-    userName:e.target.username.value,
-    password:e.target.password.value,
+    const obj1 = {
+      userName: e.target.username.value,
+      password: e.target.password.value,
+    };
+    setObj({ ...obj, ...obj1 });
   }
-  console.log(obj);
-  }
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await axios.post("http://localhost:8080/login", obj);
+        console.log(res.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    fetchData(); // Call the async function
+  }, [obj]);
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">

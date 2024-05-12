@@ -15,6 +15,10 @@ router.get("/getAll", async (req, res) => {
 router.post("/signup", async (req, res) => {
   try {
     let { firstName, lastName, userName, password, email, phone } = req.body;
+    if(firstName==null || lastName==null || userName==null || password==null || email == null || phone==null){
+      res.status(201).send({message:"please fill all required fields"});
+      return;
+    }
     let newUser = await User.create({
       firstName,
       lastName,
@@ -24,8 +28,10 @@ router.post("/signup", async (req, res) => {
       email,
       phone,
     });
+    console.log(newUser);
     newUser.save();
     res.status(201).send({ message: "the user is successfully resgistered" });
+    return;
   } catch (err) {
     res.status(500).send({ message: err.message });
   }

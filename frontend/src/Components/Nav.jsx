@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 function Nav() {
     return(
-        <div className='bg-orange-200 h-16 flex justify-evenly items-center'>
+        <div className='bg-orange-200 h-16 flex justify-evenly items-center sticky'>
         <Link to="/">HOME</Link>
         <Link to="/friends" >FRIENDS</Link>
         <Link to="/notifications">NOTIFICATIONS</Link>

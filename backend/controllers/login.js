@@ -6,27 +6,35 @@ const {setToken,getUser}= require("../middleware/jwt");
 
 
 //validate user
-router.post("/login/", async(req,res)=>{
+router.post("/login", async(req,res)=>{
     try{
     let {userName,password}= req.body;
+    if(!userName  || !password){
+        res.status(200).send({message:"userName and password id requires"});
+        return;
+    }
     let user= await User.findOne({userName:userName});
-    console.log(user.password);
+    console.log(user);
+    if(user==null){
+        res.status(200).send({message:"useris not found"});
+        return;
+    }
     let token=setToken(user);
     if(user){
-        console.log(password , user.password,typeof(password),typeof(user.password))
+        // console.log(password , user.password,typeof(password),typeof(user.password))
         if(user.password==password){
 
             let item=res.cookie("uid",token);
             console.log(item);
             res.status(201).send({message:"person authorised, right userName and password"})
+            return;
         }
         else{
             res.status(401).send({message:"person is unauthorised, wrong userName and password"})
+            return
         }
     }
-    else{
-        res.status(400).send({message:"user is not found"});
-    }
+   
     
 
     }

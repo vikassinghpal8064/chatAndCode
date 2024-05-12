@@ -7,7 +7,7 @@ import Login from './Components/user/Login'
 function App() {
   return (
     <div>
-     <Nav>Home</Nav>
+     <Nav></Nav>
       <Routes>
         <Route path="/" element={<Home></Home>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>

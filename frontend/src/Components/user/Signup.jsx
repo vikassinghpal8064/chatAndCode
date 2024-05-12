@@ -1,9 +1,12 @@
-import React from "react";
+import axios from "axios";
+import React, { useState,useEffect } from "react";
 
 function Signup() {
+
+  let [obj,setObj]= useState({});
   function handleSubmit(e) {
     e.preventDefault();
-    let obj = {
+    let obj1 = {
       firstName: e.target.firstName.value,
       lastName: e.target.lastName.value,
       userName: e.target.userName.value,
@@ -11,8 +14,22 @@ function Signup() {
       email: e.target.email.value,
       phone: e.target.phone.value,
     };
-    console.log(obj);
+    // console.log(obj1);
+   setObj({...obj,...obj1});
+   
   }
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await axios.post("http://localhost:8080/signup", obj);
+        console.log(res.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    fetchData(); // Call the async function
+  }, [obj]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">

@@ -60,6 +60,7 @@ let userSchema = new mongoose.Schema(
    category:{
     
        type:String,
+       enum:["post","friendRequest","others"],
        trim:true,
     },
     message:{

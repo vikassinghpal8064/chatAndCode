@@ -55,6 +55,7 @@ user.save();
 //reject request
 router.get("/rejectRequest", async(req,res)=>{
     try{
+      let cookeId= req.cookies.uid;
   let userCookeId="66334cf9d767b9e8f8af7b8b";
   let user= await User.findById(userCookeId);
   let friendId= user.notifications[0].friend._id.toString();

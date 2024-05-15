@@ -22,7 +22,7 @@ function Home() {
     async function fetchPostData() {
       let data = await axios.get("http://localhost:8080/getAllFriends");
       console.log(data);
-      setObj([...post, ...data.data]);
+      setPost([...post, ...data.data]);
       console.log(post);
     }
     fetchPostData();

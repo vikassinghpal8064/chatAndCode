@@ -6,42 +6,30 @@ const {setToken,getUser}= require("../middleware/jwt");
 
 
 //validate user
-router.post("/login", async(req,res)=>{
-    try{
-    let {userName,password}= req.body;
-    if(!userName  || !password){
-        res.status(200).send({message:"userName and password id requires"});
-        return;
-    }
-    let user= await User.findOne({userName:userName});
-    // console.log(user);
-    if(user==null){
-        res.status(200).send({message:"user is not found"});
-        return;
-    }
-    let token=setToken(user._id);
-    if(user){
-        // console.log(password , user.password,typeof(password),typeof(user.password))
-        if(user.password==password){
-
-            let item=res.cookie("uid",token);
-            
-            res.status(201).send({message:"person authorised, right userName and password"})
+router.post("/login", async(req, res) => {
+    try {
+        let { userName, password } = req.body;
+        if (!userName || !password) {
+            res.status(400).send({ message: "userName and password are required" });
             return;
         }
-        else{
-            res.status(401).send({message:"person is unauthorised, wrong userName and password"})
-            return
+        let user = await User.findOne({ userName: userName });
+        if (!user) {
+            res.status(404).send({ message: "User not found" });
+            return;
         }
+        if (user.password === password) {
+            let token = setToken(user._id);
+            // Set the cookie and send it in the response
+            res.cookie("uid", token).status(201).send({ message: "Person authorized, correct username and password" });
+        } else {
+            res.status(401).send({ message: "Unauthorized, wrong username and password" });
+        }
+    } catch (err) {
+        res.status(500).send({ error: err.message });
     }
-   
-    
+});
 
-    }
-    catch(err){
-        res.status(500).send({error:err.message});
-    }
-})
 
 router.get("/check",async (req,res)=>{
     try{

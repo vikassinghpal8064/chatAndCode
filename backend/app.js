@@ -8,6 +8,10 @@ const login=require("./controllers/login");
 const post= require("./controllers/post");
 const friendRequest= require("./controllers/friendRequest")
 const cookieParser = require("cookie-parser");
+const {chat} = require("./controllers/sockets/chatting");
+const {Server}= require("socket.io");
+const http = require('http');
+const server = http.createServer(app);
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/friendsbook');
      }
@@ -17,25 +21,24 @@ main().then(()=>{
 .catch((err)=>{
     console.log(`error in mongodb connection ${err}`)
 });
+app.use(cors({
+    origin:["http://localhost:5173"],
+    credentials:true,
+}))
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
-app.use(cors({
-    origin:["http://localhost:5173"]
-}))
-app.use("/me",(req,res)=>{
-    console.log("hii it me")
-    res.send("<h1>hii its me</h1>")
-})
+
+
 app.use(cookieParser());
 app.use(signupUser);
 app.use(login);
 app.use(post);
 app.use(friendRequest);
-
+chat(server);
 
 
 let PORT=8080;
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
     console.log(`i am listening at ${PORT}`)
 })

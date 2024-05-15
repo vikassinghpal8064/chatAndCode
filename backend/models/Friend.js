@@ -17,10 +17,10 @@ let friendSchema = new mongoose.Schema(
     },
 
     chats:[{type:mongoose.SchemaTypes.ObjectId,
-      ref:"ChatSchema"}],
+      ref:"Chat"}],
     },
   { timestamps: true }
 );
-// friendSchema.plugin(require('mongoose-autopopulate'));
+
 let Friend = mongoose.model("Friend", friendSchema);
 module.exports = Friend;

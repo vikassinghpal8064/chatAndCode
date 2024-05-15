@@ -2,13 +2,13 @@ const express= require("express");
 const router= express.Router();
 const Friend= require("../models/Friend");
 const User= require("../models/User");
-
+const{setUser,getUser}= require("../middleware/jwt");
 
 //sending a friend request;
 router.post("/friendRequest/:id", async(req,res)=>{
     try{
 
-        let userCookeId = "66334c41d767b9e8f8af7b85";
+        let userCookeId = req.cookies.uid;
         let {id}= req.params;
         
         let user= await User.findById(id);
@@ -65,23 +65,28 @@ router.get("/rejectRequest", async(req,res)=>{
 user.notifications.pop();
 user.save();
   res.status(201).send({message:"friend Rrquest rejected"});
-  
-    
     }
     catch(err){
         res.status(500).send({message:err.message})
     }
 })
 
+//finding all friens of the login user
+router.get("/getAllFriends",async(req,res)=>{
+  try{
 
-
-
-
-
-
-
-
-
+    let token=req.cookies.uid;
+   
+    let token1= getUser(token);
+    // console.log(token1);
+    let user=await  User.findById(token1.id);
+    // console.log(user);
+    res.status(201).send(user.friends);
+  }
+  catch(err){
+   res.status(500).send({error:err.message});
+  }
+});
 
 
 

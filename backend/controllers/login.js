@@ -14,18 +14,18 @@ router.post("/login", async(req,res)=>{
         return;
     }
     let user= await User.findOne({userName:userName});
-    console.log(user);
+    // console.log(user);
     if(user==null){
-        res.status(200).send({message:"useris not found"});
+        res.status(200).send({message:"user is not found"});
         return;
     }
-    let token=setToken(user);
+    let token=setToken(user._id);
     if(user){
         // console.log(password , user.password,typeof(password),typeof(user.password))
         if(user.password==password){
 
             let item=res.cookie("uid",token);
-            console.log(item);
+            
             res.status(201).send({message:"person authorised, right userName and password"})
             return;
         }

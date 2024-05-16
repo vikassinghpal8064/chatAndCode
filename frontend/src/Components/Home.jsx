@@ -19,13 +19,18 @@ function Home() {
     fetchdata();
   }, []);
   useEffect(() => {
-    async function fetchPostData() {
-      let data = await axios.get("http://localhost:8080/getAllFriends");
-      console.log(data);
-      setPost([...post, ...data.data]);
-      console.log(post);
+    try{
+
+      async function fetchPostData() {
+        let data = await axios.get("http://localhost:8080/getAllFriends");
+        console.log(data);
+        setPost([...post, ...data.data]);
+        console.log(post);
+      }
+      fetchPostData();
+    }catch(err){
+      console.log({"error":err});
     }
-    fetchPostData();
   }, []);
    function handleChat(){
     

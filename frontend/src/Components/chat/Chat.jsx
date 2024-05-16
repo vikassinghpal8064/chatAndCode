@@ -7,10 +7,16 @@ function Chat() {
   let socket = useRef();
 
   useEffect(() => {
-    socket.current = io("http://localhost:8080");
+    socket.current = io("http://localhost:8080",{
+      auth: {
+        serverOffset: 0
+      }
+    });
+
 
     socket.current.on("message", (msg) => {
       setMessages((prevMessages) => [...prevMessages, msg]);
+      socket.current.auth.serverOffset = serverOffset;
     });
 
     return () => {

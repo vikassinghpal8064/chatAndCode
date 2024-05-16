@@ -21,7 +21,10 @@ router.post("/login", async(req, res) => {
         if (user.password === password) {
             let token = setToken(user._id);
             // Set the cookie and send it in the response
-            res.cookie("uid", token).status(201).send({ message: "Person authorized, correct username and password" });
+            res.cookie("uid", token,{maxAge:36000000,httpOnly:true , secure:false ,sameSite:"lax"});
+            res.status(201).send({ message: "Person authorized, correct username and password" ,
+                uid:token
+            });
         } else {
             res.status(401).send({ message: "Unauthorized, wrong username and password" });
         }
@@ -34,10 +37,10 @@ router.post("/login", async(req, res) => {
 router.get("/check",async (req,res)=>{
     try{
 
-        let token=req.cookies.uid;
-        // console.log(token);
+        let token=document.cookie
+        console.log(token);
         let item= getUser(token);
-        // console.log(item);
+        console.log(item);
         res.send({ message: "ok",token:token,item:item});
     }
     catch(err){

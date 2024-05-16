@@ -76,7 +76,7 @@ router.get("/getAllFriends",async(req,res)=>{
   try{
 
     let token=req.cookies.uid;
-   
+   console.log(token);
     let token1= getUser(token);
     // console.log(token1);
     let user=await  User.findById(token1.id);

@@ -10,6 +10,7 @@ function Nav() {
         <Link to="/about" >ABOUT</Link>
         <Link to="/login">LOGIN</Link>
         <Link to="/signup">SIGNUP</Link>
+        <Link to="/check">check</Link>
       </div>
       )
 }

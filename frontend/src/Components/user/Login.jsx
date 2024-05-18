@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import SetupAxiosInstances from '../Instances/SetupAxiosInstances';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [obj, setObj] = useState({});
-
+  let navigate = useNavigate();
+  const axiosInstances = SetupAxiosInstances(navigate);
   function handleSubmit(e) {
     e.preventDefault();
     const obj1 = {
@@ -16,8 +18,10 @@ function Login() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.post("http://localhost:8080/login", obj);
+        const res = await axiosInstances.post("http://localhost:8080/login", obj);
         console.log(res.data.uid);
+        const token = res.data.uid;
+        localStorage.setItem("token",token);
         let date = new Date();
         let expire = date.setTime(date.getTime()+3600000);
         document.cookie=`uid=${res.data.uid},expires=${expire}`

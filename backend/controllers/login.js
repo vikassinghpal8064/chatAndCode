@@ -19,6 +19,7 @@ router.post("/login", async(req, res) => {
             return;
         }
         if (user.password === password) {
+          
             let token = setToken(user._id);
             // Set the cookie and send it in the response
             res.cookie("uid", token,{maxAge:36000000,httpOnly:true , secure:false ,sameSite:"lax"});
@@ -36,12 +37,13 @@ router.post("/login", async(req, res) => {
 
 router.get("/check",async (req,res)=>{
     try{
-
-        let token=document.cookie
-        console.log(token);
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1];
+        // let token=req.cookies;
+        // console.log(token);
         let item= getUser(token);
         console.log(item);
-        res.send({ message: "ok",token:token,item:item});
+        res.send({ message: "ok",token:token});
     }
     catch(err){
         res.status(500).send({message:err.message});

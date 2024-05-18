@@ -6,6 +6,7 @@ import Home from './Components/Home'
 import Login from './Components/user/Login'
 import Friends from './Components/user/Friends'
 import Chat from './Components/chat/Chat'
+import Check from './Components/user/Check'
 function App() {
   return (
     <div>
@@ -16,6 +17,7 @@ function App() {
         <Route path='/signup' element={<Signup></Signup>}></Route>
         <Route path='/friends' element={<Friends></Friends>}></Route>
         <Route path='/chat' element={<Chat></Chat>}></Route>
+        <Route path='/check' element={<Check></Check>}></Route>
       </Routes>
       
     </div>

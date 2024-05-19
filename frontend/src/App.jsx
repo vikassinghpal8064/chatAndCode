@@ -7,6 +7,7 @@ import Login from './Components/user/Login'
 import Friends from './Components/user/Friends'
 import Chat from './Components/chat/Chat'
 import Check from './Components/user/Check'
+import ViewProfile from './Components/reusableComponents/ViewProfile'
 function App() {
   return (
     <div>
@@ -18,6 +19,7 @@ function App() {
         <Route path='/friends' element={<Friends></Friends>}></Route>
         <Route path='/chat' element={<Chat></Chat>}></Route>
         <Route path='/check' element={<Check></Check>}></Route>
+        <Route path='/ViewProfile/:id' element={<ViewProfile></ViewProfile>}></Route>
       </Routes>
       
     </div>

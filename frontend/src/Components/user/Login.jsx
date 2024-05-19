@@ -22,9 +22,6 @@ function Login() {
         console.log(res.data.uid);
         const token = res.data.uid;
         localStorage.setItem("token",token);
-        let date = new Date();
-        let expire = date.setTime(date.getTime()+3600000);
-        document.cookie=`uid=${res.data.uid},expires=${expire}`
       } catch (error) {
         console.error("Error fetching data:", error);
       }

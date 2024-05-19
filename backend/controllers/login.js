@@ -39,8 +39,7 @@ router.get("/check",async (req,res)=>{
     try{
         const authHeader = req.headers['authorization'];
         const token = authHeader && authHeader.split(' ')[1];
-        // let token=req.cookies;
-        // console.log(token);
+       
         let item= getUser(token);
         console.log(item);
         res.send({ message: "ok",token:token});

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ViewProfile from "./reusableComponents/ViewProfile";
 let message = "hii i am traveling to europe";
 // let imageUrl ="https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg";
 let imageUrl =
@@ -22,7 +23,7 @@ function Home() {
     try{
 
       async function fetchPostData() {
-        let data = await axios.get("http://localhost:8080/getAllFriends");
+        let data = await axios.get("http://localhost:8080/allUsers");
         console.log(data);
         setPost([...post, ...data.data]);
         console.log(post);
@@ -54,7 +55,7 @@ function Home() {
           return (
             <div
               className=" flex flex-col justify-center items-center mt-14"
-              key={index}
+              key={item._id}
             >
               <img
                 className="rounded-full size-40"
@@ -62,15 +63,14 @@ function Home() {
                 alt=""
               />
 
-              <h3>{item.firstName}</h3>
+              <h3>{item.firstName +" "+item.lastName}</h3>
+              <Link to={`/ViewProfile/${item._id}`}>
               <button className="bg-cyan-400 w-auto border-blue-600 rounded-md">
                 check profile
               </button>
-             <Link to={'/chat'}>
-             <button  className="bg-cyan-400 w-auto border-blue-600 rounded-md">
-                CHAT
-              </button>
-             </Link>
+              </Link>
+           
+            
             </div>
           );
         })}

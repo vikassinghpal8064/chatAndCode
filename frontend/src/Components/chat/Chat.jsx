@@ -13,7 +13,7 @@ function Chat() {
       }
     });
 
-
+//receiving message
     socket.current.on("message", (msg) => {
       setMessages((prevMessages) => [...prevMessages, msg]);
       socket.current.auth.serverOffset = serverOffset;
@@ -24,6 +24,8 @@ function Chat() {
     };
   }, []);
 
+
+  //sending msg
   function handleClick() {
     if (inputRef.current.value) {
       socket.current.emit('message', inputRef.current.value);

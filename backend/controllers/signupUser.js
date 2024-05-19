@@ -2,6 +2,8 @@ let express = require("express");
 let router = express.Router();
 let User = require("../models/User");
 let Education = require("../models/Education");
+
+//all users
 router.get("/getAll", async (req, res) => {
   try {
     let allUser = await User.find({});
@@ -10,6 +12,22 @@ router.get("/getAll", async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
+
+
+// finding a particular user
+router.post("/user/:id",async(req,res)=>{
+  try{
+
+    let id= req.params;
+    // console.log(id);
+    let user= await User.findById(id.id);
+    // console.log(user);
+    res.status(201).send(user);
+  }
+  catch(err){
+    res.status(500).send({error:err})
+  }
+})
 
 //adding a new user
 router.post("/signup", async (req, res) => {
@@ -66,5 +84,15 @@ router.post("/userEdu/:id", async (req, res) => {
     res.status(500).send({ error: err.message });
   }
 });
+
+router.get("/allUsers",async(req,res)=>{
+  try{
+  let users= await User.find({});
+  // console.log(users);
+  res.status(201).send(users);
+  }catch(err){
+    res.status(500).send({error:err});
+  }
+})
 
 module.exports = router;

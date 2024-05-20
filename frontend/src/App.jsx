@@ -20,6 +20,7 @@ function App() {
         <Route path='/chat' element={<Chat></Chat>}></Route>
         <Route path='/check' element={<Check></Check>}></Route>
         <Route path='/ViewProfile/:id' element={<ViewProfile></ViewProfile>}></Route>
+        <Route path="/getAllFriends" element={<></>}></Route>
       </Routes>
       
     </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ViewProfile from "./reusableComponents/ViewProfile";
+import Card from "./reusableComponents/Card";
 let message = "hii i am traveling to europe";
 // let imageUrl ="https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg";
 let imageUrl =
@@ -53,25 +54,7 @@ function Home() {
       <div className="bg-slate-400  w-1/4 mt-10">
         {obj.map((item, index) => {
           return (
-            <div
-              className=" flex flex-col justify-center items-center mt-14"
-              key={item._id}
-            >
-              <img
-                className="rounded-full size-40"
-                src="https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg"
-                alt=""
-              />
-
-              <h3>{item.firstName +" "+item.lastName}</h3>
-              <Link to={`/ViewProfile/${item._id}`}>
-              <button className="bg-cyan-400 w-auto border-blue-600 rounded-md">
-                check profile
-              </button>
-              </Link>
-           
-            
-            </div>
+            <Card item={item} key={item._id}></Card>
           );
         })}
       </div>

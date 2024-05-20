@@ -32,7 +32,7 @@ function ViewProfile() {
         
     },[])
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+    <div className="max-w-md mx-auto mt-10 p-6 shadow-lg rounded-lg bg-slate-400">
       <img className="w-16 h-16 rounded-full border-2 border-indigo-500" src={obj.photo} alt="Profile Picture" />
       <h3 className="mt-4 text-xl font-semibold text-gray-800">{obj.firstName} {obj.lastName}</h3>
       <div className="mt-4">

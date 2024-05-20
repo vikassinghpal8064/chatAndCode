@@ -4,6 +4,7 @@ const Friend= require("../models/Friend");
 const User= require("../models/User");
 const{setUser,getUser}= require("../middleware/jwt");
 
+
 //sending a friend request;
 router.post("/friendRequest/:id", async(req,res)=>{
     try{
@@ -74,14 +75,29 @@ user.save();
 //finding all friens of the login user
 router.get("/getAllFriends",async(req,res)=>{
   try{
+    console.log("hello");
+    const authHeader = req.headers['authorization'];
 
-    let token=req.cookies.uid;
-   console.log(token);
+const token = authHeader && authHeader.split(' ')[1];
+   
+   
     let token1= getUser(token);
-    // console.log(token1);
+    // console.log(token1.id);
     let user=await  User.findById(token1.id);
-    // console.log(user);
-    res.status(201).send(user.friends);
+    // console.log(user.friends);
+    let friendsList= [];
+    for(let item of user.friends){
+      // console.log(item.toString());
+      let friendItem= await Friend.findById(item.toString());
+      console.log(friendItem);
+      let sourceId= friendItem.sourceId;
+      console.log(sourceId);
+      let friend= await User.findById(sourceId);
+      friendsList.push(friend);
+    }
+    console.log(friendsList);
+ 
+    res.status(201).send(friendsList);
   }
   catch(err){
    res.status(500).send({error:err.message});

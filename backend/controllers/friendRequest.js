@@ -89,9 +89,9 @@ const token = authHeader && authHeader.split(' ')[1];
     for(let item of user.friends){
       // console.log(item.toString());
       let friendItem= await Friend.findById(item.toString());
-      console.log(friendItem);
+      // console.log(friendItem);
       let sourceId= friendItem.sourceId;
-      console.log(sourceId);
+      // console.log(sourceId);
       let friend= await User.findById(sourceId);
       friendsList.push(friend);
     }

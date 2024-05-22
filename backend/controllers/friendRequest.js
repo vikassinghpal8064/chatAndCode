@@ -39,7 +39,7 @@ router.get("/acceptRequest", async(req,res)=>{
   let friendId= user.notifications[0].friend._id.toString();
   
   let friend= await Friend.findById(friendId);
-//   console.log(friendId,friend);
+  
 user.friends.push(friend);
 user.notifications.pop();
 user.save();
@@ -75,27 +75,22 @@ user.save();
 //finding all friens of the login user
 router.get("/getAllFriends",async(req,res)=>{
   try{
-    console.log("hello");
+   
     const authHeader = req.headers['authorization'];
 
 const token = authHeader && authHeader.split(' ')[1];
    
    
     let token1= getUser(token);
-    // console.log(token1.id);
-    let user=await  User.findById(token1.id);
-    // console.log(user.friends);
+    let user=await  User.findById(token1.id)
     let friendsList= [];
     for(let item of user.friends){
-      // console.log(item.toString());
       let friendItem= await Friend.findById(item.toString());
-      // console.log(friendItem);
       let sourceId= friendItem.sourceId;
-      // console.log(sourceId);
       let friend= await User.findById(sourceId);
       friendsList.push(friend);
     }
-    console.log(friendsList);
+
  
     res.status(201).send(friendsList);
   }

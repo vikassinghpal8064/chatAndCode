@@ -12,15 +12,15 @@ function Friends() {
         let res = await axiosInstances.get('http://localhost:8080/getAllFriends');
         console.log(res);
         setFriendList([...res.data]);
-        // console.log(friendList);
-        }
-        getData();
+    }
+        
+    getData();
     },[])
   return (
    <>
    {friendList.map((item,index)=>{
     return(
-        <Card item={item}></Card>
+        <Card item = {item}></Card>
     )
    })}
    </>

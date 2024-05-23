@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Card({ item }) {
-  console.log("item:", item);
+  // console.log("item:", item);
   return (
-    <div className="flex flex-col justify-center items-center mt-14 p-6 bg-white shadow-lg rounded-lg" key={item._id}>
+    <div  className="flex flex-col justify-center items-center mt-14 p-6 bg-white shadow-lg rounded-lg" key={item._id}>
       <img
         className="rounded-full w-40 h-40 object-cover"
         src={item.photo}

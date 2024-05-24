@@ -16,7 +16,7 @@ function Chat() {
 //receiving message
     socket.current.on("message", (msg) => {
       setMessages((prevMessages) => [...prevMessages, msg]);
-      socket.current.auth.serverOffset = serverOffset;
+      // socket.current.auth.serverOffset = serverOffset;
     });
 
     return () => {
@@ -28,7 +28,13 @@ function Chat() {
   //sending msg
   function handleClick() {
     if (inputRef.current.value) {
-      socket.current.emit('message', inputRef.current.value);
+      const msg={
+        sourceId:localStorage.getItem("token"),
+
+        targetId:sessionStorage.getItem("current"),
+        message: inputRef.current.value
+      };
+      socket.current.emit('message',msg);
       inputRef.current.value = "";
     }
   }

@@ -2,7 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Card({ item }) {
-  // console.log("item:", item);
+ function handleClickChat(){
+  let already=sessionStorage.removeItem("current");
+  console.log(already);
+  sessionStorage.setItem("current",item._id);
+ }
   return (
     <div  className="flex flex-col justify-center items-center mt-14 p-6 bg-white shadow-lg rounded-lg" key={item._id}>
       <img
@@ -17,7 +21,7 @@ function Card({ item }) {
             Check Profile
           </button>
         </Link>
-        <Link to="/chat">
+        <Link onClick={handleClickChat} to="/chat">
           <button className="bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 transition duration-300">
             Chat
           </button>

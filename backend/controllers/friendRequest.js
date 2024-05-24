@@ -87,8 +87,15 @@ const token = authHeader && authHeader.split(' ')[1];
     for(let item of user.friends){
       let friendItem= await Friend.findById(item.toString());
       let sourceId= friendItem.sourceId;
-      let friend= await User.findById(sourceId);
-      friendsList.push(friend);
+      let targetId= friendItem.targetId;
+      if(token1.id!=sourceId){
+        let friend= await User.findById(sourceId);
+        friendsList.push(friend);
+
+      }else{
+        let friend= await User.findById(targetId);
+        friendsList.push(friend);
+      }
     }
 
  

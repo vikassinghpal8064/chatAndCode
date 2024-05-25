@@ -6,12 +6,14 @@ const app = express();
 const signupUser=require("./controllers/signupUser");
 const login=require("./controllers/login");
 const post= require("./controllers/post");
-const friendRequest= require("./controllers/friendRequest")
+const friendRequest= require("./controllers/friendRequest");
+const chatMessages= require("./controllers/sockets/chatMessages")
 const cookieParser = require("cookie-parser");
 const {chat} = require("./controllers/sockets/chatting");
 const {Server}= require("socket.io");
 const http = require('http');
 const server = http.createServer(app);
+
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/friendsbook');
      }
@@ -35,6 +37,7 @@ app.use(signupUser);
 app.use(login);
 app.use(post);
 app.use(friendRequest);
+app.use(chatMessages);
 chat(server);
 
 

@@ -1,10 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { io } from 'socket.io-client';
-
+import { useLocation } from 'react-router-dom';
 function Chat() {
-  let [messages, setMessages] = useState([]);
+  const location = useLocation();
+  console.log(location.state.arr);
+  const arr = location.state?.arr || [{message:"null"}];
+  console.log(arr);
+  let [messages, setMessages] = useState([...arr]);
   let inputRef = useRef(null);
   let socket = useRef();
+
 
   useEffect(() => {
     socket.current = io("http://localhost:8080",{
@@ -15,6 +20,7 @@ function Chat() {
 
 //receiving message
     socket.current.on("message", (msg) => {
+      sessionStorage.setItem('firstMess',false);
       setMessages((prevMessages) => [...prevMessages, msg]);
       // socket.current.auth.serverOffset = serverOffset;
     });
@@ -30,7 +36,7 @@ function Chat() {
     if (inputRef.current.value) {
       const msg={
         sourceId:localStorage.getItem("token"),
-
+        firstMess:sessionStorage.getItem('firstMess'),
         targetId:sessionStorage.getItem("current"),
         message: inputRef.current.value
       };
@@ -43,7 +49,7 @@ function Chat() {
     <div>
       <ul>
         {messages.map((item, index) => (
-          <li key={index}>{item}</li>
+          <li key={index}>{item.message}</li>
         ))}
       </ul>
       <div className='flex fixed bottom-0 w-full'>

@@ -1,14 +1,37 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Card({ item }) {
- function handleClickChat(){
-  let already=sessionStorage.removeItem("current");
-  console.log(already);
-  sessionStorage.setItem("current",item._id);
- }
+  const [arr, setArr] = useState([]);
+  const navigate = useNavigate();
+
+  async function handleClickChat() {
+    sessionStorage.removeItem("current");
+    sessionStorage.removeItem('firstMess');
+    
+    sessionStorage.setItem("current", item._id);
+    sessionStorage.setItem("firstMess", true);
+    
+    let sourceId = localStorage.getItem('token');
+    let targetId = sessionStorage.getItem('current');
+    
+    try {
+      let res = await axios.get("http://localhost:8080/user/chat", {
+        params: { sourceId, targetId }
+      });
+      setArr(res.data);
+      console.log(res.data);
+
+      // Navigate to the chat route with state after setting the arr
+      navigate("/chat", { state: { arr: res.data } });
+    } catch (error) {
+      console.error('Error fetching chat data:', error);
+    }
+  }
+
   return (
-    <div  className="flex flex-col justify-center items-center mt-14 p-6 bg-white shadow-lg rounded-lg" key={item._id}>
+    <div className="flex flex-col justify-center items-center mt-14 p-6 bg-white shadow-lg rounded-lg" key={item._id}>
       <img
         className="rounded-full w-40 h-40 object-cover"
         src={item.photo}
@@ -21,11 +44,9 @@ function Card({ item }) {
             Check Profile
           </button>
         </Link>
-        <Link onClick={handleClickChat} to="/chat">
-          <button className="bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 transition duration-300">
-            Chat
-          </button>
-        </Link>
+        <button onClick={handleClickChat} className="bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 transition duration-300">
+          Chat
+        </button>
       </div>
     </div>
   );

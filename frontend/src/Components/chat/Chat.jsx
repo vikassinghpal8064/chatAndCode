@@ -1,46 +1,54 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { useLocation } from 'react-router-dom';
+
+
+
 function Chat() {
   const location = useLocation();
-  console.log(location.state.arr);
-  const arr = location.state?.arr || [{message:"null"}];
-  console.log(arr);
-  let [messages, setMessages] = useState([...arr]);
-  let inputRef = useRef(null);
-  let socket = useRef();
-
+  const arr = location.state?.arr || [{ message: "null" }];
+  const [messages, setMessages] = useState([...arr]);
+  const inputRef = useRef(null);
+  const socket = useRef();
 
   useEffect(() => {
-    socket.current = io("http://localhost:8080",{
+    socket.current = io("http://localhost:8080", {
       auth: {
         serverOffset: 0
       }
     });
 
-//receiving message
+    const userId = localStorage.getItem("token");
+    const friendId = sessionStorage.getItem("current");
+   
+
+    // Join the unique room
+    let room= sessionStorage.getItem("friendId");
+    console.log(room);
+    socket.current.emit('joinRoom', room);
+
+    // Receiving message
     socket.current.on("message", (msg) => {
-      sessionStorage.setItem('firstMess',false);
+      sessionStorage.setItem('firstMess', false);
       setMessages((prevMessages) => [...prevMessages, msg]);
-      // socket.current.auth.serverOffset = serverOffset;
     });
 
     return () => {
+      socket.current.emit('leaveRoom', room);
       socket.current.disconnect();
     };
   }, []);
 
-
-  //sending msg
+  // Sending message
   function handleClick() {
     if (inputRef.current.value) {
-      const msg={
-        sourceId:localStorage.getItem("token"),
-        firstMess:sessionStorage.getItem('firstMess'),
-        targetId:sessionStorage.getItem("current"),
+      const msg = {
+        sourceId: localStorage.getItem("token"),
+        firstMess: sessionStorage.getItem('firstMess'),
+        targetId: sessionStorage.getItem("current"),
         message: inputRef.current.value
       };
-      socket.current.emit('message',msg);
+      socket.current.emit('message', msg);
       inputRef.current.value = "";
     }
   }

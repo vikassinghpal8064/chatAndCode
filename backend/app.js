@@ -13,7 +13,7 @@ const {chat} = require("./controllers/sockets/chatting");
 const {Server}= require("socket.io");
 const http = require('http');
 const server = http.createServer(app);
-
+const file =require("./controllers/fileSystem/file")
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/friendsbook');
      }
@@ -38,6 +38,7 @@ app.use(login);
 app.use(post);
 app.use(friendRequest);
 app.use(chatMessages);
+app.use(file);
 chat(server);
 
 

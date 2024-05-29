@@ -1,22 +1,53 @@
+const express = require('express');
 const fs = require('fs');
-const path = require("path");
+const path = require('path');
+const router = express.Router();
 
-let assetPath=path.join(__dirname,"/asset/resorce.txt");
-
-try{
-    
-    fs.readFile(assetPath, 'utf8', (err, data) => {
-        if (err) throw err;
-        console.log(data);
-    });
-}catch(err){
-    console.log(err);
+// Ensure the 'uploads' directory exists
+const uploadDir = path.join(__dirname, 'assets');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
 }
-let s="";
-  for(let i=0;i<1000;i++){
-    s+=i;
+
+router.post('/upload', (req, res) => {
+  try {
+    if (req.headers['content-type'].startsWith('multipart/form-data')) {
+      const boundary = '--' + req.headers['content-type'].split('boundary=')[1];
+      const chunks = [];
+
+      req.on('data', (chunk) => {
+        chunks.push(chunk);
+      });
+
+      req.on('end', () => {
+        const buffer = Buffer.concat(chunks);
+        const parts = buffer.toString().split(boundary);
+        parts.pop(); // Remove the last boundary
+        parts.shift(); // Remove the first boundary
+
+        parts.forEach((part) => {
+          const [headers, body] = part.split('\r\n\r\n');
+          if (!headers || !body) return;
+          const headerLines = headers.split('\r\n');
+          const contentDisposition = headerLines.find(line => line.startsWith('Content-Disposition'));
+          const match = contentDisposition && contentDisposition.match(/filename="(.+)"/);
+
+          if (match) {
+            const filename = match[1];
+            const cleanBody = body.slice(0, -2); // Remove the trailing \r\n
+            const filePath = path.join(uploadDir, filename);
+            fs.writeFileSync(filePath, cleanBody, 'binary');
+            res.status(201).send({ message: 'File is uploaded successfully', path: filePath });
+          }
+        });
+      });
+    } else {
+      res.status(400).send({ error: 'Invalid content type' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ error: err.message });
   }
-  console.log(s);
+});
 
-
-
+module.exports = router;

@@ -5,4 +5,4 @@ public class InsertionSort {
         }
     }
     public static void main(String []argv){
-        int []arr={2,5,10,-1,6,12,7,40,-10,-20
+        int []arr={2,5,10,-1,6,12,7,40,-10,-20};

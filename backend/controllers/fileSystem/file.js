@@ -13,22 +13,29 @@ if (!fs.existsSync(uploadDir)) {
 
 router.post('/upload', (req, res) => {
   try {
+    console.log(req.headers);
     if (req.headers['content-type'].startsWith('multipart/form-data')) {
       const boundary = '--' + req.headers['content-type'].split('boundary=')[1];
+      console.log("boundary: ", boundary)
       const chunks = [];
-
+     let i=0;
       req.on('data', (chunk) => {
         chunks.push(chunk);
+        i++;
+        console.log(`chunk${i}`,chunks);
       });
+      console.log(`Array :`,chunks)
 
       req.on('end', () => {
         const buffer = Buffer.concat(chunks);
+        console.log("buffer",buffer);
         const parts = buffer.toString('binary').split(boundary).filter(part => part !== '--\r\n' && part !== '');
-
+        console.log("parts:",parts);
         parts.forEach((part) => {
           const [rawHeaders, ...bodyParts] = part.split('\r\n\r\n');
           const body = bodyParts.join('\r\n\r\n');  // Join back body parts
-
+           console.log("rawHeaders :",rawHeaders)
+           console.log("bodyParts :",bodyParts)
           if (!rawHeaders || !body) return;
 
           const headers = rawHeaders.split('\r\n');

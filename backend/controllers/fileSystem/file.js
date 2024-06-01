@@ -1,5 +1,3 @@
-
-
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -13,29 +11,22 @@ if (!fs.existsSync(uploadDir)) {
 
 router.post('/upload', (req, res) => {
   try {
-    console.log(req.headers);
-    if (req.headers['content-type'].startsWith('multipart/form-data')) {
+    if (req.headers['content-type'] && req.headers['content-type'].startsWith('multipart/form-data')) {
       const boundary = '--' + req.headers['content-type'].split('boundary=')[1];
-      console.log("boundary: ", boundary)
       const chunks = [];
-     let i=0;
+
       req.on('data', (chunk) => {
         chunks.push(chunk);
-        i++;
-        console.log(`chunk${i}`,chunks);
       });
-      console.log(`Array :`,chunks)
 
       req.on('end', () => {
         const buffer = Buffer.concat(chunks);
-        console.log("buffer",buffer);
         const parts = buffer.toString('binary').split(boundary).filter(part => part !== '--\r\n' && part !== '');
-        console.log("parts:",parts);
+
         parts.forEach((part) => {
           const [rawHeaders, ...bodyParts] = part.split('\r\n\r\n');
-          const body = bodyParts.join('\r\n\r\n');  // Join back body parts
-           console.log("rawHeaders :",rawHeaders)
-           console.log("bodyParts :",bodyParts)
+          const body = Buffer.from(bodyParts.join('\r\n\r\n'), 'binary'); // Keep the body as a buffer
+
           if (!rawHeaders || !body) return;
 
           const headers = rawHeaders.split('\r\n');
@@ -44,10 +35,10 @@ router.post('/upload', (req, res) => {
 
           if (match) {
             const filename = match[1];
-            const cleanBody = body.slice(0, body.lastIndexOf('\r\n')).split('\r\n').join('\n'); // Normalize new lines
+            const cleanBody = body.slice(0, body.lastIndexOf('\r\n')); // Clean the buffer
 
             const filePath = path.join(uploadDir, filename);
-            fs.writeFile(filePath, cleanBody, 'binary', (err) => {
+            fs.writeFile(filePath, cleanBody, (err) => {
               if (err) {
                 console.error(err);
                 return res.status(500).send({ error: 'Failed to write file' });

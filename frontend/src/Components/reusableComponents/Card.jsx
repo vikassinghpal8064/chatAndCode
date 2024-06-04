@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import SetupAxiosInstances from '../Instances/SetupAxiosInstances';
 
 function Card({ item }) {
   const [arr, setArr] = useState([]);
   const navigate = useNavigate();
-
+  const axiosInstances = SetupAxiosInstances(navigate);
   console.log(item);
   async function handleClickChat() {
     sessionStorage.removeItem("current");
@@ -20,7 +21,7 @@ function Card({ item }) {
     let targetId = sessionStorage.getItem('current');
     
     try {
-      let res = await axios.get("http://localhost:8080/user/chat", {
+      let res = await axiosInstances.get("/user/chat", {
         params: { sourceId, targetId }
       });
       setArr(res.data);

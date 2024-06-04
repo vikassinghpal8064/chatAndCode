@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ViewProfile from "./reusableComponents/ViewProfile";
 import Card from "./reusableComponents/Card";
+import SetupAxiosInstances from "./Instances/SetupAxiosInstances";
 let message = "hii i am traveling to europe";
 // let imageUrl ="https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg";
 let imageUrl =
@@ -11,9 +12,11 @@ function Home() {
   let [obj, setObj] = useState([]);
   let [post, setPost] = useState([]);
   console.log(obj);
+  const navigate = useNavigate();
+  const axiosInstances = SetupAxiosInstances(navigate);
   useEffect(() => {
     async function fetchdata() {
-      let data = await axios.get("http://localhost:8080/getAll");
+      let data = await axiosInstances.get("/getAll");
       console.log(data);
       setObj([...obj, ...data.data]);
       console.log(obj);
@@ -24,7 +27,7 @@ function Home() {
     try{
 
       async function fetchPostData() {
-        let data = await axios.get("http://localhost:8080/allUsers");
+        let data = await axiosInstances.get("/allUsers");
         console.log(data);
         setPost([...post, ...data.data]);
         console.log(post);

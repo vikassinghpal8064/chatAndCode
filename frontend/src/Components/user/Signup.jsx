@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import SetupAxiosInstances from "../Instances/SetupAxiosInstances";
 
 function Signup() {
 
@@ -18,10 +20,12 @@ function Signup() {
    setObj({...obj,...obj1});
    
   }
+  const navigate = useNavigate();
+  const axiosInstances = SetupAxiosInstances(navigate);
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.post("http://localhost:8080/signup", obj);
+        const res = await axiosInstances.post("/signup", obj);
         console.log(res.data);
       } catch (error) {
         console.error("Error fetching data:", error);

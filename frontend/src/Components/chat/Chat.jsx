@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { useLocation } from 'react-router-dom';
 import axios from "axios"
-
+import { useNavigate } from 'react-router-dom';
+import SetupAxiosInstances from '../Instances/SetupAxiosInstances';
 
 function Chat() {
   const location = useLocation();
@@ -12,8 +13,10 @@ function Chat() {
   const socket = useRef();
  const [upload,setUpload]=useState(false);
  const [file,setFile]=useState(null);
+ let navigate = useNavigate();
+ const axiosInstances = SetupAxiosInstances(navigate);
   useEffect(() => {
-    socket.current = io("http://localhost:8080", {
+    socket.current = io(import.meta.VITE_BACKEND_API, {
       auth: {
         serverOffset: 0
       }
@@ -72,7 +75,7 @@ function Chat() {
    let formData= new FormData();
    formData.append("file",file);
    try {
-    let res = await axios.post("http://localhost:8080/upload", formData, {
+    let res = await axiosInstances.post("/upload", formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }

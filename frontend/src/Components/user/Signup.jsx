@@ -1,159 +1,117 @@
-import axios from "axios";
-import React, { useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState} from "react";
+import { useNavigate ,Link} from "react-router-dom";
+import {FiEye,FiEyeOff} from 'react-icons/fi';
 import SetupAxiosInstances from "../Instances/SetupAxiosInstances";
 
 function Signup() {
-
-  let [obj,setObj]= useState({});
-  function handleSubmit(e) {
-    e.preventDefault();
-    let obj1 = {
-      firstName: e.target.firstName.value,
-      lastName: e.target.lastName.value,
-      userName: e.target.userName.value,
-      password: e.target.password.value,
-      email: e.target.email.value,
-      phone: e.target.phone.value,
-    };
-    // console.log(obj1);
-   setObj({...obj,...obj1});
-   
+  let [formData,setFormData] = useState({
+    firstName:'',
+    lastName:'',
+    userName:'',
+    email:'',
+    password:'',
+    phone:'',
+  });
+ 
+  let [passwordVisible,setPasswordVisible] = useState(false);
+  const togglePassword =()=>{
+    setPasswordVisible(!passwordVisible);
   }
+
+  const handleChange = (e) => {
+    let {name,value} = e.target;
+    setFormData({ ...formData, [name]:value });
+  };
   const navigate = useNavigate();
   const axiosInstances = SetupAxiosInstances(navigate);
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await axiosInstances.post("/signup", obj);
-        console.log(res.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
 
-    fetchData(); // Call the async function
-  }, [obj]);
+  async function handleSubmit(e) {
+    e.preventDefault();
+   try {
+    const res = await axiosInstances.post("/signup", formData);
+    if(res.status == '201'){
+      navigate('/login');
+      alert("user successfully registered");
+    }else if(res.data == 'empty field'){
+      alert("please fill all required field correctly.");
+    }else if(res.data == 'username exist'){
+      alert("username not available");
+    }else if(res.data == 'email exist'){
+      alert("This email address is already registered.");
+    }
+  } catch (error) {
+      console.error("Error in signup fetch data:", error);
+  }
+  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-8">
-          Sign up for an account
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label
-              htmlFor="firstName"
-              className="block text-sm font-medium text-gray-700"
-            >
-              First Name
-            </label>
-            <input
-              id="firstName"
-              name="firstName"
-              type="text"
-              autoComplete="given-name"
-              required
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              placeholder="First Name"
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="lastName"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Last Name
-            </label>
-            <input
-              id="lastName"
-              name="lastName"
-              type="text"
-              autoComplete="family-name"
-              required
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              placeholder="Last Name"
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Username
-            </label>
-            <input
-              id="username"
-              name="userName"
-              type="text"
-              autoComplete="username"
-              required
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              placeholder="Username"
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="new-password"
-              required
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              placeholder="Password"
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email Address
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              placeholder="Email Address"
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="phone"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Phone Number
-            </label>
-            <input
-              id="phone"
-              name="phone"
-              type="number"
-              required
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              placeholder="Phone Number"
-            />
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Sign up
-            </button>
-          </div>
-        </form>
+    <div className='flex min-h-screen bg-cover items-center justify-around' style={{backgroundImage:'url(/Assets/landing.avif)'}}>
+      <div className='flex flex-col items-center justify-center'>
+        <p className='font-bold text-3xl mb-2'>Hello!</p>
+       <p className='font-semibold text-2xl mb-2 text-white'>Do you have a account ?</p>
+       <Link to={'/login'} className='mt-2'><button className='bg-blue-500 text-white rounded-md w-72 py-2 px-4 hover:bg-blue-700 font-medium'>Sign in</button></Link>
       </div>
+<div className="flex justify-center bg-white p-4 rounded-lg relative w-96">
+      <form onSubmit={handleSubmit}>
+        <div className="mt-4 text-lg">
+          <h2 className="text-xl mb-4 font-bold absolute right-12">FriendsBook</h2>
+          <h2 className='text-md font-semibold'>Create an account</h2>
+          <h2 className='text-sm font-medium mb-2 text-gray-500'>Sign up to Continue</h2>
+          <div className="grid gap-4 grid-cols-10">
+            <div className="col-span-3">
+            <label htmlFor="first" className="font-medium">Firstname</label>
+            </div>
+            <div className="col-span-7">
+            <input  type="text"  name="firstName"  placeholder="First Name"  onChange={handleChange} id='first'  className="rounded-md border-gray-400 border px-2 py-1 mb-2" required/>
+            </div>
+          </div>
+          <div className="grid gap-4 grid-cols-10">
+            <div className="col-span-4">
+            <label htmlFor="last" className="font-medium">Lastname</label>
+            </div>
+            <div className="col-span-6">
+            <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} id='last' className="rounded-md border-gray-400 border py-2 px-1 mb-2"/>
+            </div>
+          </div>
+          <div className="grid gap-4 grid-cols-10">
+            <div className="col-span-4">
+            <label htmlFor="user" className="font-medium">Username</label>
+            </div>
+            <div className="col-span-6">
+            <input type="text" name="userName" placeholder="User Name" onChange={handleChange} id='user' className="rounded-md border-gray-400 border py-2 px-1 mb-2" required/>
+            </div>
+          </div>
+          <div className="grid gap-4 grid-cols-10">
+            <div className="col-span-4">
+            <label htmlFor="email" className="font-medium">Email</label>
+            </div>
+            <div className="col-span-6">
+            <input type="email" name="email" id='email' placeholder="Email" onChange={handleChange} className="rounded-md border-gray-400 border py-2 px-1 mb-2" required/>
+            </div>
+          </div>
+          <div className="grid gap-4 grid-cols-10">
+            <div className="col-span-4">
+            <label htmlFor="pass" className="font-medium">Password</label>
+            </div>
+            <div className="col-span-6">
+            <div className='relative'>
+          <input type={passwordVisible ? 'text':'password'} name="password" placeholder="Password" onChange={handleChange} id='pass' className="rounded-md border-gray-400 border mb-2 py-2 px-1" required/>
+          <button type='button' className='absolute mb-2 right-0 rounded-md p-2 inset-y-0 bg-gray-500' onClick={togglePassword}>{passwordVisible ? <FiEye/> :<FiEyeOff/>}</button>
+          </div>
+            </div>
+          </div>
+          <div className="grid gap-4 grid-cols-10">
+            <div className="col-span-4">
+            <label htmlFor="phone" className="font-medium">Mobile</label>
+            </div>
+            <div className="col-span-6">
+            <input type="tel" name="phone" id='phone' placeholder="Phone Number" onChange={handleChange} className="rounded-md border-gray-400 border py-2 px-1 mb-2" required/>
+            </div>
+          </div>
+          <button type="submit" className="bg-blue-500 text-white rounded-md px-4 py-2 w-full hover:bg-blue-700 mb-4 mt-4"> Register </button>
+        </div>
+      </form>
+    </div>
     </div>
   );
 }

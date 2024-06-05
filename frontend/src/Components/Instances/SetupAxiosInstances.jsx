@@ -3,7 +3,7 @@ import axios from "axios"
 const SetupAxiosInstances = (navigate)=> {
   const axiosInstances = axios.create(
     {
-      baseURL : import.meta.VITE_BACKEND_API
+      baseURL : import.meta.env.VITE_BACKEND_API
     })
 
   axiosInstances.interceptors.request.use(

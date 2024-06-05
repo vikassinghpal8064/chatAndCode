@@ -22,6 +22,7 @@ function Login() {
         console.log(res.data.uid);
         const token = res.data.uid;
         localStorage.setItem("token",token);
+        
       } catch (error) {
         console.error("Error fetching data:", error);
       }

@@ -19,7 +19,7 @@ function ViewProfile() {
         try{
 
             async function getData(){
-                let res = await axiosInstances.post(`http://localhost:8080/user/${id.id}`);
+                let res = await axiosInstances.post(`/user/${id.id}`);
                 console.log(res);
                 setobj({...obj,...res.data});
                

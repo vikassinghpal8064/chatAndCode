@@ -14,8 +14,9 @@ const {Server}= require("socket.io");
 const http = require('http');
 const server = http.createServer(app);
 const file =require("./controllers/fileSystem/file")
+const dotenv = require('dotenv').config();
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/friendsbook');
+    await mongoose.connect(process.env.MONGODB_URL);
      }
 main().then(()=>{
     console.log(`mongo db connected`)
@@ -24,7 +25,7 @@ main().then(()=>{
     console.log(`error in mongodb connection ${err}`)
 });
 app.use(cors({
-    origin:["http://localhost:5173"],
+    origin:[process.env.ALLOWED_URL],
     credentials:true,
 }))
 app.use(express.json());
@@ -42,7 +43,6 @@ app.use(file);
 chat(server);
 
 
-let PORT=8080;
-server.listen(PORT,()=>{
-    console.log(`i am listening at ${PORT}`)
+server.listen(process.env.PORT,()=>{
+    console.log("server connected to port");
 })

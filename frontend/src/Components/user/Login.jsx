@@ -18,10 +18,11 @@ function Login() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axiosInstances.post("http://localhost:8080/login", obj);
+        const res = await axiosInstances.post("/login", obj);
         console.log(res.data.uid);
         const token = res.data.uid;
         localStorage.setItem("token",token);
+        
       } catch (error) {
         console.error("Error fetching data:", error);
       }

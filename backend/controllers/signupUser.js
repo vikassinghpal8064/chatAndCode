@@ -34,24 +34,21 @@ router.post("/signup", async (req, res) => {
   try {
     let { firstName, lastName, userName, password, email, phone } = req.body;
     if(firstName==null || lastName==null || userName==null || password==null || email == null || phone==null){
-      res.status(201).send({message:"please fill all required fields"});
-      return;
+    return res.status(204).json("empty field");
     }
-    let newUser = await User.create({
-      firstName,
-      lastName,
-      
-      userName,
-      password,
-      email,
-      phone,
-    });
-    console.log(newUser);
+    let Username = await User.findOne({userName});
+    let Email = await User.findOne({email});
+    if(Username){
+      return res.status(200).json("username exist");
+    }
+    if(Email){
+      return res.status(200).json("email exist");
+    }
+    let newUser = await User.create({firstName,lastName,email,userName,password,phone})
     newUser.save();
-    res.status(201).send({ message: "the user is successfully resgistered" });
-    return;
+    return res.status(201).json("success");
   } catch (err) {
-    res.status(500).send({ message: err.message });
+    return res.status(500).json(err.message);
   }
 });
 //updating userEducation info

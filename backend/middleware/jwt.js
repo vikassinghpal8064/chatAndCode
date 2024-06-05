@@ -1,7 +1,9 @@
 const express= require("express");
 const router= express.Router();
 const jwt= require("jsonwebtoken");
-const secretKey="vikasSingh8064@@shivani123America";
+const path = require('path');
+const dotenv = require('dotenv').config({path: path.resolve(__dirname,'../.env')});
+const secretKey=process.env.ACCESS_TOKEN_SECRET;
 
 function setToken(user){
     let payload={

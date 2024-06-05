@@ -6,7 +6,7 @@ function Check() {
     const axiosInstances = SetupAxiosInstances(navigate);
     useEffect(()=>{
         async function getData(){
-        let res = await axiosInstances.get('http://localhost:8080/check');
+        let res = await axiosInstances.get('/check');
         if(res.status == 200){
             alert("success");
         }else{

@@ -9,7 +9,7 @@ function Friends() {
     const axiosInstances = SetupAxiosInstances(navigate);
     useEffect(()=>{
         async function getData(){
-        let res = await axiosInstances.get('http://localhost:8080/getAllFriends');
+        let res = await axiosInstances.get('/getAllFriends');
         console.log(res);
         setFriendList([...res.data]);
     }

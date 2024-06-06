@@ -9,6 +9,7 @@ const {setToken,getUser}= require("../middleware/jwt");
 router.post("/login", async(req, res) => {
     try {
         let { userName, password } = req.body;
+        console.log(userName,password);
         if (!userName || !password) {
            return res.status(400).send({ message: "username and password are required" });
         }

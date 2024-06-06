@@ -111,11 +111,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { useLocation } from 'react-router-dom';
-// <<<<<<< main
-// import axios from "axios"
-// import { useNavigate } from 'react-router-dom';
-// import SetupAxiosInstances from '../Instances/SetupAxiosInstances';
-// =======
 
 
 function Chat() {
@@ -124,12 +119,7 @@ function Chat() {
   const [messages, setMessages] = useState([...arr]);
   const inputRef = useRef(null);
   const socket = useRef();
-// <<<<<<< main
-//  const [upload,setUpload]=useState(false);
-//  const [file,setFile]=useState(null);
-//  let navigate = useNavigate();
-//  const axiosInstances = SetupAxiosInstances(navigate);
-// =======
+
   const [upload, setUpload] = useState(false);
   const [file, setFile] = useState(null);
 
@@ -171,36 +161,13 @@ function Chat() {
         message: inputRef.current.value
       };
 
-// <<<<<<< main
-//   //upload function
-//  function handleFileChange(e){
-//   setFile(e.target.files[0]);
- 
-//   setUpload(true);
-  
- 
-//  }
-
-//  //submit upload
-//  async function handleUpload(e){
-//  e.preventDefault();
-//  console.log("hello")
-//  if(upload==true){
-
-//    let formData= new FormData();
-//    formData.append("file",file);
-//    try {
-//     let res = await axiosInstances.post("/upload", formData, {
-//       headers: {
-//         'Content-Type': 'multipart/form-data'
-
       if (file) {
         const reader = new FileReader();
         reader.onload = () => {
           const fileMsg = {
             ...msg,
             fileName: file.name,
-            fileData: reader.result.split(',')[1]
+            fileData: reader.result.split(',')[1] // Base64 encoding
           };
           socket.current.emit('message', fileMsg);
           setFile(null);
@@ -209,7 +176,6 @@ function Chat() {
         reader.readAsDataURL(file);
       } else {
         socket.current.emit('message', msg);
-
       }
 
       inputRef.current.value = "";

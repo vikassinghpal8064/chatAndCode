@@ -1,75 +1,77 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import SetupAxiosInstances from '../Instances/SetupAxiosInstances';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
+import { FiEye,FiEyeOff } from 'react-icons/fi';
 
 function Login() {
-  const [obj, setObj] = useState({});
-  let navigate = useNavigate();
-  const axiosInstances = SetupAxiosInstances(navigate);
-  function handleSubmit(e) {
-    e.preventDefault();
-    const obj1 = {
-      userName: e.target.username.value,
-      password: e.target.password.value,
-    };
-    setObj({ ...obj, ...obj1 });
+  const [formData,setFormData] = useState({
+   userName:'',
+   password:''
+  });
+
+  let [passwordVisible,setPasswordVisible] = useState(false);
+  const togglePassword =()=>{
+    setPasswordVisible(!passwordVisible);
   }
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await axiosInstances.post("/login", obj);
-        console.log(res.data.uid);
+  let navigate = useNavigate();
+  const axiosInstances = SetupAxiosInstances(navigate);
+
+  const handleChange = (e) => {
+    let {name,value} = e.target;
+    setFormData({ ...formData, [name]:value });
+  };
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      const res = await axiosInstances.post("/login", formData);
+      if(res.data.message == "success" ){
         const token = res.data.uid;
         localStorage.setItem("token",token);
-        
-      } catch (error) {
-        console.error("Error fetching data:", error);
+        alert("successfully login");
+        navigate('/');
+      }
+    } catch (error) {
+      if(error.response.data.message == 'incorrect password or username'){
+        alert("incorrect username or password, Please enter credentials correctly.")
+      }else if(error.response.data.message == "user not found"){
+       alert("this user does not exist.")
+      }else if(error.response.data.message == "username and password are required"){
+     alert("Please fill all required field.")
+      }else{
+        console.log("error in fetch login: ",error);
       }
     }
+  }
 
-    fetchData(); // Call the async function
-  }, [obj]);
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
-        </div>
-        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="username" className="sr-only">Username</label>
-              <input id="username" name="username" type="text" autoComplete="username" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username" />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">Password</label>
-              <input id="password" name="password" type="password" autoComplete="current-password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" />
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input id="remember_me" name="remember_me" type="checkbox" className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
-              <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-900">
-                Remember me
-              </label>
-            </div>
-
-            <div className="text-sm">
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                Forgot your password?
-              </a>
-            </div>
-          </div>
-
-          <div>
-            <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              Sign in
-            </button>
-          </div>
-        </form>
+    <div className='flex bg-cover items-center justify-around' style={{backgroundImage:'url(/Assets/landing.avif)',height:'calc(100vh - 64px)'}}>
+      <div className='flex flex-col items-center justify-center'>
+        <p className='font-bold text-3xl mb-2'>Hello!</p>
+       <p className='font-semibold text-2xl mb-2 text-white'>Don't have a account ?</p>
+       <Link to={'/signup'} className='mt-2'><button className='bg-blue-500 text-white rounded-md w-72 py-2 px-4 hover:bg-blue-700 font-medium'>Sign up</button></Link>
       </div>
+<div className="flex justify-center bg-white p-4 rounded-lg relative w-auto">
+      <form onSubmit={handleSubmit}>
+        <div className="text-md">
+          <h2 className="text-2xl font-bold absolute right-6 top-4">FriendsBook</h2>
+          <h2 className='mt-4 text-xl font-semibold'>Welcome Back !!</h2>
+          <h2 className='mb-4 text-md font-medium text-gray-500'>Sign in to Continue</h2>
+            <label htmlFor="first" className="font-medium">Username</label>
+            <br />
+            <input  type="text"  name="userName"  placeholder="User Name"  onChange={handleChange} id='first'  className="rounded-md text-center border-gray-400 border py-2 px-1 mb-2 w-96" required/>
+            <br />
+            <label htmlFor="pass" className="font-medium">Password</label>
+           <br />
+          <div className='relative'>
+          <input type={passwordVisible ? 'text':'password'} name="password" placeholder="Password" onChange={handleChange} id='pass' className="rounded-md text-center border-gray-400 border mb-2 py-2 px-1 w-96" required/>
+          <button type='button' className='absolute mb-2 right-0 rounded-e-md py-2 px-4 inset-y-0 bg-gray-500' onClick={togglePassword}>{passwordVisible ? <FiEye/> :<FiEyeOff/>}</button>
+          </div>
+          <button type="submit" className="bg-blue-500 text-white rounded-md px-4 py-2 w-full hover:bg-blue-700 mb-4 mt-4">Sign in</button>
+        </div>
+      </form>
+    </div>
     </div>
   );
 }

@@ -10,24 +10,21 @@ router.post("/login", async(req, res) => {
     try {
         let { userName, password } = req.body;
         if (!userName || !password) {
-            res.status(400).send({ message: "userName and password are required" });
-            return;
+           return res.status(400).send({ message: "username and password are required" });
         }
         let user = await User.findOne({ userName: userName });
         if (!user) {
-            res.status(404).send({ message: "User not found" });
-            return;
+           return res.status(404).send({ message: "user not found" });
         }
         if (user.password === password) {
-          
             let token = setToken(user._id);
             // Set the cookie and send it in the response
             res.cookie("uid", token,{maxAge:36000000,httpOnly:true , secure:false ,sameSite:"lax"});
-            res.status(201).send({ message: "Person authorized, correct username and password" ,
+            res.status(200).send({ message: "success" ,
                 uid:token
             });
-        } else {
-            res.status(401).send({ message: "Unauthorized, wrong username and password" });
+        } else if(user.password !== password){
+            res.status(400).send({ message: "incorrect password or username" });
         }
     } catch (err) {
         res.status(500).send({ error: err.message });

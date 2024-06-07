@@ -3,7 +3,9 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import ViewProfile from "./reusableComponents/ViewProfile";
 import Card from "./reusableComponents/Card";
+import { FaSearch ,FaPlus} from "react-icons/fa";
 import SetupAxiosInstances from "./Instances/SetupAxiosInstances";
+import PostCard from "./reusableComponents/PostCard";
 let message = "hii i am traveling to europe";
 // let imageUrl ="https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg";
 let imageUrl =
@@ -11,55 +13,67 @@ let imageUrl =
 function Home() {
   let [obj, setObj] = useState([]);
   let [post, setPost] = useState([]);
-  console.log(obj);
   const navigate = useNavigate();
   const axiosInstances = SetupAxiosInstances(navigate);
-  useEffect(() => {
-    async function fetchdata() {
-      let data = await axiosInstances.get("/getAll");
-      console.log(data);
-      setObj([...obj, ...data.data]);
-      console.log(obj);
-    }
-    fetchdata();
-  }, []);
-  useEffect(() => {
-    try{
 
-      async function fetchPostData() {
-        let data = await axiosInstances.get("/allUsers");
-        console.log(data);
-        setPost([...post, ...data.data]);
-        console.log(post);
+  async function fetchdata() {
+    try{
+      let res = await axiosInstances.get("/getAll");
+      if(res.status == '200'){
+        setObj(res.data);
+        console.log(obj);
+        console.log("data oj: ",res.data);
       }
-      fetchPostData();
-    }catch(err){
-      console.log({"error":err});
     }
-  }, []);
-   function handleChat(){
-    
-   }
+    catch(err){
+      console.log("error in fetch all users: ",err);
+    }
+  }
+  async function fetchPostData() {
+    try{
+      let res = await axiosInstances.get("/allPosts");
+      if(res.status == '200'){
+        setPost(res.data.posts);
+        console.log(post);
+        console.log("data post: ",res.data.posts);
+      }
+    }catch(err){
+    console.log("error in fetch all posts: ",err);
+    }
+  }
+
+  useEffect(() => {
+    fetchdata();
+    fetchPostData();
+  }, [])
+
   return (
-    <div className="flex justify-evenly">
-      <div className="bg-yellow-400 rounded-md h-auto w-2/4 mt-10 overflow-y-auto flex flex-col">
-        <div className=" ml-24 mt-10 max-w-sm rounded overflow-hidden shadow-lg bg-green-200 mb-4">
-          <img src={imageUrl} alt="Card" className="w-full" />
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">Message</div>
-            <p className="text-gray-700 text-base">{message}</p>
-          </div>
+    <div className="2xl:container flex px-4 py-2 bg-gray-300 h-auto">
+      <div className="w-2/3 me-2 px-2 h-full">
+       <div className="w-full h-14 p-2 flex justify-center bg-white rounded-t-2xl">
+        <div className="rounded-3xl h-10 w-96 relative mr-4 cursor-pointer">
+         <button className="left-1 top-1 px-2 absolute py-2"><FaSearch/></button>
+         <input type="text" className="outline-0 h-full pl-10 pr-2 py-2 w-full rounded-3xl text-lg font-semibold text-center bg-gray-200" placeholder="search here........."/>
         </div>
-        {/* Additional Card */}
-       
-      </div>
-      {/* right box */}
-      <div className="bg-slate-400  w-1/4 mt-10">
-        {obj.map((item, index) => {
-          return (
-            <Card item={item} key={item._id}></Card>
-          );
+        <div className="border-4 border-yellow-600 h-10 w-36 flex items-center rounded-lg cursor-pointer">
+         <h2 className="text-2xl px-2"><FaPlus/></h2>
+         <h2 className="text-xl font-semibold">Add Post</h2>
+        </div>
+       </div>
+       <div className="bg-white p-2 mt-2 h-96 rounded-b-2xl w-full">
+        {post && post.map((item,index)=>{
+          return(
+            <PostCard key={index} item={item} />
+          )
         })}
+       </div>
+      </div>
+      <div className="w-1/3 h-full bg-green-400">
+       {obj && obj.map((item,index)=>{
+        return(
+          <Card key={index} item={item}/>
+        )
+       })}
       </div>
     </div>
   );

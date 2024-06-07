@@ -1,27 +1,38 @@
-const mongoose= require('mongoose');
+const mongoose = require("mongoose");
 
-let postSchema= new mongoose.Schema({
-    userId:{
-        type:mongoose.Types.ObjectId,
-        ref:"User",
-        // autopopulate:true
+let postSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+      // autopopulate:true
     },
-    title:{
-        type:String,
-        trim:true,
-        required:true
+    title: {
+      type: String,
+      trim: true,
+      required: true,
     },
-    upload:{
-      type:String,
-      trim:true,
-      
+    upload: {
+      type: String,
+      trim: true,
     },
-    desc:{
-        type:String,
-        trim:true,
-        required:true
-    }
-},{timestamps:true})
+    desc: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+    comments: [{
+        commentedBy:{type:mongoose.Types.ObjectId,ref:"User"},
+        comment:{type: String,
+            trim: true,}
+      }],
+    likes: [{
+        likedBy:{type:mongoose.Types.ObjectId,ref:"User"},
+        likeOrDislike:{type:Boolean}
+    }],
+  },
+  { timestamps: true }
+);
 // postSchema.plugin(require("mongoose-autopopulate"))
-let Post=mongoose.model("Post",postSchema);
-module.exports=Post;
+let Post = mongoose.model("Post", postSchema);
+module.exports = Post;

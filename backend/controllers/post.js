@@ -64,8 +64,8 @@ router.delete("/deletePost/:id", validateUser, async (req, res) => {
 router.get("/like/post/:id",validateUser,async(req,res)=>{
  try{
   
-    let { id } = req.params;
-    let userId = req.user.id;
+    let { id } = req.params;// this is post id
+    let userId = req.user.id;// i get it from header, dont worry about it
     
     let post = await Post.findById(id);
     if (!post) {
@@ -76,6 +76,20 @@ router.get("/like/post/:id",validateUser,async(req,res)=>{
     if (!person) {
       return res.status(404).send({ message: "User not found" });
     }
+    let check=false;
+    for(let item of person.likes){
+      if(item.likedBy.toString==userId){
+        ans=true;
+        if(likedOrDisliked==1){
+            likedOrDisliked=0; 
+        }
+        else{
+            likedOrDisliked=1;
+        }
+      }
+    }
+    await post.save();
+  if(check==false){
     let newObj={
         likedBy:person._id,
         likedOrDisliked:1
@@ -83,8 +97,9 @@ router.get("/like/post/:id",validateUser,async(req,res)=>{
     }
     post.likes.push(newObj);
     await post.save();
+  }
 
-    res.status(202).send({"message":"post liked successfully"})
+    res.status(202).send({"message":"post liked/disliked successfully"})
 
 
  }

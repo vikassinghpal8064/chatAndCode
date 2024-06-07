@@ -61,9 +61,31 @@ router.delete("/deletePost/:id", validateUser, async (req, res) => {
 });
 
 //like post
-router.get("/like/post/:id",validateUser,(req,res)=>{
+router.get("/like/post/:id",validateUser,async(req,res)=>{
  try{
+  
+    let { id } = req.params;
+    let userId = req.user.id;
     
+    let post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).send({ message: "Post not found" });
+    }
+
+    let person = await User.findById(userId);
+    if (!person) {
+      return res.status(404).send({ message: "User not found" });
+    }
+    let newObj={
+        likedBy:person._id,
+        likedOrDisliked:1
+
+    }
+    post.likes.push(newObj);
+    await post.save();
+
+    res.status(202).send({"message":"post liked successfully"})
+
 
  }
  catch(err){

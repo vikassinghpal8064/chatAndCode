@@ -5,6 +5,7 @@ import SetupAxiosInstances from '../Instances/SetupAxiosInstances';
 
 function Card({ item }) {
   const [arr, setArr] = useState([]);
+  let [pictureLoad,setPictureLoad] = useState(false);
   const navigate = useNavigate();
   const axiosInstances = SetupAxiosInstances(navigate);
   console.log(item);
@@ -35,14 +36,19 @@ function Card({ item }) {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center mt-14 p-6 bg-white shadow-lg rounded-lg" key={item.friendId}>
-      <img
-        className="rounded-full w-40 h-40 object-cover"
-        src={item.photo}
-        alt={`${item.firstName} ${item.lastName}`}
-      />
+    <div className="flex flex-col justify-center items-center py-4 px-2 mb-2 bg-white shadow-lg rounded-lg" key={item.friendId}>
+      {item.photo && !pictureLoad ?
+      (
+        <>
+        <img src={item.photo} onError={()=>setPictureLoad(true)} className='w-32 h-32 rounded-full border-black border-2'/>
+        </>
+      ):(
+        <>
+        <img src="/Assets/profile.png" className='w-32 h-32 rounded-full border-black border-2'/>
+        </>
+      )}
       <h3 className="mt-4 text-xl font-semibold">{item.firstName} {item.lastName}</h3>
-      <div className='flex flex-col gap-3 mt-4'>
+      <div className='flex gap-2 mt-4 justify-center'>
         <Link to={`/ViewProfile/${item._id}`}>
           <button className="bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 transition duration-300">
             Check Profile
@@ -51,6 +57,7 @@ function Card({ item }) {
         <button onClick={handleClickChat} className="bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 transition duration-300">
           Chat
         </button>
+        <button className='bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 transition duration-300'>Add Friend</button>
       </div>
     </div>
   );

@@ -134,6 +134,24 @@ router.post("/comment/:id", validateUser, async (req, res) => {
       res.status(500).send({ message: err.message });
     }
   });
-  
+  //finding particular post
+
+  router.get("/post/:id",validateUser,async(req,res)=>{
+    try{
+
+      let {id}= req.params;
+    let found= Post.findById(id);
+  if(!found){
+    res.send({"message":"post not found with the given id"});
+  return;
+}
+else{
+  res.status(200).send({"post":found});
+}
+}catch(err){
+  res.status(500).send({"message":err.message})
+}
+
+  })
 
 module.exports = router;

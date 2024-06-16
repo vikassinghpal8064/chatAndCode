@@ -15,13 +15,10 @@ router.get("/getAll", async (req, res) => {
 
 
 // finding a particular user
-router.post("/user/:id",async(req,res)=>{
+router.get("/user/:id",async(req,res)=>{
   try{
-
-    let id= req.params;
-    // console.log(id);
-    let user= await User.findById(id.id);
-    // console.log(user);
+    let {id}= req.params;
+    let user= await User.findById(id);
     res.status(201).send(user);
   }
   catch(err){

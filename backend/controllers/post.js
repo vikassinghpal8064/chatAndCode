@@ -4,7 +4,7 @@ const Post = require("../models/Post");
 const User = require("../models/User");
 const { validateUser } = require("../middleware/postMiddleware");
 //add new post
-router.get("/addPost", validateUser, async (req, res) => {
+router.post("/addPost", validateUser, async (req, res) => {
   try {
     let userId = req.user.id;
     console.log(req.user);
@@ -13,7 +13,7 @@ router.get("/addPost", validateUser, async (req, res) => {
     if (!user) {
       res.status(404).send({ message: "user not found" });
     }
-    let { title, upload, description: desc } = req.body;
+    let { title, upload, desc } = req.body;
     let newPost = await Post.create({ userId, title, upload, desc });
     console.log(newPost);
     await newPost.save();
@@ -28,7 +28,7 @@ router.get("/addPost", validateUser, async (req, res) => {
 // find all post of te user
 router.get("/allPosts", async (req, res) => {
   try {
-    let posts = await Post.find({});
+    let posts = await Post.find({}).populate('userId');
     res.status(200).send({ posts: posts });
   } catch (err) {
     res.status(500).send({ message: err.message });

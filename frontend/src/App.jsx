@@ -7,7 +7,8 @@ import Login from './Components/user/Login'
 import Friends from './Components/user/Friends'
 import Chat from './Components/chat/Chat'
 import Check from './Components/user/Check'
-import ViewProfile from './Components/reusableComponents/ViewProfile'
+import AddPost from './Pages/Post/AddPost'
+import ViewProfile from './Pages/Profile/ViewProfile'
 function App() {
   return (
     <div>
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path='/signup' element={<Signup></Signup>}></Route>
         <Route path='/friends' element={<Friends></Friends>}></Route>
+        <Route path='/addpost' element={<AddPost></AddPost>}></Route>
         <Route path='/chat' element={<Chat></Chat>}></Route>
         <Route path='/check' element={<Check></Check>}></Route>
         <Route path='/ViewProfile/:id' element={<ViewProfile></ViewProfile>}></Route>

@@ -14,7 +14,7 @@ router.post("/addPost", validateUser, async (req, res) => {
     if (!user) {
       res.status(404).send({ message: "user not found" });
     }
-    let { title, upload, description: desc } = req.body;
+    let { title, upload, desc } = req.body;
     let newPost = await Post.create({ userId, title, upload, desc });
     console.log(newPost);
     await newPost.save();
@@ -29,11 +29,16 @@ router.post("/addPost", validateUser, async (req, res) => {
 // find all post of the user
 router.get("/allPosts", async (req, res) => {
   try {
+// <<<<<<< main
+//     let posts = await Post.find({}).populate('userId');
+//     res.status(200).send({ posts: posts });
+// =======
    let page= parseInt(req.query.page)  || 1;
    let limit=5
    let skip = (page-1)*limit;
    let allPost= await Post.find({}).skip(skip).limit(limit);
    res.status(200).send({"post":allPost})
+
   } catch (err) {
     res.status(500).send({ message: err.message });
   }

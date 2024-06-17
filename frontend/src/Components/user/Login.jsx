@@ -28,7 +28,9 @@ function Login() {
       const res = await axiosInstances.post("/login", formData);
       if(res.data.message == "success" ){
         const token = res.data.uid;
+        const userId = res.data.userId;
         localStorage.setItem("token",token);
+        localStorage.setItem("userId",userId);
         alert("successfully login");
         navigate('/');
       }

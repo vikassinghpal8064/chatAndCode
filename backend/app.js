@@ -3,8 +3,8 @@ const mongoose= require("mongoose");
 const methodOverride = require("method-override");
 const cors= require("cors")
 const app = express();
-const signupUser=require("./controllers/signupUser");
-const login=require("./controllers/login");
+const auth = require("./controllers/auth");
+const profile = require("./controllers/profile");
 const post= require("./controllers/post");
 const friendRequest= require("./controllers/friendRequest");
 const chatMessages= require("./controllers/sockets/chatMessages");
@@ -50,7 +50,6 @@ app.use(friendRequest);
 
 app.use(file);
 chat(server);
-
 
 server.listen(process.env.PORT,()=>{
     console.log("server connected to port");

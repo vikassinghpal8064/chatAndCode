@@ -28,8 +28,12 @@ let postSchema = new mongoose.Schema(
       }],
     likes: [{
         likedBy:{type:mongoose.Types.ObjectId,ref:"User"},
-        likeOrDislike:{type:Boolean}
+       
     }],
+    dislikes: [{
+      dislikedBy:{type:mongoose.Types.ObjectId,ref:"User"},
+     
+  }]
   },
   { timestamps: true }
 );

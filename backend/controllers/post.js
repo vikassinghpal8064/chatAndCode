@@ -7,6 +7,7 @@ const { validateUser } = require("../middleware/postMiddleware");
 router.post("/addPost", validateUser, async (req, res) => {
   try {
     let userId = req.user.id;
+    console.log(userId)
     console.log(req.user);
     console.log(userId);
     let user = await User.findById(userId);
@@ -25,11 +26,19 @@ router.post("/addPost", validateUser, async (req, res) => {
   }
 });
 
-// find all post of te user
+// find all post of the user
 router.get("/allPosts", async (req, res) => {
   try {
-    let posts = await Post.find({}).populate('userId');
-    res.status(200).send({ posts: posts });
+// <<<<<<< main
+//     let posts = await Post.find({}).populate('userId');
+//     res.status(200).send({ posts: posts });
+// =======
+   let page= parseInt(req.query.page)  || 1;
+   let limit=5
+   let skip = (page-1)*limit;
+   let allPost= await Post.find({}).skip(skip).limit(limit);
+   res.status(200).send({"post":allPost})
+
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
@@ -66,40 +75,39 @@ router.get("/like/post/:id",validateUser,async(req,res)=>{
   
     let { id } = req.params;// this is post id
     let userId = req.user.id;// i get it from header, dont worry about it
+ 
     
     let post = await Post.findById(id);
     if (!post) {
       return res.status(404).send({ message: "Post not found" });
     }
+   for(let item of post.likes){
+    console.log(item.likedBy.toString())
+    if(item.likedBy.toString()==userId){
+      console.log('hello')
+      res.status(200).send({"message":"already liked"})
+      return;
+    }
+   }
+    
 
     let person = await User.findById(userId);
     if (!person) {
       return res.status(404).send({ message: "User not found" });
     }
-    let check=false;
-    for(let item of person.likes){
-      if(item.likedBy.toString==userId){
-        ans=true;
-        if(likedOrDisliked==1){
-            likedOrDisliked=0; 
-        }
-        else{
-            likedOrDisliked=1;
-        }
-      }
-    }
-    await post.save();
-  if(check==false){
+    let index= post.dislikes.findIndex((item)=>{ return item.dislikedBy.toString()==userId})
+    console.log(index);
+    post.dislikes.splice(index,1);
     let newObj={
         likedBy:person._id,
-        likedOrDisliked:1
+    
 
     }
     post.likes.push(newObj);
     await post.save();
-  }
+ //}
 
-    res.status(202).send({"message":"post liked/disliked successfully"})
+    res.status(202).send({"message":"post liked successfully"})
 
 
  }
@@ -107,6 +115,52 @@ router.get("/like/post/:id",validateUser,async(req,res)=>{
     res.status(500).send({"message":err.message})
  }
 })
+//--------------------------------------------------------------
+//dislike post
+router.get("/dislike/post/:id",validateUser,async(req,res)=>{
+  try{
+   
+     let { id } = req.params;// this is post id
+     let userId = req.user.id;// i get it from header, dont worry about it
+  
+     
+     let post = await Post.findById(id);
+     if (!post) {
+      return res.status(404).send({ message: "Post not found" });
+    }
+    for(let item of post.dislikes){
+     console.log(item.dislikedBy.toString())
+     if(item.dislikedBy.toString()==userId){
+      
+       res.status(200).send({"message":"already disliked"})
+       return;
+     }
+    }
+     let person = await User.findById(userId);
+     if (!person) {
+       return res.status(404).send({ message: "User not found" });
+     }
+let index= post.likes.findIndex((item)=>{return item.likedBy.toString()==userId})
+  console.log(index);
+  post.likes.splice(index,1);
+  
+     let newObj={
+         dislikedBy:person._id,
+        
+ 
+     }
+     post.dislikes.push(newObj);
+     await post.save();
+   
+ 
+     res.status(202).send({"message":"post disliked successfully"})
+ 
+ 
+  }
+  catch(err){
+     res.status(500).send({"message":err.message})
+  }
+ })
 
 //comment on post
 router.post("/comment/:id", validateUser, async (req, res) => {
@@ -140,7 +194,7 @@ router.post("/comment/:id", validateUser, async (req, res) => {
     try{
 
       let {id}= req.params;
-    let found= Post.findById(id);
+    let found=await Post.findById(id);
   if(!found){
     res.send({"message":"post not found with the given id"});
   return;

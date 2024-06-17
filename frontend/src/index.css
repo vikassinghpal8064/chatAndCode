@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.group:hover .expand-text{
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}

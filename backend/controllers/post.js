@@ -36,8 +36,8 @@ router.get("/allPosts", async (req, res) => {
    let page= parseInt(req.query.page)  || 1;
    let limit=5
    let skip = (page-1)*limit;
-   let allPost= await Post.find({}).skip(skip).limit(limit);
-   res.status(200).send({"post":allPost})
+   let allPost= await Post.find({}).populate('userId').skip(skip).limit(limit);
+   res.status(200).send({posts:allPost})
 
   } catch (err) {
     res.status(500).send({ message: err.message });

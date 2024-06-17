@@ -34,7 +34,7 @@ function ViewProfile() {
 
   return (
     <div className='w-11/12 bg-gray-200 mx-auto h-screen py-2 px-4 flex'>
-        <div className='w-2/5 h-full bg-yellow-500 py-2 px-4 mt-10 rounded-lg mr-10'>
+        <div className='w-2/5 h-full bg-yellow-500 mt-10 rounded-lg mr-10'>
         <div className='w-full flex-col flex h-60 relative'>
         {obj.photo && !pictureLoad ?
       (
@@ -58,6 +58,7 @@ function ViewProfile() {
       )}
       {/* <h2 className='text-xl font-semibold ml-28 mt-2 text-gray-200'>@{obj.userName}</h2> */}
         </div>
+        <div className='py-2 px-4'>
         <div className='flex flex-col justify-center items-center'>
          <h2 className='text-2xl font-semibold'>{obj.firstName} {obj.lastName && (obj.lastName)}</h2>
          <h2 className='text-md font-medium text-gray-200'>@{obj.userName}</h2>
@@ -69,6 +70,8 @@ function ViewProfile() {
         <div className='py-2'>
             <button className='bg-green-600 py-2 px-4 rounded-md'>Add Friend</button>
         </div>
+        </div>
+        
         </div>
         <div className='w-3/5 h-full flex relative'>
          <div className=''>

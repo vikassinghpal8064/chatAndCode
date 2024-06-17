@@ -7,7 +7,7 @@ const signupUser=require("./controllers/signupUser");
 const login=require("./controllers/login");
 const post= require("./controllers/post");
 const friendRequest= require("./controllers/friendRequest");
-const chatMessages= require("./controllers/sockets/chatMessages")
+const chatMessages= require("./controllers/sockets/chatMessages");
 const cookieParser = require("cookie-parser");
 const {chat} = require("./controllers/sockets/chatting");
 const {Server}= require("socket.io");
@@ -15,7 +15,7 @@ const http = require('http');
 const server = http.createServer(app);
 const file =require("./controllers/fileSystem/file")
 const dotenv = require('dotenv').config();
-
+const path = require("path")
 
 
 
@@ -38,13 +38,16 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 
+const uploadDir = path.join(__dirname, 'controllers/sockets/assets'); 
+app.use('/assets', express.static(uploadDir));
 
 app.use(cookieParser());
+app.use(chatMessages);
 app.use(signupUser);
 app.use(login);
 app.use(post);
 app.use(friendRequest);
-app.use(chatMessages);
+
 app.use(file);
 chat(server);
 

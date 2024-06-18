@@ -39,12 +39,13 @@ app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 
 const uploadDir = path.join(__dirname, 'controllers/sockets/assets'); 
+console.log(uploadDir)
 app.use('/assets', express.static(uploadDir));
 
 app.use(cookieParser());
 app.use(chatMessages);
-app.use(signupUser);
-app.use(login);
+app.use(auth);
+app.use(profile);
 app.use(post);
 app.use(friendRequest);
 

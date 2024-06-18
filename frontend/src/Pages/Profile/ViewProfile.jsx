@@ -61,11 +61,9 @@ function ViewProfile() {
   return (
     <div className='w-11/12 bg-gray-200 mx-auto h-screen py-2 px-4 flex'>
         <div className='w-2/5 h-full bg-yellow-500 mt-10 rounded-lg mr-10'>
-<<<<<<< HEAD
-        <div className='w-full flex-col flex h-60 relative'>
-=======
+
         <div className='w-full flex-col flex h-56 relative'>
->>>>>>> 60323bd45eb014092dc42f4a1f5233ec4941e727
+
         {obj.photo && !pictureLoad ?
       (
         <>
@@ -87,15 +85,11 @@ function ViewProfile() {
         </div>
       )}
         </div>
-<<<<<<< HEAD
-        <div className='py-2 px-4'>
-        <div className='flex flex-col justify-center items-center'>
-         <h2 className='text-2xl font-semibold'>{obj.firstName} {obj.lastName && (obj.lastName)}</h2>
-=======
+
         <div className='px-2 w-full flex h-24'>
         <div className='flex flex-col w-2/5 justify-start items-start'>
          <h2 className='text-3xl font-semibold pr-2 line-clamp-1'>{obj.firstName} {obj.lastName && (obj.lastName)}</h2>
->>>>>>> 60323bd45eb014092dc42f4a1f5233ec4941e727
+
          <h2 className='text-md font-medium text-gray-200'>@{obj.userName}</h2>
          <div className='flex justify-start'>
           {obj._id != userId && (
@@ -111,10 +105,7 @@ function ViewProfile() {
           )}
         </div>
         </div>
-<<<<<<< HEAD
-        
-        </div>
-=======
+
         <div className='w-3/5 group transition-all duration-300 ease-in-out relative flex flex-col justify-start items-end'>
          {obj.education && obj.education.college ? (
           <>
@@ -174,9 +165,6 @@ function ViewProfile() {
         </div>
         
         </div>
-       
-
->>>>>>> 60323bd45eb014092dc42f4a1f5233ec4941e727
         <div className='w-3/5 h-full flex relative'>
          <div className=''>
            <button className={`font-semibold text-lg py-2 px-4 inline-flex items-center ${activeSection == 'about' ? 'text-blue-500 underline' : 'text-gray-800'}`} onClick={()=>toggleSection('about')}>About</button>

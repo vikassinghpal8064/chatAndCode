@@ -12,7 +12,7 @@ router.get("/user/chat", async (req, res) => {
     // Assuming getUser is synchronous for now; otherwise, await its result
     let user = getUser(sourceId);
     let { id } = user;
-    
+    console.log(id,"  "+targetId)
 
     let friend = await Friend.findOne({
       $or: [

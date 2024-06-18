@@ -228,7 +228,6 @@ function Chat() {
 
     // Receiving message
     socket.current.on("message", (msg) => {
-      console.log(msg);
       sessionStorage.setItem('firstMess', false);
       setMessages((prevMessages) => [...prevMessages, msg]);
     });
@@ -283,8 +282,8 @@ function Chat() {
           <li key={index}>
             {item.message}
             {item.fileUrl && (
-              <a href={item.fileUrl} download>
-                Download {item.fileName}
+              <a href={item.fileUrl} download={item.fileName}>
+                    Download {item.fileName}
               </a>
             )}
           </li>

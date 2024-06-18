@@ -160,7 +160,7 @@ function chat(server) {
               targetId,
               message: `File uploaded: ${fileName}`,
               filePath,
-              fileUrl: `http://localhost:3000/assets/${fileName}` // Assuming your static files are served from /assets
+              fileUrl: `http://localhost:8080/assets/${fileName}` // Assuming your static files are served from /assets
             };
 
             console.log(`Emitting message to room: ${socket.room}`);

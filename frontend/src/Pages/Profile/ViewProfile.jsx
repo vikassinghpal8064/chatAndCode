@@ -55,8 +55,11 @@ function ViewProfile() {
     const toggleSection = (section)=>{
         setActiveSection(activeSection === section ? null : section)
     }
-    const toggleDropdown = ()=>{
-      setIsOpen(!isOpen);
+    const openDropdown = ()=>{
+      setIsOpen(true);
+    }
+    const closeDropdown = ()=>{
+      setIsOpen(false);
     }
   return (
     <div className='w-11/12 bg-gray-200 mx-auto h-screen py-2 px-4 flex'>
@@ -150,7 +153,7 @@ function ViewProfile() {
           <button className='text-xl pb-2 px-4 font-semibold cursor-default'>{obj.friends && (obj.friends.length)} Friends</button>
         </div>
           {obj._id == userId && (
-          <div className='w-1/12 relative cursor-pointer' onClick={toggleDropdown}>
+          <div className='w-1/12 relative cursor-pointer' onMouseEnter={openDropdown} onMouseLeave={closeDropdown}>
           <SlMenu className='text-xl'/>
           {isOpen && (
         <div className="absolute right-0 w-48 bg-white border rounded-lg shadow-lg z-50">

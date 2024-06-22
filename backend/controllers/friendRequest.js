@@ -3,18 +3,23 @@ const router= express.Router();
 const Friend= require("../models/Friend");
 const User= require("../models/User");
 const{setUser,getUser}= require("../middleware/jwt");
-
+const {validateUser} = require("../middleware/postMiddleware")
 
 //sending a friend request;
-router.post("/friendRequest/:id", async(req,res)=>{
+router.get("/friendRequest/:id", validateUser, async(req,res)=>{
     try{
 
-        let userCookeId = req.cookies.uid;
+       console.log("hello")
         let {id}= req.params;
-        
+        console.log(req.user);
+        let userId=req.user.id;
         let user= await User.findById(id);
-        let friendObj= await Friend.create({sourceId:userCookeId,targetId:id});
-    console.log(friendObj,id,);
+        if(!user){
+          res.status(400).send({'message':"user not found"})
+        }
+        console.log(id,userId);
+        let friendObj= await Friend.create({sourceId:userId,targetId:id});
+    
  
  let notificationObj={
     friend:friendObj,
@@ -32,18 +37,28 @@ catch(err){
 
 //accepting a friend request
 
-router.get("/acceptRequest", async(req,res)=>{
+router.get("/acceptRequest", validateUser, async(req,res)=>{
     try{
-  let userCookeId="66334cf9d767b9e8f8af7b8b";
-  let user= await User.findById(userCookeId);
-  let friendId= user.notifications[0].friend._id.toString();
+  let userId=req.user.id;
+  let user= await User.findById(userId);
+  console.log(user)
+  if(user.notifications.length==0){
+    res.status(200).send({"message":"no message in notification"});
+    return;
+  }
+  let friendId= user.notifications[0].friend.toString();
+  console.log(friendId);
   
   let friend= await Friend.findById(friendId);
-  
+  console.log(friend);
+  let senderId= friend.sourceId.toString();
+  let sender= await User.findById(senderId);
+  sender.friends.push(friend);
 user.friends.push(friend);
 user.notifications.pop();
 user.save();
-  res.status(201).send({message:"friend Rrquest accepted"});
+sender.save();
+res.status(201).send({message:"friend Request accepted"});
   
     
     }
@@ -54,12 +69,12 @@ user.save();
 
 
 //reject request
-router.get("/rejectRequest", async(req,res)=>{
+router.get("/rejectRequest", validateUser ,async(req,res)=>{
     try{
-      let cookeId= req.cookies.uid;
-  let userCookeId="66334cf9d767b9e8f8af7b8b";
-  let user= await User.findById(userCookeId);
-  let friendId= user.notifications[0].friend._id.toString();
+      let userId= req.user.id;
+       
+  let user= await User.findById(userId);
+  let friendId= user.notifications[0].friend.toString();
   
   let friend= await Friend.findByIdAndDelete(friendId);
 
@@ -73,22 +88,16 @@ user.save();
 })
 
 //finding all friens of the login user
-router.get("/getAllFriends",async(req,res)=>{
+router.get("/getAllFriends",validateUser,async(req,res)=>{
   try{
-   
-    const authHeader = req.headers['authorization'];
-
-const token = authHeader && authHeader.split(' ')[1];
-   
-   
-    let token1= getUser(token);
-    let user=await  User.findById(token1.id)
+     let userId= req.user.id
+;    let user=await  User.findById(userId)
     let friendsList= [];
     for(let item of user.friends){
       let friendItem= await Friend.findById(item.toString());
       let sourceId= friendItem.sourceId;
       let targetId= friendItem.targetId;
-      if(token1.id!=sourceId){
+      if(userId!=sourceId){
         let friend= await User.findById(sourceId)
       let newObj={...friend._doc,friendId:friendItem._id}
         friendsList.push(newObj);

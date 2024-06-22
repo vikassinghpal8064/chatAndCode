@@ -48,7 +48,7 @@ function Login() {
   }
 
   return (
-    <div className='flex bg-cover items-center justify-around' style={{backgroundImage:'url(/Assets/landing.avif)',height:'calc(100vh - 64px)'}}>
+    <div className='flex bg-cover items-center justify-around relative top-16' style={{backgroundImage:'url(/Assets/landing.avif)',height:'calc(100vh - 64px)'}}>
       <div className='flex flex-col items-center justify-center'>
         <p className='font-bold text-3xl mb-2'>Hello!</p>
        <p className='font-semibold text-2xl mb-2 text-white'>Don't have a account ?</p>

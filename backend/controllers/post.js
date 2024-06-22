@@ -29,10 +29,6 @@ router.post("/addPost", validateUser, async (req, res) => {
 // find all post of the user
 router.get("/allPosts", async (req, res) => {
   try {
-// <<<<<<< main
-//     let posts = await Post.find({}).populate('userId');
-//     res.status(200).send({ posts: posts });
-// =======
    let page= parseInt(req.query.page)  || 1;
    let limit=5
    let skip = (page-1)*limit;

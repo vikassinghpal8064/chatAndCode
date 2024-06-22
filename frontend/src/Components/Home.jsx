@@ -43,7 +43,7 @@ function Home() {
   }, [])
 
   return (
-    <div className="w-4/5 flex px-4 py-2 mx-auto h-auto justify-between bg-gray-100">
+    <div className="w-4/5 flex px-4 py-2 mx-auto h-auto min-h-screen justify-between bg-gray-100 relative top-16">
       <div className="w-2/3 me-10 px-2 h-full">
        <div className="w-full h-14 p-2 flex justify-center bg-white rounded-t-2xl">
         <div className="rounded-3xl h-10 w-96 relative mr-4 cursor-pointer">
@@ -58,7 +58,7 @@ function Home() {
         </Link>
        
        </div>
-       <div className="bg-white p-2 mt-2 h-auto rounded-b-2xl w-full ">
+       <div className="bg-white p-2 mt-2 h-auto rounded-b-2xl w-full" style={{minHeight:'calc(100vh - 56px)'}}>
         {post && post.map((item,index)=>{
           return(
             <PostCard key={index} item={item} />

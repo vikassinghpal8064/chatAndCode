@@ -82,7 +82,6 @@ function ViewProfile() {
         </div>
       )}
         </div>
-
         <div className='px-2 w-full flex h-24'>
         <div className='flex flex-col w-2/5 justify-start items-start'>
          <h2 className='text-3xl font-semibold pr-2 line-clamp-1'>{obj.firstName} {obj.lastName && (obj.lastName)}</h2>
@@ -102,7 +101,6 @@ function ViewProfile() {
           )}
         </div>
         </div>
-
         <div className='w-3/5 flex flex-col justify-start items-end'>
          {obj.education && obj.education.college ? (
           <>

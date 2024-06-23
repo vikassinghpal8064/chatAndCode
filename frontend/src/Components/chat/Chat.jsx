@@ -79,12 +79,12 @@ console.log(messages);
   }
 
   return (
-    <div className='bg-gradient-to-t from-red-300 to-blue-600 flex justify-center min-h-screen'>
+    <div className='bg-gradient-to-t from-red-400 to-blue-400 flex justify-center h-full mb-12'>
       <div className='w-100 bg-gradient-to-r from-red-50 to-red-400 rounded-md p-4'>
         <ul className='space-y-5 grid'>
           {messages.map((item, index) => (
             item.sourceId == localStorage.getItem('userId') ? (
-              <li key={index} className='bg-gray-300 rounded-md w-52'>
+              <li key={index} className='bg-gray-300 rounded-md w-52 p-2'>
                 {item.message}
                 {item.fileUrl && (
                   <a href={item.fileUrl} download>
@@ -93,7 +93,7 @@ console.log(messages);
                 )}
               </li>
             ) : (
-              <li key={index} className='bg-gray-300 rounded-md justify-self-end w-52'>
+              <li key={index} className='bg-gray-300 rounded-md justify-self-end w-52 p-3'>
                 {item.message}
                 {item.fileUrl && (
                   <a href={item.fileUrl} download>
@@ -108,8 +108,8 @@ console.log(messages);
       </div>
       <div className='flex fixed bottom-0 w-100  bg-white mt-40'>
           <input ref={inputRef} className='bg-slate-300 rounded-md h-10 mr-2 w-full' type="text" />
-          <input onChange={handleFileChange} className='mr-2' type="file" />
-          <button onClick={handleClick} className='bg-red-500 rounded-md w-20 h-10'>Send</button>
+          <input  onChange={handleFileChange} className='p-2  ' type="file" />
+          <button onClick={handleClick} className='bg-green-500 rounded-md w-20 h-10'>Send</button>
         </div>
     </div>
   );

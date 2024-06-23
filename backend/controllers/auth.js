@@ -31,6 +31,7 @@ router.post("/signup", async (req, res) => {
 //validate user
 router.post("/login", async(req, res) => {
     try {
+      console.log("hello")
         let { userName, password } = req.body;
         console.log(userName,password);
         if (!userName || !password) {

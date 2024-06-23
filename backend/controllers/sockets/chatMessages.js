@@ -2,7 +2,7 @@ const express=require("express");
 const router= express.Router();
 const {getUser} =require("../../middleware/jwt");
 const Friend = require("../../models/Friend");
-
+const {validateUser} = require("../../middleware/postMiddleware")
 router.get("/user/chat", async (req, res) => {
   try {
    

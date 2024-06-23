@@ -24,7 +24,8 @@ let postSchema = new mongoose.Schema(
     comments: [{
         commentedBy:{type:mongoose.Types.ObjectId,ref:"User"},
         comment:{type: String,
-            trim: true,}
+            trim: true,},
+        createdAt:{type:Date,default:Date.now}
       }],
     likes: [{
         likedBy:{type:mongoose.Types.ObjectId,ref:"User"},

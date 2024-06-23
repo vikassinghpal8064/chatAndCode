@@ -36,19 +36,19 @@ function chat(server) {
     socket.on("message", async (msg) => {
       try {
         const { sourceId, targetId, message, fileName, fileData } = msg;
-        const { id } = getUser(sourceId);
+        // const { id } = getUser(sourceId);
         console.log("Received message:", msg); // Log received message
         console.log("filename: ", fileName);
 
         // Store chat in friend
         if (!fileData) {
-          let chatObj = { sourceId: id, targetId: targetId, message: message };
+          let chatObj = { sourceId: sourceId, targetId: targetId, message: message };
           let newChat = await Chat.create(chatObj);
           newChat.save();
           let friend = await Friend.findOne({
             $or: [
-              { sourceId: id, targetId: targetId },
-              { sourceId: targetId, targetId: id },
+              { sourceId: sourceId, targetId: targetId },
+              { sourceId: targetId, targetId: sourceId },
             ],
           });
           friend.chats.push(newChat);

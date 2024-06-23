@@ -70,7 +70,7 @@ function Chat() {
       inputRef.current.value = "";
     }
   }
-
+console.log(messages);
   // Handle file change
   function handleFileChange(e) {
     setFile(e.target.files[0]);
@@ -81,16 +81,23 @@ function Chat() {
    <div className='bg-gradient-to-t from-red-300 to-blue-600 flex justify-center  min-h-screen '>
      <div className='w-100 bg-gradient-to-r from-red-50 to-red-400 rounded-md '>
       <ul>
-      <div className='space-y-5 w-48'>
+      <div className='space-y-5  grid'>
           {messages.map((item, index) => (
-          <li key={index} className='bg-gray-300 rounded-md '>
-            {item.message}
-            {item.fileUrl && (
-              <a href={item.fileUrl} download>
-                Download {item.fileName}
-              </a>
-            )}
-          </li>
+        item.sourceId==localStorage.getItem('userId')?  <li key={index} className='bg-gray-300 rounded-md w-52  '>
+        {item.message}
+        {item.fileUrl && (
+          <a href={item.fileUrl} download>
+            Download {item.fileName}
+          </a>
+        )}
+      </li> :   <li key={index} className='bg-gray-300 rounded-md justify-self-end'>
+      {item.message}
+      {item.fileUrl && (
+        <a href={item.fileUrl} download>
+          Download {item.fileName}
+        </a>
+      )}
+    </li>
         ))}
       </div>
       </ul>

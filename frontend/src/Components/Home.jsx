@@ -8,6 +8,7 @@ import PostCard from "./reusableComponents/PostCard";
 function Home() {
   let [obj, setObj] = useState([]);
   let [post, setPost] = useState([]);
+  let [user,setUser] = useState({});
   const navigate = useNavigate();
   const axiosInstances = SetupAxiosInstances(navigate);
 
@@ -36,10 +37,21 @@ function Home() {
     console.log("error in fetch all posts: ",err);
     }
   }
-
+  
+  async function handleUser(){
+    let userId = localStorage.getItem("userId");
+    await axiosInstances.get(`/user/${userId}`)
+    .then((res)=>{
+     setUser(res.data);
+    })
+    .catch((e)=>{
+      console.log("failed to load user: ",e);
+    })
+  }
   useEffect(() => {
     fetchdata();
     fetchPostData();
+    handleUser();
   }, [])
 
   return (
@@ -61,7 +73,7 @@ function Home() {
        <div className="bg-white p-2 mt-2 h-auto rounded-b-2xl w-full" style={{minHeight:'calc(100vh - 56px)'}}>
         {post && post.map((item,index)=>{
           return(
-            <PostCard key={index} item={item} />
+            <PostCard key={index} item={item} user={user}/>
           )
         })}
        </div>

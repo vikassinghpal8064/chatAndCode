@@ -103,7 +103,7 @@ function ViewProfile() {
         </div>
         </div>
 
-        <div className='w-3/5 group transition-all duration-300 ease-in-out relative flex flex-col justify-start items-end'>
+        <div className='w-3/5 flex flex-col justify-start items-end'>
          {obj.education && obj.education.college ? (
           <>
              <h2 className='text-lg font-semibold w-full line-clamp-1 text-right'>{obj.education.college.name}</h2>
@@ -121,7 +121,7 @@ function ViewProfile() {
           )}
           </>
          )}
-         <div className='h-0 overflow-hidden group-hover:h-11 transition-all duration-300 ease-in-out'>
+         <div className='h-11 overflow-hidden'>
           <div className='flex text-md font-semibold'>
           {obj._id == userId && (
           <>

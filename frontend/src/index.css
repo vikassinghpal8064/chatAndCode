@@ -7,3 +7,35 @@
   -webkit-line-clamp: unset;
   overflow: visible;
 }
+
+@keyframes enlargeThumb {
+  0% {
+    transform: scale(2);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(7);
+    opacity: 0.75;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0.5;
+  }
+}
+
+.like-animation {
+  position: absolute;
+  top:50%;
+  left:50%;
+  animation: enlargeThumb 3s forwards;
+  z-index: 10;
+  color:blue;
+}
+.dislike-animation{
+  position: absolute;
+  top:50%;
+  left:50%;
+  animation: enlargeThumb 3s forwards;
+  z-index: 10;
+  color:red;
+}

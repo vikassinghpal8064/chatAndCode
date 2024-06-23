@@ -48,7 +48,7 @@ function ProfilePostCard({item}) {
       <div className='1/12 inline-flex items-center justify-center relative' onMouseEnter={openDropdown} onMouseLeave={closeDropdown}>
       <CiMenuKebab className='text-xl'/>
       {isOpen && (
-        <div className="absolute top-10 right-0 w-48 bg-white border rounded-lg shadow-lg z-50">
+        <div className="absolute top-10 right-0 w-48 bg-white border rounded-lg shadow-lg z-20">
           <Link to={'/user/update-profile'} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Update Profile</Link>
           <Link to={'/user/my-posts'} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Chat</Link>
           <Link to={'/addpost'} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Add Post</Link>
@@ -59,10 +59,10 @@ function ProfilePostCard({item}) {
       </div>
       <div>
       <h2 className='text-xl font-semibold pb-2'>{item.title}</h2>
-      <div className='bg-gray-300 w-full h-60'>
+      <div className='bg-gray-300 w-full h-50'>
       <img className='h-60 w-auto mx-auto' src={item.upload} />
       </div>
-      <h2 className='text-xl font-medium py-2 line-clamp-3 expand-text'>{item.desc}</h2>
+      <h2 className='text-xl font-medium py-2 line-clamp-2 expand-text h-16'>{item.desc}</h2>
       </div>
     </div>
   )

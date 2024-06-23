@@ -4,6 +4,7 @@ import { SlMenu } from "react-icons/sl";
 import SetupAxiosInstances from '../../Components/Instances/SetupAxiosInstances';
 import AboutSection from '../../Components/reusableComponents/AboutSection';
 import PostSection from '../../Components/reusableComponents/PostSection';
+import ProfileFriendCard from '../../Components/reusableComponents/ProfileFriendCard';
 function ViewProfile() {
     const [activeSection,setActiveSection] = useState(null);
     let [pictureLoad,setPictureLoad] = useState(false);
@@ -18,16 +19,9 @@ function ViewProfile() {
         try{
             async function getData(){
                 let res = await axiosInstances.get(`/user/${id}`);
-                console.log(res);
                 setobj(res.data);
-                console.log(userId);
                 if(obj.friends){
                 const friendId = obj.friends ? obj.friends.map(friend => friend._id) : [];
-                console.log("current user: ",userId);
-                console.log("friendId: ",friendId);
-                const isFriendCheck = friendId.includes(userId);
-                console.log('Is Friend:', isFriendCheck); // Debugging log
-          
                 setIsFriend(friendId.includes(userId));
                 }else{
                   setIsFriend(false);
@@ -62,8 +56,8 @@ function ViewProfile() {
       setIsOpen(false);
     }
   return (
-    <div className='w-11/12 bg-gray-200 mx-auto h-screen py-2 px-4 flex'>
-        <div className='w-2/5 h-full bg-yellow-500 mt-10 rounded-lg mr-10'>
+    <div className='w-11/12 bg-gray-200 mx-auto py-2 px-4 flex relative top-16' style={{height:'calc(100vh)'}}>
+        <div className='w-2/5 h-auto bg-yellow-500 mt-10 rounded-lg mr-10'>
 
         <div className='w-full flex-col flex h-56 relative'>
 
@@ -109,7 +103,7 @@ function ViewProfile() {
         </div>
         </div>
 
-        <div className='w-3/5 group transition-all duration-300 ease-in-out relative flex flex-col justify-start items-end'>
+        <div className='w-3/5 flex flex-col justify-start items-end'>
          {obj.education && obj.education.college ? (
           <>
              <h2 className='text-lg font-semibold w-full line-clamp-1 text-right'>{obj.education.college.name}</h2>
@@ -127,7 +121,7 @@ function ViewProfile() {
           )}
           </>
          )}
-         <div className='h-0 overflow-hidden group-hover:h-11 transition-all duration-300 ease-in-out'>
+         <div className='h-11 overflow-hidden'>
           <div className='flex text-md font-semibold'>
           {obj._id == userId && (
           <>
@@ -156,7 +150,7 @@ function ViewProfile() {
           <div className='w-1/12 relative cursor-pointer' onMouseEnter={openDropdown} onMouseLeave={closeDropdown}>
           <SlMenu className='text-xl'/>
           {isOpen && (
-        <div className="absolute right-0 w-48 bg-white border rounded-lg shadow-lg z-50">
+        <div className="absolute right-9 -top-3 w-48 bg-white border rounded-lg shadow-lg z-20">
           <Link to={'/user/update-profile'} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Update Profile</Link>
           <Link to={'/user/my-posts'} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Chat</Link>
           <Link to={'/addpost'} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Add Post</Link>
@@ -166,10 +160,18 @@ function ViewProfile() {
         </div>
           )}
         </div>
-        
+        <div className='w-full h-44 px-2 py-2 overflow-y-auto flex flex-wrap' style={{scrollbarWidth:'none'}}>
+        {obj.friends && obj.friends.map((item,index)=>{
+          return(
+            <div className='w-1/2'>
+            <ProfileFriendCard item={item} key={item._id} />
+            </div>
+          )
+        })}
         </div>
-        <div className='w-3/5 h-full flex relative'>
-         <div className=''>
+        </div>
+        <div className='w-3/5 flex relative' style={{height:'calc(100% - 40px)'}}>
+         <div>
            <button className={`font-semibold text-lg py-2 px-4 inline-flex items-center ${activeSection == 'about' ? 'text-blue-500 underline' : 'text-gray-800'}`} onClick={()=>toggleSection('about')}>About</button>
            <button className={`font-semibold text-lg py-2 px-4 inline-flex items-center ${activeSection == 'post' ? 'text-blue-500 underline' : 'text-gray-800'}`} onClick={()=>toggleSection('post')}>Post</button>
          </div>

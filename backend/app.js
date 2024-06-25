@@ -8,6 +8,7 @@ const auth = require("./controllers/auth");
 const profile = require("./controllers/profile");
 const post= require("./controllers/post");
 const friendRequest= require("./controllers/friendRequest");
+const notifyRoute = require("./controllers/notifyRoute");
 const chatMessages= require("./controllers/sockets/chatMessages");
 const cookieParser = require("cookie-parser");
 const {chat} = require("./controllers/sockets/chatting");
@@ -28,7 +29,6 @@ main().then(()=>{
     console.log(`error in mongodb connection ${err}`)
 });
 app.use(cors({
-    // origin:"*",
     origin:[process.env.ALLOWED_URL],
     credentials:true,
 }))
@@ -48,6 +48,7 @@ app.use(auth);
 app.use(profile);
 app.use(post);
 app.use(friendRequest);
+app.use(notifyRoute);
 
 app.use(file);
 chat(server);

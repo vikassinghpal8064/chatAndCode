@@ -49,15 +49,15 @@ function ViewProfile() {
     async function handleFriend(id){
       await axiosInstances.get(`/friendRequest/${id}`)
       .then((res)=>{
-        console.log("response",res);
-        console.log("response",res.data);
-        console.log("response",res.data.notificationObj1);
-        console.log("response",res.data.user);
-        alert("send friend request");
+        if(res.data.message == 'success'){
+          alert("successfully send friend request");
+        }
       })
       .catch((e)=>{
-        if(e.response.status == 400){
-          console.log("user not found");
+        if(e.response.data.message == "already a friend"){
+          alert("already sent a friend request or he/she is your already friend.")
+        }else if(e.response.data.message == "user not found"){
+         console.log("user not found");
         }else{
           console.log("error in send friend request: ",e);
         }

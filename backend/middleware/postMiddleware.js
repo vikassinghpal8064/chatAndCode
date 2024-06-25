@@ -36,13 +36,12 @@ const validateUser = (req, res, next) => {
         let userId= req.user.id;
         let found = await Friend.findOne({$or:[{sourceId:id, targetId:userId},{sourceId:userId, targetId:id}]})
         if(found){
-           return res.status(400).send({message:"alraedy a friend"});
+           return res.status(400).send({message:"already a friend"});
         }
         next();
     }
     catch(err){
-        res.status(500).send({message:err.message});
-        return;
+        return res.status(500).send({message:err.message});
     }
  }
 

@@ -1,3 +1,4 @@
+// need to update the cors origin later -------------
 const express= require("express");
 const mongoose= require("mongoose");
 const methodOverride = require("method-override");
@@ -16,10 +17,6 @@ const server = http.createServer(app);
 const file =require("./controllers/fileSystem/file")
 const dotenv = require('dotenv').config();
 const path = require("path")
-
-
-
-
 
 async function main() {
     await mongoose.connect(process.env.MONGODB_URL);
@@ -43,7 +40,6 @@ app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 
 const uploadDir = path.join(__dirname, 'controllers/sockets/assets'); 
-console.log(uploadDir)
 app.use('/assets', express.static(uploadDir));
 
 app.use(cookieParser());

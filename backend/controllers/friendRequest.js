@@ -6,73 +6,60 @@ const{setUser,getUser}= require("../middleware/jwt");
 const {validateUser , existingFriendOrNot} = require("../middleware/postMiddleware")
 
 //sending a friend request;
-router.get("/friendRequest/:id", validateUser, existingFriendOrNot, async(req,res)=>{
-    try{
-        let {id}= req.params ;
-        console.log(req.user);
-        let userId=req.user.id;
-        let user= await User.findById(id);
+router.get("/friendRequest/:id", validateUser,existingFriendOrNot, async(req,res)=>{
+  try{
+    let {id}= req.params ;
+    let userId=req.user.id;
+    let user= await User.findById(id);
+    if(!user){
+      res.status(400).send({message:"user not found"})
+    }
 
-        if(!user){
-          res.status(400).send({message:"user not found"})
-        }
-        console.log(id,userId);
-        let friendObj= await Friend.create({sourceId:userId,targetId:id});
-    
- 
+    let friendObj= await Friend.create({sourceId:userId,targetId:id});
+
  let notificationObj1={
     friend:friendObj,
-    category:'friendRequest',
-    message:"someone send you a friend Request"
-}
-let notificationObj2={
-  friend:friendObj,
-  category:'friendRequest',
-  message:"you have send the friend request"
+    category:'sendRequest',
+    message:"send you a friend request."
 }
 await User.updateOne({_id:id,},{$push:{notifications:notificationObj1}});
-await User.updateOne({_id:userId,},{$push:{notifications:notificationObj2}});
 await user.save();
-res.status(201).send({message:"friend request is sent successfully"});
+res.status(201).send({message:"sent request"});
 }
 catch(err){
     res.status(500).send({message:err.message})
 }
-
 })
 
 //accepting a friend request
-
 router.get("/acceptRequest/:index", validateUser, async(req,res)=>{
     try{
-   let {index}=req.params ||0;
-  let userId=req.user.id;
-  let user= await User.findById(userId);
+   let {index} = req.params || 0;
+  let userId = req.user.id;
+  let user = await User.findById(userId);
   
-  if(user.notifications.length<index){
-    res.status(200).send({message:"no message in notification"});
-    return;
+  if(user.notifications.length <= index){
+    return res.status(200).send({message:"no message in notification"});
   }
-  let friendId= user.notifications[index].friend.toString();
+  let friendId = user.notifications[index].friend.toString();
   
-  let friend= await Friend.findById(friendId);
-  console.log(friend);
-  let senderId= friend.sourceId.toString();
-  let sender= await User.findById(senderId);
+  let friend = await Friend.findById(friendId);
+  let senderId = friend.sourceId.toString();
+  let sender = await User.findById(senderId);
   sender.friends.push(friend);
   user.friends.push(friend);
-  user.notifications.splice(index,1);
-  let notificationObj={
+  if(index >= 0){
+    user.notifications.splice(index,1);
+  }
+  let notificationObj = {
     friend:null,
     category:"friendRequest",
     message:`your friend request is accepted by ${user.firstName+" "+user.lastName}`
   }
   
-  user.save();
-  sender.save();
-  res.status(201).send({message:"friend Request accepted"});
-  
-    
+   await user.save();
+  await sender.save();
+  res.status(201).send({message:"accepted request"});
     }
     catch(err){
         res.status(500).send({message:err.message})
@@ -86,9 +73,9 @@ router.get("/rejectRequest/:index", validateUser ,async(req,res)=>{
       let userId= req.user.id;
        let {index}= req.params ;
   let user= await User.findById(userId);
-  let friendId= user.notifications[index].friend.toString();
+  let friendId = user.notifications[index].friend.toString();
   
-  let friend= await Friend.findByIdAndDelete(friendId);
+  let friend = await Friend.findByIdAndDelete(friendId);
 
 user.notifications.pop();
 user.save();

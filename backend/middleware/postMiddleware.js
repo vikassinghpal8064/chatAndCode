@@ -28,15 +28,13 @@ const validateUser = (req, res, next) => {
 };
  // alraedy a friend or not
 
- const existingFriendOrNot=async (req,res,next)=>{
+ const existingFriendOrNot = async (req,res,next)=>{
     try{
-
         let {id}= req.params;
         let userId= req.user.id;
-        console.log(id,"  ",userId)
         let found = await Friend.findOne({$or:[{sourceId:id, targetId:userId},{sourceId:userId, targetId:id}]})
         if(found){
-            res.status(400).send({message:"alraedy a friend"});
+           return res.status(400).send({message:"alraedy a friend"});
         }
         next();
     }

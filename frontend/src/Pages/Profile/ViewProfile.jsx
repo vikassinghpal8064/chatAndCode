@@ -46,6 +46,24 @@ function ViewProfile() {
       })
     }
 
+    async function handleFriend(id){
+      await axiosInstances.get(`/friendRequest/${id}`)
+      .then((res)=>{
+        console.log("response",res);
+        console.log("response",res.data);
+        console.log("response",res.data.notificationObj1);
+        console.log("response",res.data.user);
+        alert("send friend request");
+      })
+      .catch((e)=>{
+        if(e.response.status == 400){
+          console.log("user not found");
+        }else{
+          console.log("error in send friend request: ",e);
+        }
+      })
+    }
+
     const toggleSection = (section)=>{
         setActiveSection(activeSection === section ? null : section)
     }
@@ -94,7 +112,7 @@ function ViewProfile() {
               <Link><button className='px-2 py-2 rounded-md bg-green-600 text-green-300'>Message</button></Link>
             ) : (
               <>
-              <button className='px-2 py-2 rounded-md bg-green-600 text-green-300'>Add Friend</button>
+              <button className='px-2 py-2 rounded-md bg-green-600 text-green-300' onClick={()=>{handleFriend(obj._id)}}>Add Friend</button>
               </>
             )}
             </>

@@ -11,11 +11,11 @@ router.get("/friendRequest/:id", validateUser,existingFriendOrNot, async(req,res
     let {id}= req.params ;
     let userId=req.user.id;
     let user= await User.findById(id);
-    if(!user){
-      res.status(400).send({message:"user not found"})
-    }
-
-    let friendObj= await Friend.create({sourceId:userId,targetId:id});
+        if(!user){
+         return res.status(400).send({message:"user not found"});
+        }
+        console.log(id,userId);
+        let friendObj= await Friend.create({sourceId:userId,targetId:id});
 
  let notificationObj1={
     friend:friendObj,
@@ -43,9 +43,11 @@ router.get("/acceptRequest/:index", validateUser, async(req,res)=>{
   }
   let friendId = user.notifications[index].friend.toString();
   
-  let friend = await Friend.findById(friendId);
-  let senderId = friend.sourceId.toString();
-  let sender = await User.findById(senderId);
+  let friend= await Friend.findById(friendId);
+  console.log(friend);
+  let senderId= friend.sourceId.toString();
+  let targetId=friend.targetId.toString();
+  let sender= await User.findById(senderId);
   sender.friends.push(friend);
   user.friends.push(friend);
   if(index >= 0){
@@ -56,7 +58,7 @@ router.get("/acceptRequest/:index", validateUser, async(req,res)=>{
     category:"friendRequest",
     message:`your friend request is accepted by ${user.firstName+" "+user.lastName}`
   }
-  
+sender.notifications.push(notificationObj);
    await user.save();
   await sender.save();
   res.status(201).send({message:"accepted request"});

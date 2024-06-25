@@ -9,13 +9,15 @@ const validateUser = (req, res, next) => {
         const token = authHeader && authHeader.split(' ')[1];
 
         if (!token) {
-            return res.status(401).send({ message: 'No token provided' });
+             res.status(401).send({ message: 'No token provided' });
+             return;
         }
 
         const user = getUser(token);
 
         if (!user) {
-            return res.status(401).send({ message: 'Invalid token' });
+             res.status(401).send({ message: 'Invalid token' });
+             return;
         }
 
         // Attach the user information to the request object
@@ -40,6 +42,7 @@ const validateUser = (req, res, next) => {
     }
     catch(err){
         res.status(500).send({message:err.message});
+        return;
     }
  }
 

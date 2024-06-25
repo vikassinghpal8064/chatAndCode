@@ -22,7 +22,7 @@ function NotifyCard() {
     }
     
   async function handleAccept(receiverId){
-  await axiosInstances.post('/user/accept-request',{receiverId})
+  await axiosInstances.get(`/acceptRequest/${index}`)
   .then((res)=>{
   if(res.data == 'Success'){
     alert("Friend request accepted successfully");
@@ -36,8 +36,8 @@ function NotifyCard() {
   })
   }
 
-  async function handleReject(receiverId){
-    await axiosInstances.post('/user/reject-request',{receiverId})
+  async function handleReject(index){
+    await axiosInstances.get(`/rejectRequest/${index}`)
     .then((res)=>{
     if(res.data == 'Success'){
       alert("Friend request rejected successfully");
@@ -75,8 +75,8 @@ function NotifyCard() {
             <h2>User: {item.sender.userName}</h2>
             {item.status == 'sendRequest' ?(
               <>
-            <button className='bg-green-300 text-green-900 rounded-md mt-2 py-2 px-4' onClick={()=>handleAccept(item.sender._id)}>Accept</button>
-            <button className='bg-red-300 text-red-800 rounded-md mt-2 py-2 px-4' onClick={()=>handleReject(item.sender._id)}>Reject</button>
+            <button className='bg-green-300 text-green-900 rounded-md mt-2 py-2 px-4' onClick={()=>handleAccept(index)}>Accept</button>
+            <button className='bg-red-300 text-red-800 rounded-md mt-2 py-2 px-4' onClick={()=>handleReject(index)}>Reject</button>
               </>
             ):(
               <>

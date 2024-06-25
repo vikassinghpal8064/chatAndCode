@@ -66,7 +66,6 @@ router.get("/acceptRequest/:index", validateUser, async(req,res)=>{
     }
 })
 
-
 //reject request
 router.get("/rejectRequest/:index", validateUser ,async(req,res)=>{
     try{

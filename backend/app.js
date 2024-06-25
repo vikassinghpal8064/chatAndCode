@@ -13,13 +13,9 @@ const {chat} = require("./controllers/sockets/chatting");
 const {Server}= require("socket.io");
 const http = require('http');
 const server = http.createServer(app);
-const file =require("./controllers/fileSystem/file")
+const file =require("./controllers/fileSystem/file");
 const dotenv = require('dotenv').config();
-const path = require("path")
-
-
-
-
+const path = require("path");
 
 async function main() {
     await mongoose.connect(process.env.MONGODB_URL);
@@ -31,8 +27,8 @@ main().then(()=>{
     console.log(`error in mongodb connection ${err}`)
 });
 app.use(cors({
-    origin:"*",
-    // origin:[process.env.ALLOWED_URL],
+    // origin:"*",
+    origin:[process.env.ALLOWED_URL],
     credentials:true,
 }))
 

@@ -9,13 +9,15 @@ const validateUser = (req, res, next) => {
         const token = authHeader && authHeader.split(' ')[1];
 
         if (!token) {
-            return res.status(401).send({ message: 'No token provided' });
+             res.status(401).send({ message: 'No token provided' });
+             return;
         }
 
         const user = getUser(token);
 
         if (!user) {
-            return res.status(401).send({ message: 'Invalid token' });
+             res.status(401).send({ message: 'Invalid token' });
+             return;
         }
 
         // Attach the user information to the request object
@@ -37,11 +39,13 @@ const validateUser = (req, res, next) => {
         let found = await Friend.findOne({$or:[{sourceId:id, targetId:userId},{sourceId:userId, targetId:id}]})
         if(found){
             res.status(400).send({message:"alraedy a friend"});
+            return;
         }
         next();
     }
     catch(err){
         res.status(500).send({message:err.message});
+        return;
     }
  }
 

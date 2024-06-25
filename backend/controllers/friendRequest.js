@@ -15,6 +15,7 @@ router.get("/friendRequest/:id", validateUser, existingFriendOrNot, async(req,re
 
         if(!user){
           res.status(400).send({message:"user not found"})
+          return;
         }
         console.log(id,userId);
         let friendObj= await Friend.create({sourceId:userId,targetId:id});
@@ -58,6 +59,7 @@ router.get("/acceptRequest/:index", validateUser, async(req,res)=>{
   let friend= await Friend.findById(friendId);
   console.log(friend);
   let senderId= friend.sourceId.toString();
+  let targetId=friend.targetId.toString();
   let sender= await User.findById(senderId);
   sender.friends.push(friend);
   user.friends.push(friend);
@@ -67,7 +69,7 @@ router.get("/acceptRequest/:index", validateUser, async(req,res)=>{
     category:"friendRequest",
     message:`your friend request is accepted by ${user.firstName+" "+user.lastName}`
   }
-  
+  sender.notifications.push(notificationObj);
   user.save();
   sender.save();
   res.status(201).send({message:"friend Request accepted"});

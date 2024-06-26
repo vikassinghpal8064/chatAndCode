@@ -19,7 +19,7 @@ router.get("/getAll", async (req, res) => {
 router.get("/user/:id",async(req,res)=>{
   try{
     let {id}= req.params;
-    let user= await User.findById(id).populate('education').populate({path:'posts',populate:'userId'}).populate({path:'friends',select:'photo userName'});
+    let user= await User.findById(id).populate('education').populate({path:'posts',populate:'userId'}).populate({path:'friends',select:'photo userName'}).populate({path:'notifications',populate:{path:'friend',select:'firstName lastName userName'}});
     res.status(201).send(user);
   }
   catch(err){
@@ -109,5 +109,6 @@ router.post('/add-education',validateUser,async(req,res)=>{
     res.status(500).json("Internal Error");
   }
   })
+
 
 module.exports = router;

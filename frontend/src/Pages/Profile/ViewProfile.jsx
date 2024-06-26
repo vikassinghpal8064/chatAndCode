@@ -46,6 +46,24 @@ function ViewProfile() {
       })
     }
 
+    async function handleFriend(id){
+      await axiosInstances.get(`/friendRequest/${id}`)
+      .then((res)=>{
+        if(res.data.message == 'success'){
+          alert("successfully send friend request");
+        }
+      })
+      .catch((e)=>{
+        if(e.response.data.message == "already a friend"){
+          alert("already sent a friend request or he/she is your already friend.")
+        }else if(e.response.data.message == "user not found"){
+         console.log("user not found");
+        }else{
+          console.log("error in send friend request: ",e);
+        }
+      })
+    }
+
     const toggleSection = (section)=>{
         setActiveSection(activeSection === section ? null : section)
     }
@@ -82,7 +100,6 @@ function ViewProfile() {
         </div>
       )}
         </div>
-
         <div className='px-2 w-full flex h-24'>
         <div className='flex flex-col w-2/5 justify-start items-start'>
          <h2 className='text-3xl font-semibold pr-2 line-clamp-1'>{obj.firstName} {obj.lastName && (obj.lastName)}</h2>
@@ -95,14 +112,13 @@ function ViewProfile() {
               <Link><button className='px-2 py-2 rounded-md bg-green-600 text-green-300'>Message</button></Link>
             ) : (
               <>
-              <button className='px-2 py-2 rounded-md bg-green-600 text-green-300'>Add Friend</button>
+              <button className='px-2 py-2 rounded-md bg-green-600 text-green-300' onClick={()=>{handleFriend(obj._id)}}>Add Friend</button>
               </>
             )}
             </>
           )}
         </div>
         </div>
-
         <div className='w-3/5 flex flex-col justify-start items-end'>
          {obj.education && obj.education.college ? (
           <>

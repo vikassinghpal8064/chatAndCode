@@ -58,9 +58,8 @@ let userSchema = new mongoose.Schema(
       ref:"Friend"
     },
    category:{
-    
        type:String,
-       enum:["post","friendRequest","others"],
+       enum:["post","sendRequest","friendRequest","others"],
        trim:true,
     },
     message:{

@@ -8,7 +8,6 @@ function Card({ item }) {
   let [pictureLoad,setPictureLoad] = useState(false);
   const navigate = useNavigate();
   const axiosInstances = SetupAxiosInstances(navigate);
-  console.log(item);
   async function handleClickChat() {
     sessionStorage.removeItem("current");
     sessionStorage.removeItem('firstMess');
@@ -35,6 +34,25 @@ function Card({ item }) {
     }
   }
 
+  async function handleFriend(id){
+    await axiosInstances.get(`/friendRequest/${id}`)
+    .then((res)=>{
+      if(res.data.message == 'success'){
+        alert("successfully sent friend request");
+      }
+    })
+    .catch((e)=>{
+      if(e.response.data.message === "already a friend"){
+        alert("already sent a friend request or he/she is your already friend.")
+      }else if(e.response.data.message === "user not found"){
+       console.log("user not found");
+      }else{
+        console.log("error in send friend request: ",e.response);
+      }
+      // console.log("error in log: ",e.response);
+    })
+  }
+
   return (
     <div className="flex flex-col justify-center items-center py-4 px-2 mb-4 bg-white shadow-lg rounded-lg" key={item.friendId}>
       {item.photo && !pictureLoad ?
@@ -57,7 +75,7 @@ function Card({ item }) {
         <button onClick={handleClickChat} className="bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 transition duration-300">
           Chat
         </button>
-        <button className='bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 transition duration-300'>Add Friend</button>
+        <button className='bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 transition duration-300' onClick={()=>{handleFriend(item._id)}}>Add Friend</button>
       </div>
     </div>
   );

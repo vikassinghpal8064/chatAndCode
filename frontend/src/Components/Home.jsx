@@ -15,7 +15,7 @@ function Home() {
   async function fetchdata() {
     try{
       let res = await axiosInstances.get("/getAll");
-      if(res.status == '200'){
+      if(res.status == 200){
         setObj(res.data);
         console.log(obj);
         console.log("data oj: ",res.data);

@@ -12,6 +12,7 @@ import ViewProfile from './Pages/Profile/ViewProfile'
 import AddEducation from './Pages/Profile/AddEducation'
 import UpdateEducation from './Pages/Profile/UpdateEducation'
 import UpdateProfile from './Pages/Profile/UpdateProfile'
+import NotifyCard from './Components/reusableComponents/NotifyCard'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path='/user/add-education' element={<AddEducation></AddEducation>}></Route>
         <Route path='/user/update-education' element={<UpdateEducation></UpdateEducation>}></Route>
         <Route path='/user/update-profile' element={<UpdateProfile></UpdateProfile>}></Route>
+        <Route path='/notifications' element={<NotifyCard></NotifyCard>}></Route>
       </Routes>
       
     </div>

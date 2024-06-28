@@ -8,29 +8,23 @@ function NotifyCard() {
   const axiosInstances = SetupAxiosInstances(navigate);
   async function getData(){
     try {
-      let userId = localStorage.getItem("userId");
-      let res = await axiosInstances.get(`/user/${userId}`)
-    console.log("response: ",res.data.notifications);
-    if(res.status == 201){
-      setData(res.data.notifications);
+      let res = await axiosInstances.get(`/user/notification`)
+    console.log("response: ",res.data.notification);
+    console.log("response data:",res.data);
+    if(res.status == 200){
+      setData(res.data.notification);
     }
-    // .then((res)=>{
-    //  if(res.data.message == "success"){
-    //   setData(res.data.notification);
-    //  }
-    // })
-    // .catch((e)=>{
-    //   console.log("failed to get notifications: ",e.response.status)
-    //   console.log("failed to get notifications: ",e.response.data)
-    //   console.log("failed to get notifications: ",e.response)
-    // })
     } catch (error) {
-      console.log("failed to load axios error: ",error);
+      console.error("Failed to load notifications:", error);
+      if (error.response) {
+        console.error("Response error:", error.response.data);
+      }
     }
   }
   useEffect(()=>{
     getData();
   },[])
+
   async function handleAccept(index){
   await axiosInstances.get(`/acceptRequest/${index}`)
   .then((res)=>{

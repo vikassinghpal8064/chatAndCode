@@ -13,10 +13,10 @@ let friendSchema = new mongoose.Schema(
 
     status: {
       type: Boolean,
-      dafault: false,
+      default: false,
     },
 
-    chats:[{type:mongoose.SchemaTypes.ObjectId,
+    chats:[{type:mongoose.Types.ObjectId,
       ref:"Chat"}],
     },
   { timestamps: true }

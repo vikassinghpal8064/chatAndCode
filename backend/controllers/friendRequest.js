@@ -1,5 +1,6 @@
 const express= require("express");
 const router= express.Router();
+const mongoose = require('mongoose');
 const Friend= require("../models/Friend");
 const User= require("../models/User");
 const{setUser,getUser}= require("../middleware/jwt");
@@ -16,8 +17,12 @@ router.get("/friendRequest/:id", validateUser,existingFriendOrNot, async(req,res
         }
         let friendObj= await Friend.create({sourceId:userId,targetId:id});
         await friendObj.save();
+        console.log("Type of friendObj:", typeof friendObj);
+        console.log("Instance of friendObj:", friendObj instanceof Friend);
+        console.log("Type of friendObj._id:", typeof friendObj._id);
+        console.log("Instance of friendObj._id:", friendObj._id instanceof mongoose.Types.ObjectId);
  let notificationObj1={
-    friend:friendObj,
+    friend:friendObj._id,
     category:"sendRequest",
     message:"send you a friend request."
 }
@@ -29,6 +34,7 @@ catch(err){
   return res.status(500).send({message:err.message})
 }
 })
+
 
 //accepting a friend request
 router.get("/acceptRequest/:index", validateUser, async(req,res)=>{
@@ -51,7 +57,7 @@ router.get("/acceptRequest/:index", validateUser, async(req,res)=>{
     user.notifications.splice(index,1);
   }
   let notificationObj = {
-    friend:friend,
+    friend:friend._id,
     category:"friendRequest",
     message:`your friend request is accepted by ${user.firstName+" "+user.lastName}`
   }
@@ -126,7 +132,7 @@ router.get("/user/notification", validateUser, async(req,res)=>{
     let userId = req.user.id;
     console.log("user: ",userId);
     let fullNotification=[];
-    let user = await User.findById(userId);
+    let user = await User.findById(userId).populate('notifications.friend');
    for(let item of user.notifications){
     let sourcePersonInfo= await User.findById(item.friend.sourceId);
     let targetPersonInfo= await User.findById(item.friend.targetId);
@@ -140,6 +146,25 @@ router.get("/user/notification", validateUser, async(req,res)=>{
     res.status(200).send({message:"success",notification:fullNotification});
   } catch (error) {
     res.status(500).send({message:err.message});
+  }
+})
+
+// delete notification
+router.delete("/notification/delete/:index", validateUser,async(req,res)=>{
+  try{
+    let userId = req.user.id;
+    let user= await User.findById(userId);
+    if(user.notifications.length <= index){
+      return res.status(400).send({message:"empty notification"});
+    }
+    if(index >= 0){
+      user.notifications.splice(index,1);
+    }
+    await user.save();
+    return res.status(200).send({message:"success"})
+  }
+  catch(err){
+    return res.status(500).send({message:err.message})
   }
 })
 

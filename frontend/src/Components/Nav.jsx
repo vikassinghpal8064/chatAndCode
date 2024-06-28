@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 function Nav() {
     return(
-        <div className='bg-gray-400 h-16 flex justify-evenly items-center fixed w-full z-50 text-xl font-bold text-white'>
+        <div className='bg-gray-400 h-16 flex justify-evenly items-center fixed w-full z-50 text-xl font-bold text-white top-0'>
         <Link to="/">HOME</Link>
         <Link to="/about" >ABOUT</Link>
         <Link to="/getAllFriends" >FRIENDS</Link>

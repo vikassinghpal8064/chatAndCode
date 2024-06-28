@@ -17,21 +17,18 @@ function Home() {
       let res = await axiosInstances.get("/getAll");
       if(res.status == 200){
         setObj(res.data);
-        console.log(obj);
-        console.log("data oj: ",res.data);
       }
     }
     catch(err){
       console.log("error in fetch all users: ",err);
     }
   }
+  
   async function fetchPostData() {
     try{
       let res = await axiosInstances.get("/allPosts");
       if(res.status == '200'){
         setPost(res.data.posts);
-        console.log(post);
-        console.log("data post: ",res.data.posts);
       }
     }catch(err){
     console.log("error in fetch all posts: ",err);

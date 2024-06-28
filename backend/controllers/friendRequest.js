@@ -133,7 +133,6 @@ router.get("/notification", validateUser ,async(req,res)=>{
   
     let fullNotification=[];
     let user = await User.findById(userId).populate("notifications.friend");
-    console.log(user);
     for(let item of user.notifications){
       let sourcePersonInfo= await User.findById(item.friend.sourceId);
       let targetPersonInfo= await User.findById(item.friend.targetId);
@@ -144,7 +143,7 @@ router.get("/notification", validateUser ,async(req,res)=>{
        }
        fullNotification.push(obj);
      }
-  res.status(200).send({message:fullNotification});
+  res.status(200).send({message:"success",notification:fullNotification});
   }
   catch(err){
     res.status(500).send({message:err.message})

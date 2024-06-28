@@ -17,6 +17,7 @@ function setToken(user){
 
 
 function getUser(token){
+    console.log("i am inside getUser function")
     return jwt.verify(token,secretKey);
 }
 

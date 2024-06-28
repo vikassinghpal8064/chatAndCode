@@ -18,7 +18,7 @@ router.get("/friendRequest/:id", validateUser,existingFriendOrNot, async(req,res
         await friendObj.save();
  let notificationObj1={
     friend:friendObj._id,
-    category:"sendRequest",
+    category:"friendRequest",
     message:"send you a friend request."
 }
 await User.updateOne({_id:id,},{$push:{notifications:notificationObj1}});
@@ -51,7 +51,7 @@ router.get("/acceptRequest/:index", validateUser, async(req,res)=>{
     user.notifications.splice(index,1);
   }
   let notificationObj = {
-    friend:null,
+    friend:friend,
     category:"friendRequest",
     message:`your friend request is accepted by ${user.firstName+" "+user.lastName}`
   }
@@ -120,13 +120,24 @@ router.get("/getAllFriends",validateUser,async(req,res)=>{
 });
 
 // check notification routes
-router.get("/user/notify", validateUser, async(req,res)=>{
+router.get("/user/notification", validateUser, async(req,res)=>{
   try {
+    console.log("hello notification")
     let userId = req.user.id;
     console.log("user: ",userId);
+    let fullNotification=[];
     let user = await User.findById(userId);
-    // let notification = user.notifications;
-    res.status(200).send({message:"success",notification:user});
+   for(let item of user.notifications){
+    let sourcePersonInfo= await User.findById(item.friend.sourceId);
+    let targetPersonInfo= await User.findById(item.friend.targetId);
+     let obj={
+      details:item,
+      sourcePersonInfo:sourcePersonInfo,
+      targetPersonInfo:targetPersonInfo
+     }
+     fullNotification.push(obj);
+   }
+    res.status(200).send({message:"success",notification:fullNotification});
   } catch (error) {
     res.status(500).send({message:err.message});
   }

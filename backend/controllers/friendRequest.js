@@ -17,7 +17,7 @@ router.get("/friendRequest/:id", validateUser,existingFriendOrNot, async(req,res
         let friendObj= await Friend.create({sourceId:userId,targetId:id});
         await friendObj.save();
  let notificationObj1={
-    friend:friendObj._id,
+    friend:friendObj,
     category:"sendRequest",
     message:"send you a friend request."
 }

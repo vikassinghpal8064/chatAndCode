@@ -118,30 +118,34 @@ router.get("/getAllFriends",validateUser,async(req,res)=>{
    return res.status(500).send({error:err.message});
   }
 });
+// notification
+router.get("/notification", validateUser ,async(req,res)=>{
+  try{
+
+    let userId = req.user.id;
+  
+    let fullNotification=[];
+    let user = await User.findById(userId).populate("notifications.friend");
+    console.log(user);
+    for(let item of user.notifications){
+      let sourcePersonInfo= await User.findById(item.friend.sourceId);
+      let targetPersonInfo= await User.findById(item.friend.targetId);
+       let obj={
+        details:item,
+        sourcePersonInfo:sourcePersonInfo,
+        targetPersonInfo:targetPersonInfo
+       }
+       fullNotification.push(obj);
+     }
+  res.status(200).send({message:fullNotification});
+  }
+  catch(err){
+    res.status(500).send({message:err.message})
+  }
+
+})
 
 // check notification routes
-router.get("/user/notification", validateUser, async(req,res)=>{
-  try {
-    console.log("hello notification")
-    let userId = req.user.id;
-    console.log("user: ",userId);
-    let fullNotification=[];
-    let user = await User.findById(userId);
-   for(let item of user.notifications){
-    let sourcePersonInfo= await User.findById(item.friend.sourceId);
-    let targetPersonInfo= await User.findById(item.friend.targetId);
-     let obj={
-      details:item,
-      sourcePersonInfo:sourcePersonInfo,
-      targetPersonInfo:targetPersonInfo
-     }
-     fullNotification.push(obj);
-   }
-    res.status(200).send({message:"success",notification:fullNotification});
-  } catch (error) {
-    res.status(500).send({message:err.message});
-  }
-})
 
 
 module.exports=router;

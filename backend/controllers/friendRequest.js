@@ -48,8 +48,7 @@ router.get("/acceptRequest/:index", validateUser, async(req,res)=>{
   }
   let friendId = user.notifications[index].friend.toString();
   let friend= await Friend.findById(friendId);
-  let senderId= friend.sourceId.toString();
-  let targetId=friend.targetId.toString();
+  let senderId = friend.sourceId.toString();
   let sender= await User.findById(senderId);
   sender.friends.push(friend);
   user.friends.push(friend);
@@ -59,7 +58,7 @@ router.get("/acceptRequest/:index", validateUser, async(req,res)=>{
   let notificationObj = {
     friend:friend._id,
     category:"friendRequest",
-    message:`your friend request is accepted by ${user.firstName+" "+user.lastName}`
+    message: "accepted your friend request."
   }
 sender.notifications.push(notificationObj);
    await user.save();
@@ -82,6 +81,7 @@ router.get("/rejectRequest/:index", validateUser ,async(req,res)=>{
   }
   let friendId = user.notifications[index].friend.toString();
   let friend = await Friend.findByIdAndDelete(friendId);
+
   if(index >= 0){
     user.notifications.splice(index,1);
   }
@@ -94,31 +94,47 @@ router.get("/rejectRequest/:index", validateUser ,async(req,res)=>{
 })
 
 //finding all friends of the login user
-router.get("/getAllFriends",validateUser,async(req,res)=>{
+router.get("/getAllFriends/:id",validateUser,async(req,res)=>{
   try{
-     let userId= req.user.id
-;    let user=await  User.findById(userId)
-    let friendsList= [];
-    for(let item of user.friends){
-      let friendItem= await Friend.findById(item.toString());
-      let sourceId= friendItem.sourceId;
-      let targetId= friendItem.targetId;
-      if(userId!=sourceId){
-        let friend= await User.findById(sourceId)
-      let newObj={...friend._doc,friendId:friendItem._id}
-        friendsList.push(newObj);
-
-      }
-      
-        else{
-          let {_doc}= await User.findById(targetId)
-          let newObj={..._doc,  friendId:friendItem._id.toString()}
-            friendsList.push(newObj);
-    
-      }
-    }
-    console.log(friendsList);
-    return res.status(201).send(friendsList);
+     let {id} = req.params;
+     let userId = req.user.id;
+     if(id == userId){
+      ;   let user = await  User.findById(id)
+          let friendsList = [];
+          for(let item of user.friends){
+            let friendItem = await Friend.findById(item.toString());
+            let sourceId = friendItem.sourceId;
+            let targetId = friendItem.targetId;
+            if(id != sourceId){
+              let friend = await User.findById(sourceId).select('firstName lastName photo email userName')
+              let newObj = {...friend._doc,friendId:friendItem._id}
+              friendsList.push(newObj);
+            }else{
+              let {_doc} = await User.findById(targetId).select('firstName lastName photo email userName')
+              let newObj={..._doc,  friendId:friendItem._id.toString()}
+              friendsList.push(newObj);
+            }
+          }
+          return res.status(201).send(friendsList);
+     }else{
+      ;   let user = await  User.findById(id)
+          let friendsList = [];
+          for(let item of user.friends){
+            let friendItem = await Friend.findById(item.toString());
+            let sourceId = friendItem.sourceId;
+            let targetId = friendItem.targetId;
+            if(id != sourceId){
+              let friend = await User.findById(sourceId).select('firstName lastName photo')
+              let newObj = {...friend._doc,friendId:friendItem._id}
+              friendsList.push(newObj);
+            }else{
+              let {_doc} = await User.findById(targetId).select('firstName lastName photo')
+              let newObj={..._doc,  friendId:friendItem._id.toString()}
+              friendsList.push(newObj);
+            }
+          }
+          return res.status(201).send(friendsList);
+     }
   }
   catch(err){
    return res.status(500).send({error:err.message});

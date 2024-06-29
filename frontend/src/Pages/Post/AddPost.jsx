@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import SetupAxiosInstances from '../../Components/Instances/SetupAxiosInstances';
 import { useNavigate } from 'react-router-dom';
+import Nav from '../../Components/Nav';
 
 function AddPost() {
   let [form,setForm] = useState({
@@ -10,15 +11,19 @@ function AddPost() {
   })
   let navigate = useNavigate();
   const axiosInstances = SetupAxiosInstances(navigate);
+  let userId = localStorage.getItem('userId');
+
   function handleChange(e){
     const {name,value} = e.target;
     setForm({...form,[name]:value});
   }
+  
   async function handleSubmit(e){
     e.preventDefault();
     await axiosInstances.post('/addPost',form)
     .then((res)=>{
      if(res.status == '201'){
+      handleProfile(userId);
       alert("Post added Successfully.")
      }
     })
@@ -26,8 +31,21 @@ function AddPost() {
       console.log("failed to add new post axios error: ",e);
     })
   }
+
+  async function handleProfile(id){
+    await axiosInstances.get(`/user/${id}`)
+    .then((res)=>{
+     setProfile(res.data);
+     navigate(`/ViewProfile/${id}`,{state:{profile:res.data}});
+    })
+    .catch((e)=>{
+      console.log("failed to fetch profile: ",e);
+    })
+  }
+
   return (
     <>
+    <Nav/>
      <div className="flex justify-center">
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
         <div>

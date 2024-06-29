@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import SetupAxiosInstances from '../../Components/Instances/SetupAxiosInstances';
+import Nav from '../../Components/Nav';
 function AddEducation() {
   let [formdata,setFormData] = useState({
     school:{
@@ -14,8 +15,9 @@ function AddEducation() {
       major:''
     }
   })
+  let [profile , setProfile] = useState({});
   let navigate = useNavigate();
-  let {id} = localStorage.getItem('userId');
+  let userId = localStorage.getItem('userId');
   const axiosInstances = SetupAxiosInstances(navigate);
   function handleChange(e){
     const {name,value} = e.target;
@@ -34,7 +36,7 @@ function AddEducation() {
     await axiosInstances.post('/add-education',formdata)
     .then((res)=>{
       if(res.status == 201){
-        navigate(`/ViewProfile/${id}`)
+        handleProfile(userId);
         alert("successfully added the user's education.")
       }
     })
@@ -43,11 +45,23 @@ function AddEducation() {
     })
   }
 
+  async function handleProfile(id){
+    await axiosInstances.get(`/user/${id}`)
+    .then((res)=>{
+     setProfile(res.data);
+     navigate(`/ViewProfile/${id}`,{state:{profile:res.data}});
+    })
+    .catch((e)=>{
+      console.log("failed to fetch profile: ",e);
+    })
+  }
+
   return (
     <>
-    <div className="flex justify-center">
-      <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-        <div>
+    <Nav/>
+    <div className="flex justify-center relative top-16">
+      <form onSubmit={handleSubmit} className="space-y-6 mt-2 mb-2">
+        <div className=''>
           <h2 className="text-3xl mb-4">Add Education</h2>
           <h2>School</h2>
           <label htmlFor="schoolname">School Name: 

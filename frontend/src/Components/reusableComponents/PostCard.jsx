@@ -7,6 +7,7 @@ import CommentCard from './CommentCard';
 
 function PostCard({item,user}) {
   let [pictureLoad,setPictureLoad] = useState(false);
+  let [profile , setProfile] = useState({});
   const [animateLike, setAnimateLike] = useState(false);
   const [animateDisLike, setAnimateDisLike] = useState(false);
   let [likesCount,setLikesCount] = useState(item.likes.length);
@@ -27,12 +28,19 @@ function PostCard({item,user}) {
     return `${day}-${month}-${year}`;
   };
    
-  function handleClick(){
-    let clickId = item.userId._id;
-    localStorage.setItem("clickId",clickId);
-  }
   let navigate = useNavigate();
   let axiosInstances = SetupAxiosInstances(navigate);
+
+  async function handleProfile(id){
+    await axiosInstances.get(`/user/${id}`)
+    .then((res)=>{
+     setProfile(res.data);
+     navigate(`/ViewProfile/${id}`,{state:{profile:res.data}});
+    })
+    .catch((e)=>{
+      console.log("failed to fetch profile: ",e);
+    })
+  }
 
   async function handleLike(id){
   await axiosInstances.get(`/like/post/${id}`)
@@ -138,8 +146,7 @@ function PostCard({item,user}) {
     <div className='w-full py-2 px-4 mb-4 rounded-lg bg-gray-100 group relative transition-all duration-300 ease-in-out'>
       <div className='flex justify-start mb-4'>
       <div className='pr-2 pt-1'>
-          <Link to={`/ViewProfile/${item.userId._id}`}>
-          <button onClick={handleClick}>
+          <button onClick={()=>{handleProfile(item.userId._id)}}>
           {item.userId.photo && !pictureLoad ?
       (
         <>
@@ -151,12 +158,9 @@ function PostCard({item,user}) {
         </>
       )}
           </button>
-          </Link>
       </div>
       <div>
-          <Link to={`/ViewProfile/${item.userId._id}`}>
-          <button onClick={handleClick}><h2 className='text-2xl font-semibold hover:underline hover:text-blue-400'>{item.userId.firstName} {item.userId.lastName && (item.userId.lastName)}</h2></button>
-          </Link>
+          <button onClick={()=>{handleProfile(item.userId._id)}}><h2 className='text-2xl font-semibold hover:underline hover:text-blue-400'>{item.userId.firstName} {item.userId.lastName && (item.userId.lastName)}</h2></button>
         <h2 className='text-sm text-gray-400'>{formatDate(item.createdAt)}</h2>
       </div>
       </div>
@@ -226,7 +230,7 @@ function PostCard({item,user}) {
       )}
               </div>
               <div className='w-9/12'>
-               <input type="text" className='h-full w-full p-2 text-center rounded-lg' onChange={handleChange} placeholder={`${user.firstName} ${user.lastName &&(user.lastName)} comment here ...`} value={comment}/>
+               <input type="text" className='h-full w-full p-2 text-center rounded-lg' onChange={handleChange} placeholder={`${user?.firstName ?? ''} ${user?.lastName ?? ''} comment here ...`} value={comment}/>
               </div>
               <div>
                 <button onClick={()=>{handleComment(item._id)}} className='bg-green-400 p-2 rounded-lg text-green-800'>Comment</button>

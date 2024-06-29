@@ -12,7 +12,7 @@ function setToken(user){
         lastName:user.lastName,
         userName:user.userName
     }
-   return jwt.sign(payload,secretKey);
+   return jwt.sign(payload,secretKey,{expiresIn:'3h'});
 }
 
 

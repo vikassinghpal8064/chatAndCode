@@ -2,6 +2,7 @@ import React, { useState} from "react";
 import { useNavigate ,Link} from "react-router-dom";
 import {FiEye,FiEyeOff} from 'react-icons/fi';
 import SetupAxiosInstances from "../Instances/SetupAxiosInstances";
+import Nav from "../Nav";
 
 function Signup() {
   let [formData,setFormData] = useState({
@@ -45,6 +46,8 @@ function Signup() {
   }
 
   return (
+    <>
+    <Nav/>
     <div className='flex bg-cover items-center justify-around relative top-16' style={{backgroundImage:'url(/Assets/landing.avif)',height:'calc(100vh - 64px)'}}>
       <div className='flex flex-col items-center justify-center'>
         <p className='font-bold text-3xl mb-2'>Hello!</p>
@@ -54,7 +57,7 @@ function Signup() {
 <div className="flex justify-center bg-white p-4 rounded-lg relative w-auto">
       <form onSubmit={handleSubmit}>
         <div className="text-md">
-          <h2 className="text-2xl font-bold absolute right-6 top-4">FriendsBook</h2>
+          <h2 className="text-2xl font-bold absolute right-6 top-4 text-gray-500">Chat<sub className="text-gray-300">&</sub>Code</h2>
           <h2 className='mt-4 text-xl font-semibold'>Create an account</h2>
           <h2 className='mb-4 text-md font-medium text-gray-500'>Sign up to Continue</h2>
           <div className="grid gap-4 grid-cols-10">
@@ -113,6 +116,7 @@ function Signup() {
       </form>
     </div>
     </div>
+    </>
   );
 }
 

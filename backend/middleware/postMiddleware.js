@@ -5,26 +5,24 @@ const {getUser}= require('./jwt')
 
 const validateUser = (req, res, next) => {
     try {
-        console.log('i am inside validate user')
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
-
-        if (!token) {
-             res.status(401).send({ message: 'No token provided' });
-             return;
-        }
-
-        const user = getUser(token);
-        console.log(user);
-        if (!user) {
-             res.status(401).send({ message: 'Invalid token' });
-             return;
-        }
-
-        // Attach the user information to the request object
-        req.user = user;
-
-        next();
+      const authHeader = req.headers['authorization'];
+      const token = authHeader && authHeader.split(' ')[1];
+  
+      if (!token) {
+        res.status(401).send({ message: 'No token provided' });
+        return;
+      }
+  
+      const user = getUser(token);
+  
+      if (!user) {
+        res.status(401).send({ message: 'Invalid token' });
+        return;
+      }
+  
+      // Attach the user information to the request object
+      req.user = user;
+      next();
     } catch (err) {
         res.status(500).send({ message: err.message });
     }

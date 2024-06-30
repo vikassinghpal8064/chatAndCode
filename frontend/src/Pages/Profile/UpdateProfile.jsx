@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import SetupAxiosInstances from '../../Components/Instances/SetupAxiosInstances';
+import Nav from '../../Components/Nav';
 function UpdateProfile() {
   let [formdata,setFormData] = useState({
     firstName:'',
@@ -10,17 +11,19 @@ function UpdateProfile() {
   })
   let navigate = useNavigate();
   const axiosInstances = SetupAxiosInstances(navigate);
+  
   function handleChange(e){
     const {name,value} = e.target;
     setFormData({...formdata,[name]:value});
   }
   let userId = localStorage.getItem('userId');
+
   async function handleSubmit(e){
     e.preventDefault();
     await axiosInstances.put('/update-profile',formdata)
     .then((res)=>{
       if(res.status == 200){
-        navigate(`/ViewProfile/${userId}`);
+        handleProfile(userId);
         alert("successfully updated the user's profile.")
       }
     })
@@ -29,9 +32,21 @@ function UpdateProfile() {
     })
   }
 
+  async function handleProfile(id){
+    await axiosInstances.get(`/user/${id}`)
+    .then((res)=>{
+     setProfile(res.data);
+     navigate(`/ViewProfile/${id}`,{state:{profile:res.data}});
+    })
+    .catch((e)=>{
+      console.log("failed to fetch profile: ",e);
+    })
+  }
+
   return (
     <>
-    <div className="flex justify-center">
+    <Nav/>
+    <div className="flex justify-center relative top-16">
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
         <div>
           <h2 className="text-3xl mb-4">Update Profile</h2>

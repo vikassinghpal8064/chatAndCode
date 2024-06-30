@@ -29,11 +29,13 @@ router.post("/addPost", validateUser, async (req, res) => {
 // find all post of the user
 router.get("/allPosts", async (req, res) => {
   try {
-   let page= parseInt(req.query.page)  || 1;
+   let page = parseInt(req.query.page)  || 1;
    let limit=5
    let skip = (page-1)*limit;
-   let allPost= await Post.find({}).populate('userId').populate({path:'comments.commentedBy',select:'firstName lastName photo'}).skip(skip).limit(limit);
-   res.status(200).send({posts:allPost})
+   let allPost= await Post.find({}).populate('userId').populate({path:'comments.commentedBy',select:'firstName lastName photo'}).sort({createdAt:-1}).skip(skip).limit(limit);
+   let totalPosts = await Post.countDocuments({});
+   let totalPages = Math.ceil(totalPosts / limit);
+   res.status(200).send({posts:allPost , totalPages:totalPages})
   } catch (err) {
     res.status(500).send({ message: err.message });
   }

@@ -8,7 +8,6 @@ const auth = require("./controllers/auth");
 const profile = require("./controllers/profile");
 const post= require("./controllers/post");
 const friendRequest= require("./controllers/friendRequest");
-const notifyRoute = require("./controllers/notifyRoute");
 const chatMessages= require("./controllers/sockets/chatMessages");
 const cookieParser = require("cookie-parser");
 const {chat} = require("./controllers/sockets/chatting");
@@ -48,7 +47,6 @@ app.use(auth);
 app.use(profile);
 app.use(post);
 app.use(friendRequest);
-app.use(notifyRoute);
 
 app.use(file);
 chat(server);

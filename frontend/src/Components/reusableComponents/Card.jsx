@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import {useNavigate } from 'react-router-dom';
 import SetupAxiosInstances from '../Instances/SetupAxiosInstances';
 
 function Card({ item }) {
   const [arr, setArr] = useState([]);
   let [pictureLoad,setPictureLoad] = useState(false);
+  let [isFriend,setIsFriend] = useState(false);
   let [profile,setProfile] = useState({});
   const navigate = useNavigate();
   const axiosInstances = SetupAxiosInstances(navigate);
-
+ let userId = localStorage.getItem('userId');
   async function handleClickChat() {
     sessionStorage.removeItem("current");
     sessionStorage.removeItem('firstMess');
@@ -34,6 +35,23 @@ function Card({ item }) {
       console.error('Error fetching chat data:', error);
     }
   }
+
+  useEffect(()=>{
+    async function getFriendList(userId){
+      await axiosInstances.get(`/getAllFriends/${userId}`)
+      .then((res)=>{
+       const friendId = res.data ? res.data.map(friend => friend._id) : [];
+       setIsFriend(friendId.includes(item._id));
+       console.log("friend data: ",res.data);
+      })
+      .catch((e)=>{
+        console.log("failed to load friendLIst: ",e);
+      })
+    }
+    if(userId){
+      getFriendList(userId);
+    }
+  },[userId])
 
   async function handleProfile(id){
     await axiosInstances.get(`/user/${id}`)
@@ -81,10 +99,18 @@ function Card({ item }) {
           <button onClick={()=>{handleProfile(item._id)}} className="bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 transition duration-300">
             Profile
           </button>
+        
+        {item._id != userId && (
+          <>
+          {isFriend ? (
         <button onClick={handleClickChat} className="bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 transition duration-300">
-          Chat
-        </button>
-        <button className='bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 transition duration-300' onClick={()=>{handleFriend(item._id)}}>Add Friend</button>
+        Message
+      </button>
+          ):(
+            <button className='bg-cyan-400 text-white py-2 px-4 rounded-md hover:bg-cyan-500 transition duration-300' onClick={()=>{handleFriend(item._id)}}>Add Friend</button>
+          )}
+          </>
+        )}
       </div>
     </div>
   );

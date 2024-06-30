@@ -6,6 +6,7 @@ import AboutSection from '../../Components/reusableComponents/AboutSection';
 import PostSection from '../../Components/reusableComponents/PostSection';
 import ProfileFriendCard from '../../Components/reusableComponents/ProfileFriendCard';
 import Nav from '../../Components/Nav';
+
 function ViewProfile() {
     const [activeSection,setActiveSection] = useState(null);
     const [friendList, setFriendList] = useState([]);

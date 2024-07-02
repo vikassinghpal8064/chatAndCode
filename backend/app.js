@@ -28,8 +28,8 @@ main().then(()=>{
     console.log(`error in mongodb connection ${err}`)
 });
 app.use(cors({
-    origin:[process.env.ALLOWED_URL],
-    // origin:"*",
+    // origin:[process.env.ALLOWED_URL],
+    origin:"*",
     credentials:true,
 }))
 

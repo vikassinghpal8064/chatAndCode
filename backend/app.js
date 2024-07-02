@@ -48,9 +48,13 @@ app.use(auth);
 app.use(profile);
 app.use(post);
 app.use(friendRequest);
-
 app.use(file);
 chat(server);
+
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+});
 
 server.listen(process.env.PORT,()=>{
     console.log("server connected to port");

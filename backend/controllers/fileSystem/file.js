@@ -4,9 +4,15 @@ const path = require('path');
 const router = express.Router();
 
 // Ensure the 'uploads' directory exists
-const uploadDir = path.join(__dirname, 'assets');
+// const uploadDir = path.join(__dirname, 'assets');
+// if (!fs.existsSync(uploadDir)) {
+//   fs.mkdirSync(uploadDir);
+// }
+
+// Use the /tmp directory for serverless environment
+const uploadDir = path.join('/tmp', 'assets');
 if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
+  fs.mkdirSync(uploadDir, { recursive: true });
 }
 
 router.post('/upload', (req, res) => {

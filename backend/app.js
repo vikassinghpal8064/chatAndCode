@@ -4,6 +4,7 @@ const mongoose= require("mongoose");
 const methodOverride = require("method-override");
 const cors= require("cors")
 const app = express();
+const fs = require('fs');
 const auth = require("./controllers/auth");
 const profile = require("./controllers/profile");
 const post= require("./controllers/post");

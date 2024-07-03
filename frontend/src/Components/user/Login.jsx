@@ -45,11 +45,11 @@ function Login() {
         navigate('/');
       }
     } catch (error) {
-      if(error.response.data.message == 'incorrect password or username'){
+      if(error.message == 'incorrect password or username'){
         alert("incorrect username or password, Please enter credentials correctly.")
-      }else if(error.response.data.message == "user not found"){
+      }else if(error.message == "user not found"){
        alert("this user does not exist.")
-      }else if(error.response.data.message == "username and password are required"){
+      }else if(error.message == "username and password are required"){
      alert("Please fill all required field.")
       }else{
         console.log("error in fetch login: ",error);

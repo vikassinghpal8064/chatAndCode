@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { useLocation } from 'react-router-dom';
+import Nav from '../Nav';
 
 function Chat() {
   const location = useLocation();
@@ -79,8 +80,10 @@ console.log(messages);
   }
 
   return (
-    <div className='bg-gradient-to-t from-red-400 to-blue-400 flex justify-center h-full mb-12'>
-      <div className='w-100 bg-gradient-to-r from-red-50 to-red-400 rounded-md p-4'>
+    <>
+    <Nav/>
+    <div className='bg-gradient-to-t from-red-400 to-blue-400 flex justify-center overflow-y-auto relative top-16' style={{height:'calc(100vh - 64px)', scrollbarWidth:'none'}}>
+      <div className='w-100 bg-gradient-to-r h-full from-red-50 mb-11 to-red-400 p-4 overflow-y-auto' style={{scrollbarWidth:'none', height:'calc(100% - 46px)'}}>
         <ul className='space-y-5 grid'>
           {messages.map((item, index) => (
             item.sourceId == localStorage.getItem('userId') ? (
@@ -110,10 +113,10 @@ console.log(messages);
           <input ref={inputRef} className='bg-slate-300 rounded-md h-10 mr-2 w-full' type="text" />
           <input  onChange={handleFileChange} className='p-2  ' type="file" />
           <button onClick={handleClick} className='bg-green-500 rounded-md w-20 h-10'>Send</button>
-        </div>
+      </div>
     </div>
+    </>
   );
-  
 }
 
 export default Chat;

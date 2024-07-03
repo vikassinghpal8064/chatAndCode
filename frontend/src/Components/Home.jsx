@@ -15,6 +15,7 @@ function Home() {
   const navigate = useNavigate();
   const axiosInstances = SetupAxiosInstances(navigate);
 
+  
   async function fetchdata() {
     try{
       let res = await axiosInstances.get("/getAll");

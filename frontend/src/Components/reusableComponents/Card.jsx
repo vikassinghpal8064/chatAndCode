@@ -36,6 +36,7 @@ function Card({ item }) {
     }
   }
 
+  
   useEffect(()=>{
     async function getFriendList(userId){
       await axiosInstances.get(`/getAllFriends/${userId}`)

@@ -41,4 +41,5 @@ function ProfileFriendCard({item}) {
   )
 }
 
+
 export default ProfileFriendCard

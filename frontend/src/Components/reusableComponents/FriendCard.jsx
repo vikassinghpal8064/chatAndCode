@@ -46,6 +46,7 @@ function FriendCard({item}) {
     })
   }
 
+  
   return (
     <div className="flex gap-4 items-center py-4 px-2 mb-4 bg-white shadow-lg rounded-lg" key={item._id}>
       <div className='cursor-pointer' onClick={()=>{handleProfile(item._id)}}>

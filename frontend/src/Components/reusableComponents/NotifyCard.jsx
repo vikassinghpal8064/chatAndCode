@@ -151,4 +151,5 @@ function NotifyCard() {
   )
 }
 
+
 export default NotifyCard

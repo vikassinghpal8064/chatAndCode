@@ -68,4 +68,5 @@ function ProfilePostCard({item}) {
   )
 }
 
+
 export default ProfilePostCard

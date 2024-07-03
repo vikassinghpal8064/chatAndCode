@@ -45,4 +45,5 @@ function CommentCard({item}) {
   )
 }
 
+
 export default CommentCard

@@ -56,6 +56,7 @@ function AddEducation() {
     })
   }
 
+  
   return (
     <>
     <Nav/>

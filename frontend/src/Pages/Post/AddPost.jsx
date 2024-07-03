@@ -18,6 +18,7 @@ function AddPost() {
     setForm({...form,[name]:value});
   }
   
+  
   async function handleSubmit(e){
     e.preventDefault();
     await axiosInstances.post('/addPost',form)

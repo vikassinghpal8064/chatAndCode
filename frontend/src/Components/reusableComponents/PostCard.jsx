@@ -228,6 +228,7 @@ function PostCard({item,user}) {
         <img src="/Assets/profile.png" className='w-8 h-8 rounded-full border-black border-2 bg-gray-100'/>
         </>
       )}
+      
               </div>
               <div className='w-9/12'>
                <input type="text" className='h-full w-full p-2 text-center rounded-lg' onChange={handleChange} placeholder={`${user?.firstName ?? ''} ${user?.lastName ?? ''} comment here ...`} value={comment}/>

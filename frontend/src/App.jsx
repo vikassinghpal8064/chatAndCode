@@ -12,6 +12,7 @@ import UpdateEducation from './Pages/Profile/UpdateEducation'
 import UpdateProfile from './Pages/Profile/UpdateProfile'
 import NotifyCard from './Components/reusableComponents/NotifyCard'
 
+
 function App() {
   return (
     <div>

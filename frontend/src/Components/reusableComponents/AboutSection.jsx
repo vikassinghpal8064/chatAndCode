@@ -10,6 +10,7 @@ function AboutSection() {
           <Link to={'/user/notifications'} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Notifications</Link>
         </div>
   );
+  
 }
 
 export default AboutSection

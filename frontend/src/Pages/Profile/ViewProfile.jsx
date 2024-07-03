@@ -21,6 +21,7 @@ function ViewProfile() {
     let navigate = useNavigate();
     const axiosInstances = SetupAxiosInstances(navigate);
     
+    
     useEffect(()=>{
       async function getFriendList(profileId){
         await axiosInstances.get(`/getAllFriends/${profileId}`)

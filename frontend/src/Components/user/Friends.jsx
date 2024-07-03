@@ -17,6 +17,7 @@ function Friends() {
         console.log("friend data user: ",res.data);
     }
     getData();
+    
     },[])
 
   return (

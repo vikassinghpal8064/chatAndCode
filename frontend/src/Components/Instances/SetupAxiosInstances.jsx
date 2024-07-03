@@ -19,6 +19,7 @@ const SetupAxiosInstances = (navigate)=> {
   }
   )
   
+  
   axiosInstances.interceptors.response.use(
     (response)=>{
      return response;

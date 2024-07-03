@@ -15,6 +15,7 @@
   }
   50% {
     transform: scale(7);
+    
     opacity: 0.75;
   }
   100% {

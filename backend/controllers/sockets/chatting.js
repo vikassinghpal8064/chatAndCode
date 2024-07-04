@@ -14,7 +14,7 @@ if (!fs.existsSync(uploadDir)) {
 function chat(server) {
   const io = new Server(server, {
     cors: {
-      origin: "https://chatandcode.vercel.app",
+      origin: process.env.ALLOWED_URL,
       methods: ["GET", "POST"],
       credentials: true,
     },

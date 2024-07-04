@@ -44,21 +44,21 @@ function Nav() {
   }
 
     return(
-        <div className='bg-gray-400 h-16 flex justify-evenly items-center fixed w-full z-50 text-xl font-bold text-white top-0'>
-        <div><h2 className='text-2xl text-gray-500'>Chat<sub className='text-gray-200'>&</sub>Code</h2></div>
-        <Link to={'/'}><div>Home</div></Link>
+      <div className='flex flex-col xs:flex-row xs:fixed xs:top-0 text-white bg-gray-400 items-start xs:items-center justify-evenly w-full h-40 xs:h-10 sm:h-12 md:h-14 lg:h-16 z-50 text-base sm:text-md md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-bold pl-7 xs:p-0' style={{overflowX:'hidden'}}>
+        <div className='text-gray-500 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl'>Chat<sub className='text-gray-200'>&</sub>Code</div>
+        <Link to={'/'}><div className='w-screen-7 xs:w-auto cursor-pointer'>Home</div></Link>
         {isLoggedIn ? (
           <>
-          <div onClick={()=>handleProfile(userId)}>Profile</div>
-          <Link to={'/friend-list'}><div>Friends</div></Link>
-          <Link to={'/notifications'}><div>Notification</div></Link>
-          <div onClick={handleLogout}>Logout</div>
+            <div className='w-screen-7 xs:w-auto cursor-pointer' onClick={()=>handleProfile(userId)}>Profile</div>
+            <Link to={'/friend-list'}><div className='w-screen-7 xs:w-auto cursor-pointer'>Friends</div></Link>
+            <Link to={'/notifications'}><div className='w-screen-7 xs:w-auto cursor-pointer'>Notifications</div></Link>
+            <div className='w-screen-7 xs:w-auto cursor-pointer' onClick={handleLogout}>Logout</div>
           </>
-        ):(
+          ):(
           <>
-          <Link><div>About</div></Link>
-          <Link to={'/signup'}><div>SignUp</div></Link>
-          <Link to={'/login'}><div>Login</div></Link>
+            <Link to={'/about'}><div className='w-screen-7 xs:w-auto cursor-pointer'>About</div></Link>
+            <Link to={'/signup'}><div className='w-screen-7 xs:w-auto cursor-pointer'>SignUp</div></Link>
+            <Link to={'/login'}><div className='w-screen-7 xs:w-auto cursor-pointer'>Login</div></Link>
           </>
         )}
       </div>

@@ -57,33 +57,29 @@ function Login() {
     }
   }
   
-
   return (
     <>
     <Nav/>
-    <div className='flex bg-cover items-center justify-around relative top-16' style={{backgroundImage:'url(/Assets/landing.avif)',height:'calc(100vh - 64px)'}}>
-      <div className='flex flex-col items-center justify-center'>
-        <p className='font-bold text-3xl mb-2'>Hello!</p>
-       <p className='font-semibold text-2xl mb-2 text-white'>Don't have a account ?</p>
-       <Link to={'/signup'} className='mt-2'><button className='bg-blue-500 text-white rounded-md w-72 py-2 px-4 hover:bg-blue-700 font-medium'>Sign up</button></Link>
-      </div>
-<div className="flex justify-center bg-white p-4 rounded-lg relative w-auto">
+    <div className='flex flex-col xs:flex-row bg-cover items-center justify-around xs:relative xs:top-10 h-screen-160 xs:h-screen-40' style={{backgroundImage:'url(/Assets/landing.avif)',overflowX:'hidden'}}>
+    <div className='flex flex-col items-center justify-center'>
+        <p className='font-bold text-lg sm:text-xl md:text-3xl mb-1 md:mb-2'>Hello!</p>
+       <p className='font-semibold text-base md:text-2xl mb-1 md:mb-2 sm:text-lg text-white'>Don't have a account ?</p>
+       <Link to={'/signup'} className='mt-1 md:mt-2'><button className='bg-blue-500 text-base text-white rounded-md w-52 py-1 md:py-2 px-4 hover:bg-blue-700 font-medium xs:w-40 sm:w-52 sm:text-lg md:w-72 md:text-xl'>Sign up</button></Link>
+    </div>
+    <div className="flex flex-col justify-center bg-white p-2 md:p-4 rounded-lg relative w-76 xs:w-60 sm:w-76 md:w-96">
       <form onSubmit={handleSubmit}>
-        <div className="text-md">
-          <h2 className="text-2xl font-bold absolute right-6 top-4 text-gray-500">Chat<sub className='text-gray-300'>&</sub>Code</h2>
-          <h2 className='mt-4 text-xl font-semibold'>Welcome Back !!</h2>
-          <h2 className='mb-4 text-md font-medium text-gray-500'>Sign in to Continue</h2>
+        <div className='text-base sm:text-lg md:text-xl'>
+          <h2 className="text-base sm:text-lg md:text-2xl font-bold absolute top-1 right-2 md:right-4 md:top-4 text-gray-500">Chat<sub className='text-gray-300'>&</sub>Code</h2>
+          <h2 className='md:mt-4 text-base sm:text-lg md:text-xl font-semibold'>Welcome Back !!</h2>
+          <h2 className='mb-2 md:mb-4 text-xs sm:text-sm md:text-md font-medium text-gray-500'>Sign in to Continue</h2>
             <label htmlFor="first" className="font-medium">Username</label>
-            <br />
-            <input  type="text"  name="userName"  placeholder="User Name"  onChange={handleChange} id='first'  className="rounded-md text-center border-gray-400 border py-2 px-1 mb-2 w-96" required/>
-            <br />
+            <input  type="text"  name="userName"  placeholder="User Name"  onChange={handleChange} id='first'  className="rounded-sm xs:rounded-md text-center border-gray-400 border md:py-2 px-1 mb-1 md:mb-2 w-48 xs:w-56 ml-3 xs:block xs:ml-0 sm:w-72 md:w-88" required/>
             <label htmlFor="pass" className="font-medium">Password</label>
-           <br />
-          <div className='relative'>
-          <input type={passwordVisible ? 'text':'password'} name="password" placeholder="Password" onChange={handleChange} id='pass' className="rounded-md text-center border-gray-400 border mb-2 py-2 px-1 w-96" required/>
-          <button type='button' className='absolute mb-2 right-0 rounded-e-md py-2 px-4 inset-y-0 bg-gray-500' onClick={togglePassword}>{passwordVisible ? <FiEye/> :<FiEyeOff/>}</button>
+          <div className='relative inline pl-4 xs:pl-0 xs:block'>
+          <input type={passwordVisible ? 'text':'password'} name="password" placeholder="Password" onChange={handleChange} id='pass' className="rounded-sm xs:rounded-md text-center border-gray-400 border mb-1 md:mb-2 md:py-2 px-1 w-48 xs:w-56 sm:w-72 md:w-88" required/>
+          <button type='button' className='absolute sm:h-7 md:h-11 md:mb-2 right-0 rounded-e-sm xs:rounded-e-md px-2 md:py-2 md:px-4 -inset-y-0.5 bg-gray-500 h-6 xs:inset-y-0' onClick={togglePassword}>{passwordVisible ? <FiEye/> :<FiEyeOff/>}</button>
           </div>
-          <button type="submit" className="bg-blue-500 text-white rounded-md px-4 py-2 w-full hover:bg-blue-700 mb-4 mt-4">Sign in</button>
+          <button type="submit" className="bg-blue-500 text-white rounded-md px-4 md:py-2 w-72 xs:w-56 hover:bg-blue-700  mt-2 mb-1 md:mb-4 md:mt-4 sm:w-72 sm:mb-2 md:w-full">Sign in</button>
         </div>
       </form>
     </div>

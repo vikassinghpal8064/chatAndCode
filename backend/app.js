@@ -29,8 +29,7 @@ main().then(()=>{
     console.log(`error in mongodb connection ${err}`)
 });
 app.use(cors({
-    // origin:[process.env.ALLOWED_URL],
-    origin:"https://chatandcode.vercel.app",
+    origin:[process.env.ALLOWED_URL],
     credentials:true,
 }))
 
@@ -38,7 +37,7 @@ app.options('*', cors()); // Enable preflight requests for all routes
 
 // Middleware to set headers
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://chatandcode.vercel.app');
+  res.header('Access-Control-Allow-Origin', process.env.ALLOWED_URL);
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Credentials', 'true');

@@ -19,27 +19,27 @@ function CommentCard({item}) {
   }
 
   return (
-    <div className='w-full px-2 py-1 mb-1 bg-green-100 rounded-lg'>
+    <div className='w-full px-1 xs:px-2 py-1 mb-1 bg-green-100 xs:rounded-md sm:rounded-lg rounded-lg'>
     <div className='flex'>
-      <button onClick={()=>handleClick(item.commentedBy._id)}>
+      <button onClick={()=>handleClick(item.commentedBy._id)} >
       {item.commentedBy.photo && !pictureLoad ?
       (
         <>
-        <img src={user.photo} onError={()=>setPictureLoad(true)} className='w-8 h-8 rounded-full border-black border-2 bg-gray-100'/>
+        <img src={user.photo} onError={()=>setPictureLoad(true)} className='md:w-10 md:h-10 w-8 h-8 rounded-full border-black border-2 bg-gray-100'/>
         </>
       ):(
         <>
-        <img src="/Assets/profile.png" className='w-8 h-8 rounded-full border-black border-2 bg-gray-100'/>
+        <img src="/Assets/profile.png" className='md:w-10 md:h-10 w-8 h-8 rounded-full border-black border-2 bg-gray-100'/>
         </>
       )}
       </button>
       <div className='flex items-center justify-between w-full'>
-      <button onClick={()=>handleClick(item.commentedBy._id)} className='text-md pl-2 font-semibold text-gray-900 hover:text-blue-600 hover:underline'>{item.commentedBy.firstName} {item.commentedBy.lastName && (item.commentedBy.lastName)}</button>
+      <button onClick={()=>handleClick(item.commentedBy._id)} className='text-xs xs:text-base md:text-lg pl-1 xs:pl-2 line-clamp-1 font-semibold text-gray-900 hover:text-blue-600 hover:underline'>{item.commentedBy.firstName} {item.commentedBy.lastName && (item.commentedBy.lastName)}</button>
       <p className='text-xs pl-2 font-semibold'>{formatDate(item.createdAt)}</p>
       </div>
     </div>
     <div>
-    <p className='text-sm font-semibold pl-10'>{item.comment}</p>
+    <p className='text-xs xs:text-xs sm:text-sm md:text-base font-semibold pl-10'>{item.comment}</p>
     </div>
     </div>
   )

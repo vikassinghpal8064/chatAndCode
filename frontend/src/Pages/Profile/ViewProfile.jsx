@@ -84,11 +84,9 @@ function ViewProfile() {
   return (
    <>
    <Nav/>
-    <div className='w-11/12 bg-gray-200 mx-auto py-2 px-4 flex relative top-16' style={{height:'calc(100vh)'}}>
-        <div className='w-2/5 h-auto bg-yellow-500 mt-10 rounded-lg mr-10'>
-
+    <div className='lg:w-full bg-gray-200 mx-auto py-2 lg:px-2 flex xs:relative lg:top-16 lg:h-screen-64'>
+      <div className='w-2/5 h-auto bg-yellow-500 mt-10 rounded-lg lg:mr-2 relative group'>
         <div className='w-full flex-col flex h-56 relative'>
-
         {profile.photo && !pictureLoad ?
       (
         <>
@@ -110,9 +108,14 @@ function ViewProfile() {
         </div>
       )}
         </div>
+
+
+
+
+
         <div className='px-2 w-full flex h-24'>
         <div className='flex flex-col w-2/5 justify-start items-start'>
-         <h2 className='text-2xl font-semibold pr-2 line-clamp-1'>{profile.firstName} {profile.lastName && (profile.lastName)}</h2>
+         <h2 className='text-2xl font-semibold pr-2 line-clamp-1 group-hover:line-clamp-none'>{profile.firstName} {profile.lastName && (profile.lastName)}</h2>
          <h2 className='text-md font-medium text-gray-200'>@{profile.userName}</h2>
          <div className='flex justify-start'>
           {profile._id != userId && (
@@ -194,15 +197,26 @@ function ViewProfile() {
                    )
                   })}
                   </div>
-                  </div>
-                  <div className='w-3/5 flex relative' style={{height:'calc(100% - 40px)'}}>
-                   <div>
-                     <button className={`font-semibold text-lg py-2 px-4 inline-flex items-center ${activeSection == 'about' ? 'text-blue-500 underline' : 'text-gray-800'}`} onClick={()=>toggleSection('about')}>About</button>
-                     <button className={`font-semibold text-lg py-2 px-4 inline-flex items-center ${activeSection == 'post' ? 'text-blue-500 underline' : 'text-gray-800'}`} onClick={()=>toggleSection('post')}>Post</button>
-                   </div>
-                     {activeSection === 'about' && <AboutSection/>}
-                     {activeSection === 'post' && <PostSection postSection={profile.posts}/>}
-                  </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+      <div className='w-3/5 flex xs:relative lg:h-screen-120'>
+       <div>
+         <button className={`font-semibold text-lg py-2 px-4 inline-flex items-center ${activeSection == 'about' ?'text-blue-500 underline' : 'text-gray-800'}`} onClick={()=>toggleSection('about')}>About</button>
+         <button className={`font-semibold text-lg py-2 px-4 inline-flex items-center ${activeSection == 'post' ? 'text-blue-500 underline' : 'text-gray-800'}`} onClick={()=>toggleSection('post')}>Post</button>
+       </div>
+         {activeSection === 'about' && <AboutSection/>}
+         {activeSection === 'post' && <PostSection postSection={profile.posts}/>}
+      </div>
     </div>
    </>
   );

@@ -165,11 +165,11 @@ function PostCard({item,user}) {
       </div>
       </div>
       <div>
-      <h2 className='xs:text-lg sm:text-xl text-sm xxs:text-base font-semibold xs:pb-1 pb-2'>{item.title}</h2>
+      <h2 className='xs:text-lg sm:text-xl text-sm xxs:text-base font-semibold xs:pb-1 pb-2 line-clamp-1 group-hover:line-clamp-none transition-all duration-300 ease-in-out'>{item.title}</h2>
       <div className='bg-gray-300 w-full xs:h-40 sm:h-50 md:h-60 h-35'>
       <img className='xs:h-40 sm:h-50 md:h-60 h-35 w-auto mx-auto' src={item.upload} />
       </div>
-      <h2 className='xs:text-lg sm:text-xl text-sm xxs:text-base font-medium xs:py-1 sm:py-2 py-2 line-clamp-3 expand-text'>{item.desc}</h2>
+      <h2 className='xs:text-lg sm:text-xl text-sm xxs:text-base font-medium xs:py-1 sm:py-2 py-2 line-clamp-2 expand-text group-hover:line-clamp-none transition-all duration-300 ease-in-out'>{item.desc}</h2>
       </div>
        <div className={`transition-all duration-500 ease-in-out overflow-hidden ${isOpen ? 'h-auto' : 'h-0 group-hover:h-7 xs:group-hover:h-5 sm:group-hover:h-6 md:group-hover:h-7'}`}>
         <div className='h-full flex justify-evenly border-t-2 border-gray-300'>

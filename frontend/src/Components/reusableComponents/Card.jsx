@@ -84,7 +84,7 @@ function Card({ item }) {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center xs:py-2 xs:px-1 xs:mb-2 md:mb-3 md:px-2 py-2 px-1 mb-2 bg-white shadow-md xs:shadow-md sm:shadow-lg xs:rounded-md sm:rounded-lg rounded-md" key={item._id}>
+    <div className="flex flex-col justify-center items-center xs:py-2 xs:px-1 xs:mb-2 md:mb-3 md:px-2 py-2 px-1 mb-2 bg-white shadow-md xs:shadow-md sm:shadow-lg xs:rounded-md sm:rounded-lg rounded-md relative group transition-all duration-300 ease-in-out" key={item._id}>
       {item.photo && !pictureLoad ?
       (
         <>
@@ -95,7 +95,7 @@ function Card({ item }) {
         <img src="/Assets/profile.png" className='xs:w-20 xs:h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 w-20 h-20 rounded-full border-black border-2'/>
         </>
       )}
-      <h3 className="xs:mt-2 xs:text-sm sm:text-base md:text-lg line-clamp-1 mt-2 text-xs font-semibold">{item.firstName} {item.lastName}</h3>
+      <h3 className="xs:mt-2 xs:text-sm sm:text-base md:text-lg line-clamp-1 mt-2 text-xs font-semibold group-hover:line-clamp-none transition-all duration-300 ease-in-out">{item.firstName} {item.lastName}</h3>
       <div className='flex xs:gap-1 xs:mt-2 xs:text-xs gap-1 mt-2 justify-center text-xs flex-col sm:flex-row md:text-base'>
           <button onClick={()=>{handleProfile(item._id)}} className="bg-cyan-400 text-white xs:py-1 xs:px-2 py-1 px-2 rounded-md hover:bg-cyan-500 transition duration-300">
             Profile
@@ -108,7 +108,7 @@ function Card({ item }) {
         Message
       </button>
           ):(
-            <button className='bg-cyan-400 text-white xs:py-1 xs:px-2 py-1 px-2 rounded-md hover:bg-cyan-500 transition duration-300' onClick={()=>{handleFriend(item._id)}}>Add Friend</button>
+            <button className='bg-cyan-400 text-white xs:py-1 xs:px-2 py-1 px-2 rounded-md hover:bg-cyan-500 duration-300 line-clamp-1 group-hover:line-clamp-none transition-all ease-in-out' onClick={()=>{handleFriend(item._id)}}>Add Friend</button>
           )}
           </>
         )}

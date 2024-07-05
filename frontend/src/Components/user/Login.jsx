@@ -60,7 +60,7 @@ function Login() {
   return (
     <>
     <Nav/>
-    <div className='flex flex-col xs:flex-row bg-cover items-center justify-around xs:relative xs:top-10 h-screen-160 xs:h-screen-40' style={{backgroundImage:'url(/Assets/landing.avif)',overflowX:'hidden'}}>
+    <div className='flex flex-col xs:flex-row bg-cover items-center justify-around xs:relative xs:top-10 h-screen-160 xs:h-screen-40 sm:top-12 sm:h-screen-48 md:top-14 md:h-screen-56 lg:top-16 lg:h-screen-64' style={{backgroundImage:'url(/Assets/landing.avif)',overflowX:'hidden'}}>
     <div className='flex flex-col items-center justify-center'>
         <p className='font-bold text-lg sm:text-xl md:text-3xl mb-1 md:mb-2'>Hello!</p>
        <p className='font-semibold text-base md:text-2xl mb-1 md:mb-2 sm:text-lg text-white'>Don't have a account ?</p>

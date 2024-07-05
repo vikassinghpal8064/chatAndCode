@@ -35,7 +35,6 @@ catch(err){
 }
 })
 
-
 //accepting a friend request
 router.get("/acceptRequest/:index", validateUser, async(req,res)=>{
     try{
@@ -139,6 +138,23 @@ router.get("/getAllFriends/:id",validateUser,async(req,res)=>{
   catch(err){
    return res.status(500).send({error:err.message});
   }
+});
+
+//find particular friend of login user
+router.get('/find-friend/:id',validateUser,async(req,res)=>{
+try{
+  let {id} = req.params;
+  let userId = req.user.id;
+  let sender = await User.findById(userId).select('firstName lastName photo');
+  let receiver = await User.findById(id).select('firstName lastName photo');
+  let friendObj = {};
+  friendObj.sender = sender;
+  friendObj.receiver = receiver;
+  return res.status(201).send(friendObj);
+}
+catch(e){
+  return res.status(500).send({error:e.message});
+}
 });
 
 // notification

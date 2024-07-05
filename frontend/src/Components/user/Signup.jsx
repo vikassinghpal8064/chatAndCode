@@ -49,16 +49,12 @@ function Signup() {
   return (
     <>
     <Nav/>
-    <div className='flex bg-cover items-center justify-around xs:relative xs:top-10 h-screen-160 xs:h-screen-40' style={{backgroundImage:'url(/Assets/landing.avif)'}}>
+    <div className='flex bg-cover items-center justify-around xs:relative xs:top-10 h-screen-160 xs:h-screen-40 sm:top-12 sm:h-screen-48 md:top-14 md:h-screen-56 lg:top-16 lg:h-screen-64' style={{backgroundImage:'url(/Assets/landing.avif)'}}>
       <div className='xs:flex flex-col items-center justify-center hidden'>
         <p className='font-bold text-lg sm:text-xl md:text-3xl mb-1 md:mb-2'>Hello!</p>
        <p className='font-semibold text-base sm:text-lg md:text-2xl mb-1 md:mb-2 text-white'>Do you have a account ?</p>
        <Link to={'/login'} className='mt-2'><button className='bg-blue-500 text-white rounded-sm w-40 sm:rounded-md md:w-72 py-1 md:py-2 px-4 hover:bg-blue-700 font-medium sm:w-56 text-base sm:text-lg md:text-xl lg:w-88'>Sign in</button></Link>
       </div>
-
-
-
-
       <div className="flex flex-col justify-center bg-white p-2 md:py-4 md:px-3 rounded-md md:rounded-lg relative w-76 xs:w-60 sm:w-76 md:w-88 lg:w-96">
       <form onSubmit={handleSubmit}>
         <div className="text-sm sm:text-base md:text-lg">
@@ -70,7 +66,7 @@ function Signup() {
             <label htmlFor="first" className="font-medium">Firstname</label>
             </div>
             <div className="pl-4 xs:pl-0 md:pl-2">
-            <input  type="text"  name="firstName"  placeholder="First Name"  onChange={handleChange} id='first'  className="rounded-sm sm:rounded-md border-gray-400 text-center border w-52 mb-1 py-1 md:py-2 px-1 md:mb-2 xs:w-56 sm:w-72 md:w-60 lg:w-68" required/>
+            <input  type="text"  name="firstName"  placeholder="First Name"  onChange={handleChange} id='first'  className="rounded-sm sm:rounded-md border-gray-400 text-center border w-52 mb-1 py-1 md:py-2 px-1 xs:w-56 sm:w-72 md:w-60 lg:w-68" required/>
             </div>
           </div>
           <div className="flex w-72 xs:flex-col xs:w-56 sm:w-72 md:flex-row md:w-80 lg:w-88">
@@ -78,7 +74,7 @@ function Signup() {
             <label htmlFor="last" className="font-medium">Lastname</label>
             </div>
             <div className="pl-5 xs:pl-0 md:pl-3">
-            <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} id='last' className="rounded-sm mb-1 py-1 w-52 sm:rounded-md border-gray-400 text-center border md:py-2 px-1 md:mb-2 xs:w-56 sm:w-72 md:w-60 lg:w-68"/>
+            <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} id='last' className="rounded-sm mb-1 py-1 w-52 sm:rounded-md border-gray-400 text-center border md:py-2 px-1 xs:w-56 sm:w-72 md:w-60 lg:w-68"/>
             </div>
           </div>
           <div className="flex w-72 xs:flex-col xs:w-56 sm:w-72 md:flex-row md:w-80 lg:w-88">
@@ -86,7 +82,7 @@ function Signup() {
             <label htmlFor="user" className="font-medium">Username</label>
             </div>
             <div className="pl-4 xs:pl-0 md:pl-2">
-            <input type="text" name="userName" placeholder="User Name" onChange={handleChange} id='user' className="rounded-sm mb-1 w-52 py-1 sm:rounded-md border-gray-400 text-center border md:py-2 px-1 md:mb-2 xs:w-56 sm:w-72 md:w-60 lg:w-68" required/>
+            <input type="text" name="userName" placeholder="User Name" onChange={handleChange} id='user' className="rounded-sm mb-1 w-52 py-1 sm:rounded-md border-gray-400 text-center border md:py-2 px-1 xs:w-56 sm:w-72 md:w-60 lg:w-68" required/>
             </div>
           </div>
           <div className="flex w-72 xs:flex-col xs:w-56 sm:w-72 md:flex-row md:w-80 lg:w-88">
@@ -94,7 +90,7 @@ function Signup() {
             <label htmlFor="email" className="font-medium">Email</label>
             </div>
             <div className="pl-11 xs:pl-0 md:pl-11">
-            <input type="email" name="email" id='email' placeholder="Email" onChange={handleChange} className="mb-1 py-1 w-52 rounded-sm sm:rounded-md border-gray-400 border md:py-2 px-1 md:mb-2 text-center xs:w-56 sm:w-72 md:w-60 lg:w-68" required/>
+            <input type="email" name="email" id='email' placeholder="Email" onChange={handleChange} className="mb-1 py-1 w-52 rounded-sm sm:rounded-md border-gray-400 border md:py-2 px-1 text-center xs:w-56 sm:w-72 md:w-60 lg:w-68" required/>
             </div>
           </div>
           <div className="flex w-72 xs:flex-col xs:w-56 sm:w-72 md:flex-row md:w-80 lg:w-88">
@@ -103,8 +99,8 @@ function Signup() {
             </div>
             <div className="pl-5 xs:pl-0 md:pl-3">
             <div className='relative'>
-          <input type={passwordVisible ? 'text':'password'} name="password" placeholder="Password" onChange={handleChange} id='pass' className="mb-1 py-1 w-52 rounded-sm sm:rounded-md border-gray-400 border md:py-2 px-1 md:mb-2 text-center xs:w-56 sm:w-72 md:w-60 lg:w-68" required/>
-          <button type='button' className='absolute mb-1 md:mb-2 right-0 rounded-e-sm sm:rounded-e-md py-2 px-4 inset-y-0 bg-gray-500' onClick={togglePassword}>{passwordVisible ? <FiEye/> :<FiEyeOff/>}</button>
+          <input type={passwordVisible ? 'text':'password'} name="password" placeholder="Password" onChange={handleChange} id='pass' className="mb-1 py-1 w-52 rounded-sm sm:rounded-md border-gray-400 border md:py-2 px-1 text-center xs:w-56 sm:w-72 md:w-60 lg:w-68" required/>
+          <button type='button' className='absolute mb-1 right-0 rounded-e-sm sm:rounded-e-md py-2 px-4 inset-y-0 bg-gray-500' onClick={togglePassword}>{passwordVisible ? <FiEye/> :<FiEyeOff/>}</button>
           </div>
             </div>
           </div>
@@ -113,7 +109,7 @@ function Signup() {
             <label htmlFor="phone" className="font-medium">Mobile</label>
             </div>
             <div className="pl-9 xs:pl-0 md:pl-7">
-            <input type="tel" name="phone" id='phone' placeholder="Phone Number" onChange={handleChange} className="mb-1 py-1 w-52 rounded-sm sm:rounded-md border-gray-400 border md:py-2 px-1 md:mb-2 text-center xs:w-56 sm:w-72 md:w-60 lg:w-68" required/>
+            <input type="tel" name="phone" id='phone' placeholder="Phone Number" onChange={handleChange} className="mb-1 py-1 w-52 rounded-sm sm:rounded-md border-gray-400 border md:py-2 px-1 text-center xs:w-56 sm:w-72 md:w-60 lg:w-68" required/>
             </div>
           </div>
           <button type="submit" className="bg-blue-500 text-white rounded-sm sm:rounded-md px-4 py-2 w-full hover:bg-blue-700 my-2 md:mb-4 md:mt-4"> Register </button>

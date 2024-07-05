@@ -18,7 +18,6 @@ function AddPost() {
     setForm({...form,[name]:value});
   }
   
-  
   async function handleSubmit(e){
     e.preventDefault();
     await axiosInstances.post('/addPost',form)
@@ -47,10 +46,10 @@ function AddPost() {
   return (
     <>
     <Nav/>
-     <div className="flex justify-center">
-      <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-        <div>
-          <h2 className="text-3xl mb-4">Add New Post</h2>
+     <div className="flex justify-center xs:relative mx-auto xs:top-10 sm:top-12 md:top-14 lg:top-16 sm:h-screen-48 md:h-screen-56 lg:h-screen-64 h-screen xs:h-screen-40 bg-gray-100 px-1 w-full sm:w-10/12 md:w-2/3 lg:w-1/2">
+      <form onSubmit={handleSubmit}>
+        <div className='mt-2 mx-auto py-1 px-2 sm:mt-4 sm:px-3 sm:py-2 font-semibold bg-gray-300 rounded-sm xs:rounded-md flex flex-col text-base w-76 xs:w-96 xs:text-lg sm:text-xl'>
+          <h2 className="text-xl xs:text-2xl font-bold mb-2 text-center sm:text-3xl sm:mb-3">Add Post</h2>
           <label htmlFor="title">Title: 
           <input type="text" name="title" placeholder="Title of the Post" value={form.title} onChange={handleChange} className="rounded-md border-gray-400 border p-2 mb-2 w-full" id='title'/>
           </label>
@@ -60,9 +59,7 @@ function AddPost() {
           <label htmlFor="desc">Description: 
           <input type="text" name="desc" placeholder="Description of the Post" value={form.desc} onChange={handleChange} className="rounded-md border-gray-400 border p-2 mb-2 w-full" id='desc' />
           </label>
-        </div>
-        <div>
-          <button type="submit" className="bg-blue-500 text-white rounded-md px-4 py-2 w-full hover:bg-blue-600">Add Post</button>
+          <button type="submit" className="bg-blue-500 text-white rounded-md px-4 py-2 my-2 w-full hover:bg-blue-600">Add Post</button>
         </div>      
         </form>
     </div>

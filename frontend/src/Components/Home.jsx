@@ -78,7 +78,7 @@ function Home() {
   return (
     <>
     <Nav/>
-     <div className="w-full sm:w-11/12 md:w-10/12 lg:w-4/5 xl:w-2/3 flex flex-col px-2 py-2 mx-auto justify-between bg-gray-200 xs:relative xs:top-10 sm:top-12 md:top-14 lg:top-16 h-screen xs:h-screen-72 z-50" ref={parentRef} style={{overflowX:'hidden',scrollbarWidth:'none'}}>
+     <div className="w-full sm:w-11/12 md:w-10/12 lg:w-4/5 xl:w-2/3 flex flex-col px-2 py-2 mx-auto justify-between bg-gray-200 xs:relative xs:top-10 sm:top-12 md:top-14 lg:top-16 h-screen xs:h-screen-40 sm:h-screen-48 md:h-screen-56 lg:h-screen-64 z-50" ref={parentRef} style={{overflowX:'hidden',scrollbarWidth:'none'}}>
       <div className="xs:fixed xs:top-12 sm:top-14 md:top-16 lg:top-18 lg:mt-2 bg-white h-12 flex justify-between items-center rounded-md" style={{width:childWidth}}>
       <div className="w-3/4 sm:w-2/3 h-12 flex justify-center items-center">
         <div className="rounded-md h-8 s:h-10 xms:h-8 w-32 xxs:w-40 xs:w-48 s:w-56 sm:w-52 sd:w-60 md:w-64 relative mr-2 cursor-pointer ml:w-80 lg:w-88">
@@ -97,7 +97,7 @@ function Home() {
       </div>
       </div>
      <div className="w-full flex justify-between xs:relative xs:top-14">
-      <div className="xs:w-3/4 sm:w-2/3 w-3/4 xs:me-1 me-1 xs:px-1 md:pl-2 md:pr-5 px-1 overflow-y-auto h-screen-72 xs:h-screen-136" style={{scrollbarWidth:'none'}}>
+      <div className="xs:w-3/4 sm:w-2/3 w-3/4 xs:me-1 me-1 xs:px-1 md:pl-2 md:pr-5 px-1 overflow-y-auto h-screen-72 xs:h-screen-112 sm:h-screen-120 md:h-screen-128 lg:h-screen-136" style={{scrollbarWidth:'none'}}>
       <div className="bg-white xs:p-1 p-2 mb-2 h-auto xs:rounded-lg sm:rounded-xl rounded-lg w-full min-h-screen-72 xs:min-h-screen-136">
         {post && post.map((item,index)=>{
           return(
@@ -115,7 +115,7 @@ function Home() {
         </div>
        </div>
       </div>
-      <div className="xs:w-1/4 sm:w-1/3 md:pr-2 w-1/4 overflow-y-auto h-screen-72 xs:h-screen-136" style={{scrollbarWidth:'none'}}>
+      <div className="xs:w-1/4 sm:w-1/3 md:pr-2 w-1/4 overflow-y-auto h-screen-72 xs:h-screen-112 sm:h-screen-120 md:h-screen-128 lg:h-screen-136" style={{scrollbarWidth:'none'}}>
        {obj && obj.map((item,index)=>{
         return(
           <Card key={index} item={item}/>

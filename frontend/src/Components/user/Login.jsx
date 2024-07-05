@@ -73,11 +73,11 @@ function Login() {
           <h2 className='md:mt-4 text-base sm:text-lg md:text-xl font-semibold'>Welcome Back !!</h2>
           <h2 className='mb-2 md:mb-4 text-xs sm:text-sm md:text-md font-medium text-gray-500'>Sign in to Continue</h2>
             <label htmlFor="first" className="font-medium">Username</label>
-            <input  type="text"  name="userName"  placeholder="User Name"  onChange={handleChange} id='first'  className="rounded-sm xs:rounded-md text-center border-gray-400 border md:py-2 px-1 mb-1 md:mb-2 w-48 xs:w-56 ml-3 xs:block xs:ml-0 sm:w-72 md:w-88" required/>
+            <input  type="text"  name="userName"  placeholder="User Name"  onChange={handleChange} id='first'  className="rounded-sm py-1 xs:rounded-md text-center border-gray-400 border md:py-2 px-1 mb-1 md:mb-2 w-48 xs:w-56 ml-3 xs:block xs:ml-0 sm:w-72 md:w-88" required/>
             <label htmlFor="pass" className="font-medium">Password</label>
           <div className='relative inline pl-4 xs:pl-0 xs:block'>
-          <input type={passwordVisible ? 'text':'password'} name="password" placeholder="Password" onChange={handleChange} id='pass' className="rounded-sm xs:rounded-md text-center border-gray-400 border mb-1 md:mb-2 md:py-2 px-1 w-48 xs:w-56 sm:w-72 md:w-88" required/>
-          <button type='button' className='absolute sm:h-7 md:h-11 md:mb-2 right-0 rounded-e-sm xs:rounded-e-md px-2 md:py-2 md:px-4 -inset-y-0.5 bg-gray-500 h-6 xs:inset-y-0' onClick={togglePassword}>{passwordVisible ? <FiEye/> :<FiEyeOff/>}</button>
+          <input type={passwordVisible ? 'text':'password'} name="password" placeholder="Password" onChange={handleChange} id='pass' className="rounded-sm xs:rounded-md py-1 text-center border-gray-400 border mb-1 md:mb-2 md:py-2 px-1 w-48 xs:w-56 sm:w-72 md:w-88" required/>
+          <button type='button' className='absolute mb-1 md:mb-2 right-0 rounded-e-sm xs:rounded-e-md py-2 px-4 bg-gray-500 xs:inset-y-0' onClick={togglePassword}>{passwordVisible ? <FiEye/> :<FiEyeOff/>}</button>
           </div>
           <button type="submit" className="bg-blue-500 text-white rounded-md px-4 md:py-2 w-72 xs:w-56 hover:bg-blue-700  mt-2 mb-1 md:mb-4 md:mt-4 sm:w-72 sm:mb-2 md:w-full">Sign in</button>
         </div>

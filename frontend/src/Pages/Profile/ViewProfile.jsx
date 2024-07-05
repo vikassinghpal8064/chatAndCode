@@ -175,11 +175,11 @@ function ViewProfile() {
            <div className='w-1/12 relative cursor-pointer' onMouseEnter={openDropdown} onMouseLeave={closeDropdown}>
            <SlMenu className='text-xl'/>
            {isOpen && (
-             <div className="absolute right-9 -top-3 w-48 bg-white border rounded-lg shadow-lg z-20">
+             <div className="absolute right-7 -top-3 w-48 bg-white border rounded-lg shadow-lg z-20">
              <Link to={'/user/update-profile'} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Update Profile</Link>
-             <Link to={'/user/my-posts'} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Chat</Link>
+             <Link to={'/user/update-education'} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Update Education</Link>
              <Link to={'/addpost'} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Add Post</Link>
-             <Link to={'/user/notifications'} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Notifications</Link>
+             <Link to={'/notifications'} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Notifications</Link>
            </div>
          )}
            </div>

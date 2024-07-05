@@ -70,6 +70,7 @@ function Chat() {
   // Sending message
   async function handleClick() {
     if (inputRef.current.value || file) {
+      console.log("sending message");
       const msg = {
         sourceId: localStorage.getItem("userId"),
         firstMess: sessionStorage.getItem('firstMess'),

@@ -127,6 +127,7 @@ function PostCard({item,user}) {
   async function toggleDropdown(){
     setIsOpen(!isOpen);
   }
+  
   useEffect(()=>{
     if(item.likes){
       const likedId = item.likes.map(like => like.likedBy);

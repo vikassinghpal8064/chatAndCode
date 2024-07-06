@@ -36,6 +36,7 @@ function Nav() {
     await axiosInstances.get(`/user/${id}`)
     .then((res)=>{
      setProfile(res.data);
+     console.log("profile data: ",res.data);
      navigate(`/ViewProfile/${id}`,{state:{profile:res.data}});
     })
     .catch((e)=>{

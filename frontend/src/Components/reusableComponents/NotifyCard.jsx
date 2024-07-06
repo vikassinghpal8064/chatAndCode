@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import SetupAxiosInstances from '../Instances/SetupAxiosInstances';
 import Nav from '../Nav';
+import NotificationCard from './NotificationCard';
 
 function NotifyCard() {
   let [data,setData] = useState([]);
@@ -85,67 +86,17 @@ function NotifyCard() {
   return (
     <>
     <Nav/>
-    <div className='bg-gray-100 h-screen'>
-    <div className='relative top-16 bg-gray-100 py-2 w-full justify-center flex overflow-y-auto' style={{maxHeight:'calc(100vh - 64px)',scrollbarWidth:'none'}}>
-      <div className='w-1/2'>
+    <div className='xs:relative xs:top-10 sm:top-12 md:top-14 lg:top-16 bg-gray-100 pt-2 px-1 sm:px-2 w-full items-center flex flex-col overflow-y-auto h-screen xs:h-screen-40 sm:h-screen-48 md:h-screen-56 lg:h-screen-64' style={{scrollbarWidth:'none'}}>
+      <h2 className='font-bold text-base my-1 xs:my-2 xs:text-lg sm:text-xl'>Notifications</h2>
       {
-      data.map((item,index)=>{
-        return(
-          <div key={item.details._id} className='bg-gray-200 mb-2 py-2 px-4 rounded-md border-2 relative flex'>
-            <button className='absolute bg-red-100 text-red-900 py-1 px-1 right-2 top-2 rounded-md' onClick={()=>deleteNotification(index)}>&#10060;</button>
-             {item.details.category == 'sendRequest' ? (
-               <div className='flex'>
-               <div>
-            <button onClick={()=>{handleClick(item.sourcePersonInfo._id)}}>
-      {item.sourcePersonInfo.photo && !pictureLoad ?
-      (
-        <>
-        <img src={item.sourcePersonInfo.photo} onError={()=>setPictureLoad(true)} className='w-24 h-24 border-2 border-black bg-gray-300 rounded-full'/>
-        </>
-      ):(
-        <>
-        <img src="/Assets/profile.png" className='w-24 h-24 border-2 border-black bg-gray-300 rounded-full'/>
-        </>
-      )}
-            </button>
-               </div>
-            <div className='pl-4 flex flex-col justify-center'>
-            <h2 className='text-2xl font-bold text-gray-800'>{item.sourcePersonInfo.firstName} {item.sourcePersonInfo.lastName && (item.sourcePersonInfo.lastName)} <span className='text-xl font-semibold text-gray-500'>{item.details.message}</span></h2>
-              <div>
-            <button className='bg-green-300 text-green-900 rounded-md mt-2 py-2 px-4 mr-4' onClick={()=>handleAccept(index)}>Accept</button>
-            <button className='bg-red-300 text-red-800 rounded-md mt-2 py-2 px-4' onClick={()=>handleReject(index)}>Reject</button>
-              </div>
-            </div>
-            </div>
-            ):(
-              <div className='flex'>
-                <div>
-                  <button onClick={()=>{handleClick(item.targetPersonInfo._id)}}>
-                    {item.targetPersonInfo.photo && !pictureLoad ?
-                    (
-                      <>
-                      <img src={item.targetPersonInfo.photo} onError={()=>setPictureLoad(true)} className='w-24 h-24 border-2 border-black bg-gray-300 rounded-full'/>
-                      </>
-                    ):(
-                      <>
-                      <img src="/Assets/profile.png" className='w-24 h-24 border-2 border-black bg-gray-300 rounded-full'/>
-                      </>
-                    )}
-                  </button>
-                </div>
-                <div className='pl-4 flex flex-col justify-center'>
-                  <h2 className='text-2xl font-bold text-gray-800'>{item.targetPersonInfo.firstName} {item.targetPersonInfo.lastName && (item.targetPersonInfo.lastName)} <span className='text-xl font-semibold text-gray-500'>{item.details.message}</span></h2>
-                <div>
-              </div>
-                </div>
+        data.map((item,index)=>{
+          return(
+          <div key={item.details._id} className='w-full sm:w-10/12 md:w-2/3 lg:w-1/2'>
+          <NotificationCard item={item}/>
           </div>
-        )}
-      </div>
         )
       })
     }
-      </div>
-    </div>
     </div>
     </>
   )

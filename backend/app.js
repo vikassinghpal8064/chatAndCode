@@ -30,7 +30,6 @@ main().then(()=>{
 });
 app.use(cors({
     origin:[process.env.ALLOWED_URL],
-    // origin:"https://chatandcode.vercel.app",
     credentials:true,
 }))
 

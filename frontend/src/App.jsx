@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Signup from './Components/user/Signup'
 import { Routes,Route } from 'react-router-dom'
 import Home from './Components/Home'
@@ -14,6 +14,7 @@ import NotifyCard from './Components/reusableComponents/NotifyCard'
 
 
 function App() {
+
   return (
     <div>
       <Routes>

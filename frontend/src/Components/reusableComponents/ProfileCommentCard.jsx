@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-function CommentCard({item}) {
+function ProfileCommentCard({item}) {
   let [pictureLoad,setPictureLoad] = useState(false);
   let navigate = useNavigate();
   const formatDate = (dateString) => {
@@ -46,4 +46,4 @@ function CommentCard({item}) {
 }
 
 
-export default CommentCard
+export default ProfileCommentCard

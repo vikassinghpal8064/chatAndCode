@@ -31,6 +31,7 @@ function Chat() {
 
     // Receiving message
     socket.current.on("message", (msg) => {
+      console.log("receving message");
       sessionStorage.setItem('firstMess', false);
       setMessages((prevMessages) => [...prevMessages, msg]);
     });
@@ -73,7 +74,7 @@ function Chat() {
       inputRef.current.value = "";
     }
   }
-console.log(messages);
+// console.log(messages);
   // Handle file change
   function handleFileChange(e) {
     setFile(e.target.files[0]);

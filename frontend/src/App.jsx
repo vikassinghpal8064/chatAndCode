@@ -31,6 +31,7 @@ function App() {
         <Route path='/notifications' element={<NotifyCard/>}/>
       </Routes>
     </div>
+    
   )
 }
 

@@ -182,7 +182,6 @@ router.get("/notification", validateUser ,async(req,res)=>{
   }
 
 })
-
 // delete notification
 router.delete("/notification/delete/:index", validateUser,async(req,res)=>{
   try{

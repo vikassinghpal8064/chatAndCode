@@ -124,6 +124,10 @@ function Chat() {
     };
   },[])
 
+  function handleIconClick(){
+    console.log("i am alive");
+  }
+
   return (
     <>
     <Nav/>

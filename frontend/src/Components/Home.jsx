@@ -75,6 +75,7 @@ function Home() {
       window.removeEventListener('resize', handleResize);
     };
   },[])
+  
   return (
     <>
     <Nav/>

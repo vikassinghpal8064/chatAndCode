@@ -9,6 +9,7 @@ function AddPost() {
     upload:'',
     desc:''
   })
+  let [profile, setProfile] = useState({});
   let navigate = useNavigate();
   const axiosInstances = SetupAxiosInstances(navigate);
   let userId = localStorage.getItem('userId');

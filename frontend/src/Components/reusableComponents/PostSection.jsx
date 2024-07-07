@@ -25,7 +25,7 @@ function PostSection({postSection}) {
         <div className="flex flex-wrap absolute w-full h-full top-10 left-0 bg-white border rounded-lg shadow-lg z-10 py-2 px-2 overflow-y-auto" style={{scrollbarWidth:"none"}}>
          {postSection && postSection.map((item,index)=>{
            return(
-            <div className='lg:w-1/2 md:w-full' key={item._id}>
+            <div className='lg:w-1/2 w-full' key={item._id}>
               <ProfilePostCard item={item} key={item._id} user={user} />
             </div>
           )

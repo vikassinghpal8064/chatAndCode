@@ -18,7 +18,7 @@ function PostCard({item,user}) {
   let [isDisLiked,setIsDisLiked] = useState(false);
   let [comment,setComment] = useState('');
   let [isOpen,setIsOpen] = useState(false);
-  const userId = localStorage.getItem('userId');
+  let userId = localStorage.getItem('userId');
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -129,19 +129,16 @@ function PostCard({item,user}) {
   }
   
   useEffect(()=>{
-    if(item.likes){
-      const likedId = item.likes.map(like => like.likedBy);
-      setIsLiked(likedId.includes(userId));
-    }else{
-      setIsLiked(false);
-    }
-    if(item.dislikes){
-      const dislikedId = item.dislikes.map(dislike => dislike.dislikedBy);
-      setIsDisLiked(dislikedId.includes(userId));
-    }else{
-      setIsDisLiked(false);
-    }
-  },[]);
+    setIsOpen(false);
+    setLikesCount(item.likes.length);
+    setDislikesCount(item.dislikes.length);
+    setCommentsCount(item.comments.length);
+    setAllComment(item.comments);
+    const likedId = item.likes.map(like => like.likedBy);
+    setIsLiked(likedId.includes(userId));
+    const dislikedId = item.dislikes.map(dislike => dislike.dislikedBy);
+    setIsDisLiked(dislikedId.includes(userId));
+  },[item,userId]);
 
   return (
     <div className='w-full xs:px-2 md:px-4 py-1 px-2 xs:mb-2 sm:mb-3 md:mb-4 mb-2 rounded-lg bg-gray-100 group relative transition-all duration-300 ease-in-out'>

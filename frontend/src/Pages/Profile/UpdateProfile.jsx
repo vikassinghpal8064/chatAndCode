@@ -9,6 +9,7 @@ function UpdateProfile() {
     email:'',
     phone:'',
   })
+  let [profile, setProfile] = useState({});
   let navigate = useNavigate();
   const axiosInstances = SetupAxiosInstances(navigate);
   

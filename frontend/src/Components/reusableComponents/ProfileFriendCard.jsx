@@ -21,22 +21,25 @@ function ProfileFriendCard({item}) {
   }
 
   return (
-  <div className='h-20 px-2 py-2 mx-1 mb-1 flex' style={{width:'calc(100% - 8px)'}}>
+  <div className='px-2 py-1 mb-1 flex justify-center w-full group'>
       <button onClick={()=>{handleProfile(item._id)}}>
       {item.photo && !pictureLoad ?
       (
         <>
+        <div className='flex justify-center'>
         <img src={item.photo} onError={()=>setPictureLoad(true)} className='w-16 h-16 border-2 border-black rounded-full bg-gray-300'/>
+        </div>
+      <div onClick={()=>{handleProfile(item._id)}} className='sm:text-lg md:text-base lg:text-lg xl:text-xl font-bold hover:text-blue-800 hover:underline cursor-pointer'>{item.firstName} {item.lastName && (item.lastName)}</div>
         </>
       ):(
         <>
+        <div className='flex justify-center'>
         <img src="/Assets/profile.png" className='w-16 h-16 border-2 border-black rounded-full bg-gray-300'/>
+        </div>
+        <div onClick={()=>{handleProfile(item._id)}} className='sm:text-lg md:text-base lg:text-lg xl:text-xl font-bold hover:text-blue-800 hover:underline cursor-pointer line-clamp-1 group-hover:line-clamp-none'>{item.firstName} {item.lastName && (item.lastName)}</div>
         </>
       )}
       </button>
-    <div className='flex items-center pl-1'>
-      <button onClick={()=>{handleProfile(item._id)}} className='text-md font-bold hover:text-blue-800 hover:underline'>{item.firstName} {item.lastName && (item.lastName)}</button>
-    </div>
   </div>
   )
 }

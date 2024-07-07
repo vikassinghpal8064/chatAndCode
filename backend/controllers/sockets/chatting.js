@@ -26,6 +26,8 @@ function chat(server) {
       console.log(room);
       socket.join(room);
       socket.room = room; // Save the room in the socket instance
+      console.log(`socket room connection address1 ${socket.room}`)
+      console.log(`socket room connection address2 ${socket.rooms}`)
     });
 
     socket.on("leaveRoom", (room) => {
@@ -53,6 +55,7 @@ function chat(server) {
           });
           friend.chats.push(newChat);
           friend.save();
+          console.log(`Emitting success message ${socket.room}`)
         }
 
         if (fileData) {
@@ -86,6 +89,7 @@ function chat(server) {
           });
         } else {
           const textMessage = { sourceId, targetId, message };
+          console.log(` emit message ${socket.room}`);
           if (socket.room) {
             io.to(socket.room).emit("message", textMessage);
           }

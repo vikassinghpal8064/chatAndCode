@@ -15,6 +15,7 @@ function UpdateEducation() {
       major:''
     }
   })
+  let [profile ,setProfile] = useState({});
   let navigate = useNavigate();
   let userId = localStorage.getItem('userId');
   const axiosInstances = SetupAxiosInstances(navigate);

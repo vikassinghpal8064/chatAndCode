@@ -185,6 +185,8 @@ router.get("/notification", validateUser ,async(req,res)=>{
 // delete notification
 router.delete("/notification/delete/:index", validateUser,async(req,res)=>{
   try{
+    let {index}= req.params;
+    console.log(index);
     let userId = req.user.id;
     let user= await User.findById(userId);
     if(user.notifications.length <= index){
@@ -203,3 +205,5 @@ router.delete("/notification/delete/:index", validateUser,async(req,res)=>{
 
 
 module.exports=router;
+
+
